@@ -1,0 +1,114 @@
+sword:
+  Attacks:
+    - Type: Melee
+      Damage: [4, 6, 6, 6, 6, 8, 10]
+axe:
+  Attacks:
+    - Type: Melee
+      Damage: [2, 2, 6, 6, 8, 10, 12]
+knife:
+  Attacks:
+    - Type: Melee
+      Damage: [2, 2, 2, 2, 4, 8, 10]
+staff:
+  Attacks:
+    - Type: Melee
+      Damage: [2, 4, 4, 4, 4, 6, 8]
+hammer:
+  Attacks:
+    - Type: Melee
+      Ignore armour: 1
+      Damage: [1, 2, 4, 6, 8, 10, 12]
+spear:
+  Attacks:
+    - Type: Melee
+      Damage: [4, 4, 6, 6, 8, 8, 10]
+longsword:
+  Attacks:
+    - Type: Melee
+      Damage: [4, 6, 8, 8, 10, 12, 14]
+mace:
+  Attacks:
+    - Type: Melee
+      Ignore armour: 1
+      Damage: [2, 4, 4, 6, 6, 8, 10]
+polearm:
+  Attacks:
+    - Type: Melee
+      Hands: 2
+      Ignore armour: 1
+      Damage: [2, 4, 4, 8, 12, 14, 18]
+maul:
+  Attacks:
+    - Type: Melee
+      Hands: 2
+      Ignore armour: 1
+      Damage: [1, 2, 3, 6, 12, 13, 14]
+greatsword:
+  Attacks:
+    - Type: Melee
+      Hands: 2
+      Damage: [2, 4, 8, 10, 12, 14, 18]
+club:
+  Attacks:
+    - &attack:club
+      Type: Melee
+      Damage: [1, 1, 2, 3, 6, 8, 10]
+unarmed:
+  Attacks:
+    - Type: Melee
+      Damage: [1, 1, 1, 2, 2, 3, 4]
+shield:
+  Attacks:
+    - Type: Melee
+      Damage: [2, 2, 2, 4, 4, 6, 8]
+fusil:
+  Description: |-
+    A fusil is a long Weapon that looks like a rifle and can be used in melee as a Club. A Fusil holds 6 charges before the plasmic core needs replacing.
+  Charges: 6
+  Attacks:
+    - Type: Ranged
+      Hands: 2
+      Ignore armour: 1
+      Damage: [2, 4, 4, 6, 12, 18, 24]
+    - *attack:club
+bow:
+  Attacks:
+    - Type: Ranged
+      Hands: 2
+      Damage: [2, 4, 6, 8, 8, 10, 12]
+crossbow:
+  Attacks:
+    - Type: Ranged
+      Hands: 2
+      Damage: [4, 4, 6, 8, 8, 8, 10]
+pistolet:
+  Description: |-
+    A pistolet is a hand held energy Weapon. Holds enough energy for 8 shots.
+  Charges: 8
+  Attacks:
+    - Type: Ranged
+      Ignore armour: 1
+      Damage: [2, 2, 4, 4, 6, 12, 16]
+small beast:
+  Attacks:
+    - Type: Beastly
+      Damage: [2, 2, 3, 3, 4, 5, 6]
+modest beast:
+  Attacks:
+    - Type: Beastly
+      Damage: [4, 6, 6, 8, 8, 10, 12]
+large beast:
+  Attacks:
+    - Type: Beastly
+      Ignore armour: 1
+      Damage: [4, 6, 8, 10, 12, 14, 16]
+gigantic beast:
+  Attacks:
+    - Type: Beastly
+      Ignore armour: 1
+      Damage: [4, 8, 12, 12, 16, 18, 24]
+dragon-fire:
+  Attacks:
+    - Type: Other
+      Damage: [6, 8, 12, 16, 18, 24, 36]

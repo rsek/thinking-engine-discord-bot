@@ -1,0 +1,19 @@
+Burglar:
+  Description: |-
+    As a second-story man you often have cause to wander. Enemies come naturally from both sides of the law and it pays to keep ahead of trouble.
+  Possessions:
+    - Weapon: crossbow
+    - Item: crossbow bolts
+      Quantity: 18
+    - Item: roll of lock picks
+    - Item: grappling hook
+  Advanced Skills:
+    Sneak: 2
+    Locks: 2
+    Awareness: 1
+    Climb: 1
+    Trapping: 1
+    Knife Fighting: 1
+    Crossbow Fighting: 1
+  Special:
+    You may Test your Luck to find and get in with the local criminal underbelly if one exists.

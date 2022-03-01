@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node12",
+    "lib": [
+      "es6",
+      "es2020",
+      "es2021",
+      "esnext"
+    ],
+    "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+    "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "allowUnreachableCode": true,
+    "noImplicitAny":true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "sourceMap": false,
+    "baseUrl": "./"
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.yaml",
+    "src/**/*.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+}
