@@ -1,60 +1,41 @@
-import { TypedRegEx } from "typed-regex";
-import troikaDice from "../../types/troikaDice.js";
-import troikaDiceNotation from "../../types/troikaDiceNotation.js";
-import Die from "./Die.js";
 import _ from "lodash-es";
 
+export default class Roll implements IRoll {
+  private _bonus: number;
+  private _dice: number[];
+  constructor(quantity = 1, sides = 6, bonus = 0)
+  {
+    this._dice = [];
+    for (let i = 0; i < quantity; i++) {
+      this._dice.push(_.random(1, sides));
+    }
+    this._bonus = bonus ?? 0;
+    this.valueOf = this.valueOf.bind(this);
+  }
+  public get dice(): number[] {
+    return this._dice;
+  }
+  get bonus(): number {
+    return this._bonus;
+  }
+  get total(): number {
+    // console.log(this.dice);
+    return _.sum(this.dice) + this.bonus;
+  }
 
-export default class Roll extends Array<Die> {
-  private _mods: number;
-  get mods(): number {
-    return this._mods;
-  }
-  get result(): number {
-    return _.sum(this.dice) + this.mods;
-  }
-  // toString
-  get dice(): Array<Die> {
-    return Array.from(this.values());
+  toString(): string {
+    const result = `[${this.dice.map(die => die.valueOf()).join(", ")}] + ${this.bonus} = **${this.valueOf()}**`;
+    return result;
   }
   valueOf(): number {
-    return this.result;
+    return this.total;
   }
-  constructor(options: IRollOptions|troikaDiceNotation)
-  {
-    let rollOptions: IRollOptions;
-    if (typeof options == "string") {
-      rollOptions = parseDice(options);
-    } else {
-      rollOptions = options;
-    }
-    let dice = new Array(rollOptions.quantity).map(die => new Die(rollOptions.sides));
-    super(...dice);
-    this._mods = rollOptions.mods;
-  }
+
 }
 
-export interface IRollOptions {
-  quantity: number;
-  sides: troikaDice;
-  mods: number;
-}
-
-const rollPattern = TypedRegEx("^(?<quantity>[0-9]+)?d(?<sides>(2|3|6|66|666)(?<mods>[\+\-][0-9]+)?$");
-
-export function parseDice(notation: troikaDiceNotation): IRollOptions {
-  let defaults = {
-    quantity: "1",
-    mods: "0",
-  };
-  let subStrings = rollPattern.captures(notation);
-  if (!subStrings) {
-    throw new Error();
-  }
-  subStrings = Object.assign(defaults, subStrings);
-  if (!subStrings.sides) {
-    throw new Error();
-  }
-  let result = _.mapValues(subStrings, (value,key) => Number(value)) as IRollOptions;
-  return result;
+export interface IRoll {
+  dice: number[];
+  bonus: number;
+  total: number;
+  valueOf: () => number;
 }

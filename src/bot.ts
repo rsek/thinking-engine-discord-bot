@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Intents, Interaction, Message } from "discord.js";
+import { Intents, Interaction } from "discord.js";
 import { Client } from "discordx";
 import { dirname, importx } from "@discordx/importer";
 import { readFileSync } from "fs";
@@ -8,21 +8,21 @@ console.log("Bot is starting...");
 
 type configType = {clientId: string, guildIds: string[], token: string };
 
-const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8"));
+const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8")) as configType;
 
 
 export const client = new Client({
-    botId: config.clientId,
-    botGuilds: config.guildIds ?? undefined,
-    intents: [
-      Intents.FLAGS.GUILDS,
-      Intents.FLAGS.GUILD_MESSAGES,
-      Intents.FLAGS.GUILD_WEBHOOKS,
-      Intents.FLAGS.GUILD_WEBHOOKS,
-      Intents.FLAGS.DIRECT_MESSAGES,
-    ],
-    "silent": false,
-  });
+  botId: config.clientId,
+  botGuilds: config.guildIds ?? undefined,
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_WEBHOOKS,
+    Intents.FLAGS.GUILD_WEBHOOKS,
+    Intents.FLAGS.DIRECT_MESSAGES,
+  ],
+  "silent": false,
+});
 
 client.once("ready", async () => {
   // make sure all guilds are in cache
@@ -50,9 +50,9 @@ client.on("interactionCreate", (interaction: Interaction) => {
   client.executeInteraction(interaction);
 });
 
-client.on("messageCreate", (message: Message) => {
-  client.executeCommand(message);
-});
+// client.on("messageCreate", (message: Message) => {
+//   client.executeCommand(message);
+// });
 
 async function run() {
 
@@ -93,4 +93,4 @@ async function run() {
   // // ************* rest api section: end **********
 }
 
-run();
+await run();

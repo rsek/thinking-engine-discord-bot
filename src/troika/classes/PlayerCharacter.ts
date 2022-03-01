@@ -14,12 +14,12 @@ export default class PlayerCharacter {
   Luck: Attribute;
   constructor(
     name: string,
-// posessions
-// template
-    skill: number = new Roll("1d3+3").valueOf(),
-    stamina: number = new Roll("2d6+12").valueOf(),
-    luck: number = new Roll("1d6+6").valueOf()
-    ) {
+    // posessions
+    // template
+    skill: number = new Roll(1, 3, 3).valueOf(), // 1d3+3
+    stamina: number = new Roll(2, 6, 12).valueOf(), // 2d6+12
+    luck: number = new Roll(1, 6, 6).valueOf(), // 1d6+6
+  ) {
     this.Name = name;
     this.Skill = new Attribute("Skill", skill);
     this.Stamina = new Attribute("Stamina", stamina);
@@ -27,14 +27,14 @@ export default class PlayerCharacter {
     this.Possessions = baselinePossessions;
   }
   toEmbed(): MessageEmbed {
-    let options: MessageEmbedOptions = {
+    const options: MessageEmbedOptions = {
       author: { name: "Player Character" },
       title: this.Name
     };
-    let embed = new MessageEmbed(options
+    const embed = new MessageEmbed(options
     )
       .addFields(
-          [this.Skill, this.Stamina, this.Luck].map(item => item.toEmbedField(true)))
+        [this.Skill, this.Stamina, this.Luck].map(item => item.toEmbedField(true)))
     ;
     return embed;
   }

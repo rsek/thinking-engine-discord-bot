@@ -1,42 +1,69 @@
-import Tuple from "../../types/Tuple.js";
-import Roll from "./Roll.js";
+import { EmbedField, MessageEmbed } from "discord.js";
+import _ from "lodash";
+import OpponentRoll from "./OpponentRoll.js";
 
-export default class RollVersus {
-  opponent1: Opponent;
-  opponent2: Opponent;
-  getWinner() {
-    if (this.isTied()) {
-      return null;
+export interface IRollVersus {
+  opponents: Record<string, OpponentRoll>;
+  description?: string | undefined;
+  getWinner: () => OpponentRoll | null | undefined;
+  isTied: () => boolean;
+  toResultField: () => EmbedField;
+  toEmbed: () => MessageEmbed;
+}
+
+export default class RollVersus implements IRollVersus {
+  opponents: Record<string, OpponentRoll> = {};
+  description?: string | undefined;
+  constructor(opponent1bonus: number, opponent2bonus: number, opponent1name="Player", opponent2name = "Opponent", description?: string) {
+    if (opponent1name == opponent2name) {
+      opponent1name += " 1";
+      opponent2name += " 2";
     }
-    let result = this.opponent1.valueOf() > this.opponent2.valueOf() ? this.opponent1 : this.opponent2;
-    return result;
-  }
-  isTied() {
-    return this.opponent1.valueOf() == this.opponent2.valueOf();
-  }
-  constructor(opponent1mod: number, opponent2mod: number, opponent1name="Opponent 1", opponent2name = "Opponent 2") {
-    this.opponent1 = new Opponent(opponent1name, opponent1mod);
-    this.opponent2 = new Opponent(opponent2name,opponent2mod);
-  }
-}
+    this.opponents[opponent1name] = new OpponentRoll(opponent1name, opponent1bonus);
+    this.opponents[opponent2name] = new OpponentRoll(opponent2name, opponent2bonus);
 
-export class Opponent implements IOpponent {
-  name: string;
-  roll: Roll;
-  constructor(name: string, mods: number) {
-    this.name = name;
-    this.roll = new Roll(
-      {quantity: 2,
-      sides: 6,
-      mods: mods
-    });
+    this.description = description;
+    this.getWinner = this.getWinner.bind(this);
+    this.isTied = this.isTied.bind(this);
+    this.toResultField = this.toResultField.bind(this);
+    this.toEmbed = this.toEmbed.bind(this);
+    this.valueOf = this.valueOf.bind(this);
   }
-  valueOf() {
-    return this.roll.valueOf;
+  getWinner() {
+    if (this.isTied() === true) {
+      return null;
+    } else {
+      return _.reduce(this.opponents, (prev,curr) => prev > curr ? prev : curr);
+    }
   }
-}
-
-export interface IOpponent {
-  name: string,
-  roll: Roll
+  isTied(): boolean {
+    const opponents = Object.values(this.opponents).map(item => item.valueOf()) as [number, number];
+    return _.isEqual(...opponents);
+  }
+  toResultField() {
+    let value;
+    if (this.getWinner() != null) {
+      value = this.getWinner()?.name;
+      value += " wins";
+    } else { value = "Tie";}
+    const field: EmbedField = {
+      name: "Result",
+      value: value as string,
+      inline: false
+    };
+    return field;
+  }
+  toEmbed() {
+    const embed = new MessageEmbed()
+      .setTitle("Roll Versus")
+      .addFields(
+        ..._.map(this.opponents, (opponent) => opponent.toField()),
+        this.toResultField()
+      )
+      ;
+    if (this.description) {
+      embed.setDescription(this.description);
+    }
+    return embed;
+  }
 }

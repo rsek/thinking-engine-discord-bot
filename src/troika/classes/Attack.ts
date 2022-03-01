@@ -20,7 +20,7 @@ export default class Attack implements IAttack {
   }
   getDamageString() {
     const cellWidth = 2
-    let tableHead = this.Damage.map((item,index,arr) => {
+    const tableHead = this.Damage.map((_,index) => {
       let rollString = (index+1).toString();
       if (rollString == "7") {
         rollString += "+";
@@ -28,16 +28,16 @@ export default class Attack implements IAttack {
       return rollString.padEnd(cellWidth);
     } ).join(" | ");
 
-    let tableBody = this.Damage.map((item,index,arr) => {
-      let dmgString = item.toString();
+    const tableBody = this.Damage.map((item) => {
+      const dmgString = item.toString();
       return dmgString.padEnd(cellWidth);
     } ).join(" | ");
-    let tableBorder = tableHead.replace(/[^\|]/g, "-");
-    let result = [tableHead, tableBorder, tableBody].join("\n");
+    const tableBorder = tableHead.replace(/[^|]/g, "-");
+    const result = [tableHead, tableBorder, tableBody].join("\n");
     return "```" + result + "```";
   }
   toEmbed() {
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
       .setAuthor({name: this.Origin})
       .setTitle(this.Type ? this.Type +" Attack": "Attack")
       ;
@@ -45,7 +45,7 @@ export default class Attack implements IAttack {
       embed.addField("Hands", this.Hands.toString(), true)
     }
     if (typeof this["Ignore armour"] != "undefined") {
-      let armorIgnoreString = this["Ignore armour"] == -1 ? "All" : this["Ignore armour"].toString();
+      const armorIgnoreString = this["Ignore armour"] == -1 ? "All" : this["Ignore armour"].toString();
       embed.addField("Ignore armour",armorIgnoreString, true);
     }
     embed.addField("Damage", this.getDamageString())

@@ -1,4 +1,4 @@
-import { EmbedField, EmbedFieldData } from "discord.js";
+import { EmbedField } from "discord.js";
 
 export interface IAttribute {
   Name: string;
@@ -16,7 +16,7 @@ export default class Attribute implements IAttribute{
     this.Current = current;
     this.toEmbedField = this.toEmbedField.bind(this);
   }
-  toEmbedField(inline: boolean = false): EmbedFieldData {
+  toEmbedField(inline = false): EmbedField {
     return {
       name: this.Name,
       value: `${this.Max} / ${this.Current}`,

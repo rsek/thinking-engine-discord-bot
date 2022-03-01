@@ -10,8 +10,7 @@ parserOptions:
     - ./tsconfig.json
 plugins:
   - "@typescript-eslint"
-  # - "lodash"
-  - "import"
+  - sort-class-members
 env:
   es6: true
 extends:
@@ -24,10 +23,17 @@ extends:
   # - plugin:lodash/recommended
   # - prettier
 rules:
-
-  # import/no-unresolved: error
-  # "@typescript-eslint/no-inferrable-types":
-  #   - 1
+  sort-class-members/sort-class-members:
+    - 2
+    - order:
+        - "[static-properties]"
+        - "[static-methods]"
+        - "[properties]"
+        - "[conventional-private-properties]"
+        - "constructor"
+        - "[methods]"
+        - "[conventional-private-methods]"
+      accessorPairPositioning: "getThenSet"
   indent:
     - error
     - 2
@@ -38,11 +44,6 @@ rules:
   quotes:
     - error
     - double
-  # import/extensions:
-  #   - 1
-  #   - js: never
-  #     ts: never
-  #     json: always
   lodash/prefer-lodash-method:
     - 0
   lodash/import-scope:
@@ -51,8 +52,3 @@ rules:
     - 0
   lodash/prefer-constant:
     - 0
-  settings:
-    # import/parsers:
-    #   "@typescript-eslint/parser":
-    #     - .ts
-    #     - .tsx
