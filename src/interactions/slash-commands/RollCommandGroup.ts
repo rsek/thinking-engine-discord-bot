@@ -5,5 +5,4 @@ import { Discord, SlashGroup} from "discordx";
 @SlashGroup({
   name: "roll",
   description: "Roll dice." })
-export default abstract class RollCommandGroup {
-}
+export default abstract class RollCommandGroup { }

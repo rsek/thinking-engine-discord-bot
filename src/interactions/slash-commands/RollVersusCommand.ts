@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup} from "discordx";
-import RollVersus from "../../troika/classes/RollVersus.js";
+import RollVersus from "../../classes/RollVersus.js";
 
 @Discord()
 export default abstract class RollVersusCommand {

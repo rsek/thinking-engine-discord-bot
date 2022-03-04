@@ -6,26 +6,27 @@
   "type": "module",
   "scripts": {
     "flush": "rm -R ./dist",
-    "build": "tsc -p . && cp -R ./src/troika/data/yaml ./dist/troika/data",
+    "build": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
     "start": "yarn run flush && yarn run build && node ."
   },
   "author": "rsek",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
     "@discordx/importer": "^1.1.2",
     "@discordx/pagination": "^2.0.0",
-    "@types/lodash-es": "^4.17.6",
     "discord-api-types": "^0.27.2",
     "discord.js": "^13.6.0",
     "discordx": "^9.3.2",
     "lodash-es": "^4.17.21",
+    "title-case": "^3.0.3",
     "typed-regex": "^0.0.8",
+    "weighted": "^1.0.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.5",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "^17.0.19",
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^5.12.1",

@@ -1,12 +1,13 @@
+import { AutocompleteInteraction, ButtonInteraction, CommandInteraction, InteractionReplyOptions, MessageActionRow, MessageButton } from "discord.js";
+import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import "reflect-metadata";
-import { AutocompleteInteraction, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashOption} from "discordx";
-import gameData from "../../troika/data/gameData.js";
+import gameData from "../../data/gameData.js";
 import queryRecord from "../autocomplete/queryRecord.js";
+import revealMessageButton from "../components/revealMessageButton.js";
 
 @Discord()
 export default abstract class SpellCommand {
-  @Slash("spell", {description: "Display the text of a spell"})
+  @Slash("spell", {description: "Display the text of a spell."})
   async spell(
     @SlashOption( "spell-name",
       {
@@ -45,14 +46,21 @@ export default abstract class SpellCommand {
             ephemeral: true});
           return;
         }
-        await interaction.reply({
+        const options: InteractionReplyOptions = {
           embeds: spellData.toEmbeds(),
           ephemeral
-        });
+        }
+        if (ephemeral)
+        {
+
+          options.components = [new MessageActionRow({components: [revealMessageButton]})];
+        }
+        await interaction.reply(options);
         break;
       }
       default:
         break;
     }
   }
+
 }

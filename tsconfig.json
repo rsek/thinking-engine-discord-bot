@@ -34,7 +34,7 @@
     "./**/*.ts",
     "./**/*.yaml",
     "src/**/*.json"
-  ],
+, "src/interactions/missChanceByActionRoll.js"  ],
   "exclude": [
     "node_modules",
     "dist"

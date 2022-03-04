@@ -1,8 +1,11 @@
 import "reflect-metadata";
 import { Discord, Slash, SlashGroup, SlashOption} from "discordx";
-import { AutocompleteInteraction, CommandInteraction } from "discord.js";
-import gameData from "../../troika/data/gameData.js";
+import { AutocompleteInteraction, CommandInteraction, InteractionReplyOptions, Message, MessageActionRow } from "discord.js";
+import gameData from "../../data/gameData.js";
 import queryRecord from "../autocomplete/queryRecord.js";
+import revealMessageButton from "../components/revealMessageButton.js";
+import tableRollButton from "../components/tableRollButton.js";
+import dismissMessageButton from "../components/dismissMessageButton.js";
 
 @Discord()
 export default abstract class RollTableCommand {
@@ -16,7 +19,13 @@ export default abstract class RollTableCommand {
         autocomplete: true
       })
       tableName: string,
-      interaction: CommandInteraction|AutocompleteInteraction
+    @SlashOption("preview", {
+      description: "Display a preview of the table instead of rolling on it. (default: false)",
+      type: "BOOLEAN",
+      required: false
+    })
+      preview: boolean = false,
+    interaction: CommandInteraction|AutocompleteInteraction
   ): Promise<void> {
     switch (interaction.type) {
       case "APPLICATION_COMMAND_AUTOCOMPLETE": {
@@ -38,9 +47,26 @@ export default abstract class RollTableCommand {
             ephemeral: true});
           return;
         }
-        await interaction.reply({
-          embeds: [tableData.toEmbed()],
-        });
+        const result: InteractionReplyOptions = {};
+        if (preview) {
+          result.embeds = tableData.toPreviewEmbeds();
+          result.ephemeral = true;
+          result.components = [
+            new MessageActionRow({components: [
+              revealMessageButton,
+              tableRollButton(tableName),
+            ]})
+          ];
+        } else {
+          result.embeds = [tableData.toRollEmbed()];
+          result.components = [
+            new MessageActionRow({components: [
+              dismissMessageButton,
+              tableRollButton(tableName, "Roll again"),
+            ]})
+          ];
+        }
+        await interaction.reply(result);
         break;
       }
       default:

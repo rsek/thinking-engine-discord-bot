@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup} from "discordx";
-import RollUnder from "../../troika/classes/RollUnder.js";
+import RollUnder from "../../classes/RollUnder.js";
 
 @Discord()
 export default class RollUnderCommand {

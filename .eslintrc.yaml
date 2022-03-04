@@ -23,6 +23,8 @@ extends:
   # - plugin:lodash/recommended
   # - prettier
 rules:
+  prefer-rest-params:
+    - 0
   sort-class-members/sort-class-members:
     - 2
     - order:
@@ -52,3 +54,6 @@ rules:
     - 0
   lodash/prefer-constant:
     - 0
+  "@typescript-eslint/no-inferrable-types":
+    - 0
+    - error
