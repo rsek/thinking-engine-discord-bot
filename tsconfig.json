@@ -24,10 +24,12 @@
     "removeComments": true,
     "allowUnreachableCode": true,
     "noImplicitAny":true,
+    "strictNullChecks": true,
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "./src/**/*.d.ts"
     ],
-    "sourceMap": false,
+    "sourceMap": true,
     "baseUrl": "./"
   },
   "include": [

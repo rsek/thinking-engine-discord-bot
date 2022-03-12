@@ -1,48 +1,24 @@
-import { PathLike, readdirSync } from "fs";
-import IItem from "./interfaces/IItem.js";
-import ISpell from "./interfaces/ISpell.js";
-import IWeapon from "./interfaces/IWeapon.js";
-import YAML from "yamljs";
-import _ from "lodash";
-import Spell from "../classes/Spell.js";
-import Attack from "../classes/Attack.js";
-import Weapon from "../classes/Weapon.js";
-import ITable from "./interfaces/ITable.js";
-import Table from "../classes/Table.js";
+import spells from "./loadSpells.js";
+import tables from "./loadTables.js";
+import items from "./loadItems.js";
+import { RefType } from "../modules/parseComponent/WidgetType.js";
+import getDamageInfo from "./getDamageInfo.js";
+import { Collection } from "discord.js";
+import Skill from "../modules/PlayerCharacter/Skill.js";
+import DamageInfo from "../modules/DamageRoll/DamageInfo.js";
+import Item from "../modules/inventory/Item.js";
+import Spell from "../modules/items/Spell.js";
+import Table from "../modules/tables/Table.js";
+import Background from "./Background.js";
 
-const yamlRoot = "./dist/data/yaml/";
-
-// console.info(__dirname);
-
-// console.log(readdirSync(yamlRoot));
-
-function getYamlFiles(path: PathLike): PathLike[] {
-  return readdirSync(path).filter(file => file.match(/^.*\.y(a)?ml/)).map(file => `${path.toString()}${file}`) as PathLike[];
-}
-
-const spellData = getYamlFiles(yamlRoot+"spells/").map(file => YAML.load(file as string) as Record<string,ISpell>).reduce((obj1,obj2) => Object.assign(obj1, obj2));
-
-const weaponData = getYamlFiles(yamlRoot+"weapons/").map(file => YAML.load(file as string) as Record<string,IWeapon>).reduce((obj1,obj2) => Object.assign(obj1, obj2));
-
-const itemData =  getYamlFiles(yamlRoot+"items/").map(file => YAML.load(file as string) as Record<string,IItem>).reduce((obj1,obj2) => Object.assign(obj1, obj2));
-
-const tableData =  getYamlFiles(yamlRoot+"tables/").map(file => YAML.load(file as string) as Record<string,ITable>).reduce((obj1,obj2) => Object.assign(obj1, obj2));
-
-const gameData = {
-  spells: _.mapValues(spellData, (spell, spellName) => new Spell(spellName, spell)),
-  // backgrounds: YAML.load(yamlRoot+"backgrounds/core.yaml") as Record<string,object>,
-  weapons: _.mapValues(weaponData, (weapon, weaponName) => new Weapon(weaponName, weapon)),
-  items: itemData,
-  tables: _.mapValues(tableData, (table, tableName) => new Table(tableName, table)),
-  attacks: {} as Record<string,Attack>
+const GameData: Record<RefType, Collection<string, Spell | Table | Item | DamageInfo | Skill | Background>> = {
+  [RefType.Background]: new Collection<string, Background>(),
+  [RefType.DamageTable]: getDamageInfo(items, spells),
+  [RefType.Item]: items,
+  [RefType.Skill]: new Collection<string, Skill>(),
+  [RefType.Spell]: spells,
+  [RefType.Table]: tables,
 };
-let attackArr: Attack[] = [];
 
-_.forEach(gameData.weapons, weapon => attackArr = attackArr.concat(...weapon.Attacks));
-_.filter(gameData.spells, (spell) => Array.isArray(spell.Attacks) ? true : false).forEach(spell => attackArr = attackArr.concat(...spell.Attacks as Attack[]));
+export default GameData;
 
-attackArr.forEach(atk =>{ gameData.attacks[`${atk.Origin} (${atk.Type?.toLowerCase() ?? "unknown"})`] = atk; });
-
-// console.log(gameData.attacks);
-
-export default gameData;

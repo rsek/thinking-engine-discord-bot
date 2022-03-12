@@ -1,66 +1,51 @@
-import { AutocompleteInteraction, ButtonInteraction, CommandInteraction, InteractionReplyOptions, MessageActionRow, MessageButton } from "discord.js";
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import "reflect-metadata";
-import gameData from "../../data/gameData.js";
-import queryRecord from "../autocomplete/queryRecord.js";
-import revealMessageButton from "../components/revealMessageButton.js";
+import { AutocompleteInteraction, CommandInteraction, InteractionType, ApplicationCommandOptionType } from "discord.js";
+import { Discord, Slash, SlashOption } from "discordx";
+import GameData from "../../data/GameData.js";
+import { RefType } from "../../modules/parseComponent/WidgetType.js";
+import queryCollection from "../autocomplete/queryCollection.js";
+import ReferenceTask from "../tasks/ReferenceTask.js";
 
 @Discord()
 export default abstract class SpellCommand {
-  @Slash("spell", {description: "Display the text of a spell."})
-  async spell(
+  @Slash("spell", { description: "Display the text of a spell." })
+  static spell(
     @SlashOption( "spell-name",
       {
         description: "The spell to be displayed",
-        type: "STRING",
+        type: ApplicationCommandOptionType.String,
         autocomplete: true
       })
-      spellName: string,
+      id: string,
     @SlashOption("ephemeral",
       {
         description: "Whether to display as private ephemeral message, or to the entire channel",
         required: false,
-        type: "BOOLEAN"
+        type: ApplicationCommandOptionType.Boolean
       }
     )
       ephemeral = true,
     interaction: CommandInteraction|AutocompleteInteraction
-  ): Promise<void> {
+  ) {
     switch (interaction.type) {
-      case "APPLICATION_COMMAND_AUTOCOMPLETE": {
+      case InteractionType.ApplicationCommandAutocomplete: {
         interaction = interaction as AutocompleteInteraction;
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === "spell-name") {
           return interaction.respond(
-            queryRecord(focusedOption.value as string, gameData.spells)
+            queryCollection(focusedOption.value as string, GameData[RefType.Spell])
           );
         }
         break;
       }
-      case "APPLICATION_COMMAND": {
-        interaction = interaction as CommandInteraction;
-        const spellData = gameData.spells[spellName];
-        if (!spellData) {
-          await interaction.reply({
-            content:`Couldn't find a spell named ${spellName}.`,
-            ephemeral: true});
-          return;
-        }
-        const options: InteractionReplyOptions = {
-          embeds: spellData.toEmbeds(),
-          ephemeral
-        }
-        if (ephemeral)
-        {
-
-          options.components = [new MessageActionRow({components: [revealMessageButton]})];
-        }
-        await interaction.reply(options);
-        break;
+      case InteractionType.ApplicationCommand: {
+        return ReferenceTask.exec(interaction as CommandInteraction, {
+          ephemeral, id, type: RefType.Spell
+        });
       }
       default:
+        throw new Error("[SpellCommand] Received unexpected interaction.");
         break;
     }
   }
-
 }

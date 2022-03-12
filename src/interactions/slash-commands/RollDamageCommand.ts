@@ -1,79 +1,91 @@
-import { CommandInteraction, AutocompleteInteraction, ButtonInteraction } from "discord.js";
-import { ButtonComponent, Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
-import Attack from "../../classes/Attack.js";
-import RollDamage from "../../classes/RollDamage.js";
+import "reflect-metadata";
+import { CommandInteraction, AutocompleteInteraction, ApplicationCommandOptionType, InteractionType, Collection } from "discord.js";
+import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import Armour from "../../constants/Armour.js";
-import gameData from "../../data/gameData.js";
-import queryRecord from "../autocomplete/queryRecord.js";
+import queryCollection from "../autocomplete/queryCollection.js";
+import RollDamage from "../../modules/rolls/RollDamage.js";
+import { RefType } from "../../modules/parseComponent/WidgetType.js";
+import enumToRecord from "../../utils/enumToRecord.js";
+import GameData from "../../data/GameData.js";
+import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
 
 @Discord()
 export default abstract class RollDamageCommand {
-  @Slash("damage", {description: "Roll damage."})
+  @Slash("damage", { description: "Roll damage." })
   @SlashGroup("roll")
   async rollTable(
-    @SlashOption( "weapon",
+    @SlashOption("table",
       {
-        description: "The spell or weapon damage to use.",
-        type: "STRING",
+        description: "The damage table to use.",
+        type: ApplicationCommandOptionType.String,
         autocomplete: true
       })
-      attackId: string,
+      damageId: string,
+
     @SlashOption("shield", {
       description: "Whether the target has a shield or not.",
-      type: "BOOLEAN"
+      type: ApplicationCommandOptionType.Integer
     })
-      shield: boolean,
-    // this should just be a single SlashChoice with the enum piped in, but it's not cooperating for some reason
-    // @SlashChoice("Unarmoured", 0)
-    // @SlashChoice("Lightly armoured", 1)
-    // @SlashChoice("Modestly armoured", 2)
-    // @SlashChoice("Heavily armoured", 3)
+    @SlashChoice({ "No shield": 0, Shield: 1, })
+      shield: number,
+
     @SlashOption("armour", {
-      minValue: 0,
-      maxValue: 3,
       description: "The armour type of the target.",
-      type: "INTEGER",
     })
-      armour: number,
-    @SlashOption("bonus", {
-      description: "Any bonuses to the damage roll.",
-      type: "INTEGER"
+    // discord.ts claims this can be done with just the enum, but it apparently requires a standard object.
+    // if they fixed it, 'armour' can instead be passed directly
+    @SlashChoice(enumToRecord(Armour))
+      armour: Armour,
+
+    @SlashOption("modifier", {
+      description: "Any additional modifiers to the damage roll.",
+      type: ApplicationCommandOptionType.Integer,
+      required: false
     })
-      bonus: number,
-      interaction: CommandInteraction|AutocompleteInteraction
+      modifier: number = 0,
+
+    @SlashOption("description", {
+      description: "An optional text description.",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    })
+    description: string | undefined,
+
+    @SlashOption("mighty-blow", {
+      description: "Whether to calculate damage as a Mighty Blow.",
+      required: false,
+    })
+    isMightyBlow: boolean = false,
+
+    interaction: CommandInteraction|AutocompleteInteraction
   ): Promise<void> {
+    const collection = GameData[RefType.DamageTable] as Collection<string, DamageInfo>;
     switch (interaction.type) {
-      case "APPLICATION_COMMAND_AUTOCOMPLETE": {
+      case InteractionType.ApplicationCommandAutocomplete: {
         interaction = interaction as AutocompleteInteraction;
         const focusedOption = interaction.options.getFocused(true);
-        if (focusedOption.name === "weapon") {
+        if (focusedOption.name === "table") {
           return interaction.respond(
-            queryRecord(focusedOption.value as string, gameData.attacks)
+            queryCollection(focusedOption.value as string, collection)
           );
         }
         break;
       }
-      case "APPLICATION_COMMAND": {
+      case InteractionType.ApplicationCommand: {
         interaction = interaction as CommandInteraction;
-        const attack = gameData.attacks[attackId];
-        if (!attack) {
-          await interaction.reply({
-            content:`Couldn't find a weapon or spell for ${attackId}.`,
-            ephemeral: true});
-          return;
+        if (!collection.has(damageId)) {
+          return interaction.reply({
+            content: `Couldn't find a damage table for \`${damageId}\`.`,
+            ephemeral: true
+          });
         }
-        const roll = new RollDamage(attack, bonus, armour, shield);
-        await interaction.reply({
-          embeds: [roll.toEmbed()],
-        });
+        const damage = collection.get(damageId) as DamageInfo;
+        const roll = new RollDamage(damage, modifier, armour, shield, description, isMightyBlow);
+        return interaction.reply(roll.toMessage());
         break;
       }
       default:
         break;
     }
-  }
-  @ButtonComponent(/^show-damage:(.*)$/)
-  async showDamage(interaction: ButtonInteraction) {
-    await interaction.reply("NYI");
   }
 }

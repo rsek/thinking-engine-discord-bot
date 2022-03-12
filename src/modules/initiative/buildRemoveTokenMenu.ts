@@ -1,54 +1,49 @@
-import { MessageSelectMenu, MessageSelectOptionData } from "discord.js";
+import { SelectMenuComponent } from "discord.js";
 import _ from "lodash";
-import { incrementFieldId } from "../../functions/incrementField.js";
-import {paramSeparator } from "../../functions/parseBotAction.js";
-import { CurrentMaxHash, currentKeyName } from "./currentMax.js";
+import { NumericAttrHash, currentKeyName } from "../ux/NumericAttrHash.js";
 import { endOfRoundToken, isPlayerToken, pcTokenValue, henchmanToken, enemyToken } from "./initiativeTokens.js";
-import numberEmoji from "./numberEmoji.js";
+import numberEmoji from "../../constants/numberEmoji.js";
+import { getTaskMenuStub } from "../../interactions/components/TaskMenu.js";
+
+// TODO: figure out how i'm handling/IDing the menu
 
 export const removeTokenMenuId = "removeTokenMenu";
 
-export default function buildRemoveTokenMenu(tokens: CurrentMaxHash) {
-  const newMenu = new MessageSelectMenu()
-    .setCustomId(removeTokenMenuId)
-    .setPlaceholder("Remove tokens...")
-    .setMaxValues(1)
-    .setMinValues(1)
+export default function buildRemoveTokenMenu(tokens: NumericAttrHash) {
+  const menu = getTaskMenuStub(removeTokenMenuId)
+    .setPlaceholder("Discard tokens...")
   ;
-  const tokenOptions: MessageSelectOptionData[] = [];
-  _.forEach(tokens, (tokenValue, token) => {
-    if (tokenValue.current > 0 && token != endOfRoundToken) {
+  _.forEach(tokens, (token) => {
+    if (token.current > 0 && token.name !== endOfRoundToken) {
       switch (true) {
-        case isPlayerToken(token): {
-          tokenOptions.push({
-            default: false,
-            label: `Remove ${token} from initiative`,
-            value: `${incrementFieldId}:0${paramSeparator}-${pcTokenValue}${paramSeparator}${token}`,
-            emoji: "👤"
-          });
+        case isPlayerToken(token.name): {
+          menu.addOptions(
+            token
+              .toSelectMenuOption({ current: 0, max: -pcTokenValue })
+              .setLabel(`Remove ${token.name} from initiative`)
+              .setEmoji({ name: "👤" })
+          );
           break;
         }
-        case token == henchmanToken: {
-          tokenOptions.push({
-            default: false,
-            label: "Remove 1 henchman token",
-            value: `${incrementFieldId}:0${paramSeparator}-1${paramSeparator}${henchmanToken}`,
-            emoji: "👥"
-          });
+        case token.name === henchmanToken: {
+          menu.addOptions(
+            token
+              .toSelectMenuOption({ current: 0, max: -1 })
+              .setLabel("Remove 1 henchman token from initiative")
+              .setEmoji({ name: "👥" })
+          );
           break;
         }
-        case token == enemyToken: {
-          numberEmoji.slice(1,5).forEach((emoji,index) => {
+        case token.name === enemyToken: {
+          const enemyOptions = numberEmoji.slice(1,Math.min(6, token[currentKeyName])).map((emoji, index) => {
             const currentValue = index+1;
-            if (currentValue <= tokenValue[currentKeyName]) {
-              tokenOptions.push({
-                default: false,
-                label: `Remove ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"}`,
-                value: `${incrementFieldId}:0${paramSeparator}-${currentValue}${paramSeparator}${enemyToken}`,
-                emoji
-              });
-            }
+            return token
+              .toSelectMenuOption({ current: 0, max: -currentValue })
+              .setLabel(`Remove ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"} from the initiative`)
+              .setEmoji({ name: emoji as string })
+            ;
           });
+          menu.addOptions(...enemyOptions);
           break;
         }
         default:
@@ -56,6 +51,5 @@ export default function buildRemoveTokenMenu(tokens: CurrentMaxHash) {
       }
     }
   });
-  newMenu.addOptions(...tokenOptions);
-  return newMenu;
+  return menu;
 }

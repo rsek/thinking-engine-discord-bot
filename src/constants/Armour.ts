@@ -1,5 +1,7 @@
+import _ from "lodash";
+
 enum Armour {
-  Unarmoured = 0,
+  "Unarmoured" = 0,
   "Lightly armoured" = 1,
   "Modestly armoured" = 2,
   "Heavily armoured" = 3

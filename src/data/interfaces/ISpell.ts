@@ -1,7 +1,8 @@
-import IAttack from "./IAttack.js";
+import IDamageInfo from "./IDamageInfo.js";
+import IItem from "./IItem.js";
 
-export default interface ISpell {
-  "Casting cost"?: string | number | undefined;
+export default interface ISpell extends IItem {
   Description: string;
-  Attacks?: IAttack[] | undefined;
+  "Casting cost"?: string | number | undefined;
+  Attacks?: IDamageInfo[] | undefined;
 }

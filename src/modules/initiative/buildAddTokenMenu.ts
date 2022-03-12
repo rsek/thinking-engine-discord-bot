@@ -1,39 +1,41 @@
-import { MessageSelectMenu, MessageSelectOptionData } from "discord.js";
-import { incrementFieldId } from "../../functions/incrementField.js";
-import { paramSeparator } from "../../functions/parseBotAction.js";
-import { currentKeyName } from "./currentMax.js";
-import { enemyToken, henchmanToken } from "./initiativeTokens.js";
-import numberEmoji from "./numberEmoji.js";
+import { enemyToken, henchmanToken, pcTokenValue } from "./initiativeTokens.js";
+import numberEmoji from "../../constants/numberEmoji.js";
+import { SelectMenuOption } from "discord.js";
+import NumericAttribute from "../attributes/NumericAttribute.js";
+import { getTaskMenuStub } from "../../interactions/components/TaskMenu.js";
+import { BotTask } from "../parseComponent/BotTask.js";
+import { packPartialParams } from "../parseComponent/packParams.js";
 
 export const addTokenMenuId = "addTokenMenu";
 
 export default function buildAddTokenMenu() {
-  const removeTokenMenu = new MessageSelectMenu()
-    .setCustomId(addTokenMenuId)
-    .setPlaceholder("Add tokens...")
-    .setMaxValues(1)
-    .setMinValues(1)
-  ;
-  const tokenOptions: MessageSelectOptionData[] = [
-    {
-      default: false,
-      label: "Add 1 henchman token",
-      value: `${incrementFieldId}:1${paramSeparator}1${paramSeparator}${henchmanToken}`,
-      emoji: "👥"
-    }
-  ];
+  const menu = getTaskMenuStub(addTokenMenuId)
+    .setPlaceholder("Add tokens...");
 
-  numberEmoji.slice(1,5).forEach((emoji,index) => {
+  // TODO: if EditAttribute isn't provided with an ID, it should prompt the user for one
+  menu.addOptions(
+    new SelectMenuOption()
+      .setLabel("Add player character...")
+      .setEmoji({ name: "👤" })
+      .setValue(packPartialParams(BotTask.EditAttribute, { current: pcTokenValue, max: pcTokenValue }) )
+  );
+  menu.addOptions(
+    new NumericAttribute(henchmanToken, 1)
+      .toSelectMenuOption({ current: 1, max: 1 })
+      .setLabel("Add 1 henchman token")
+      .setEmoji({ name: "👥" })
+  );
+  numberEmoji.slice(1,6).forEach((emoji, index) => {
     const currentValue = index+1;
-    tokenOptions.push({
-      default: false,
-      label: `Add ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"}`,
-      // NB: adds one to both max and current to replicate drawing/stacking behaviour. in other words: the number of *drawn* tokens remains the same, but the *total* tokens changes.
-      value: `${incrementFieldId}:${currentValue}${paramSeparator}${currentValue}${paramSeparator}${enemyToken}`,
-      emoji
-    });
-
+    menu.addOptions(
+      new NumericAttribute(enemyToken, currentValue)
+        .toSelectMenuOption({
+          current: currentValue,
+          max: currentValue
+        })
+        .setLabel(`Add ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"}`)
+        .setEmoji({ name: emoji as string })
+    );
   });
-  removeTokenMenu.addOptions(...tokenOptions);
-  return removeTokenMenu;
+  return menu;
 }
