@@ -12,7 +12,7 @@
   "scripts": {
     "flush": "rm -R ./dist",
     "build": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
-    "heroku-postbuild": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
+    "heroku-postbuild": "echo Skip builds on Heroku",
     "heroku-cleanup": "patch-package",
     "postinstall": "patch-package",
     "start": "yarn run flush && yarn run build && node ."
