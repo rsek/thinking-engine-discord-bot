@@ -4,6 +4,11 @@
   "description": "",
   "main": "./dist/main.js",
   "type": "module",
+  "engines": {
+    "node": "17.x",
+    "npm": "8.x",
+    "yarn": "1.22"
+  },
   "scripts": {
     "flush": "rm -R ./dist",
     "build": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
