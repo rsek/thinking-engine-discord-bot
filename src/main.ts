@@ -3,16 +3,19 @@ import "source-map-support/register.js";
 import type { ArgsOf } from "discordx";
 import {  Client, Discord, On, Once } from "discordx";
 import { dirname, importx } from "@discordx/importer";
-import { readFileSync } from "fs";
+import dotenv from "dotenv";
+
+dotenv.config();
+console.log(process.env);
 
 console.log("Bot is starting...");
 
-type configType = {clientId: string, guildIds: string[], token: string };
-const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8")) as configType;
+// type configType = {clientId: string, guildIds: string[], token: string };
+// const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8")) as configType;
 
 export const client = new Client({
-  botId: config.clientId,
-  botGuilds: config.guildIds ?? undefined,
+  botId: process.env.CLIENT_ID,
+  botGuilds: process.env.GUILDS?.split(",") ?? undefined,
   intents: [
     "Guilds",
     "GuildMessages",
@@ -62,10 +65,10 @@ async function run() {
 
   const commands = await client.CommandByGuild();
 
-  if (!config.token) {
-    throw Error("No config.token found!");
-  }
-  await client.login(config.token);
+  // if (!process.env.DISCORD_TOKEN) {
+  //   throw Error("No config.token found!");
+  // }
+  await client.login(process.env.DISCORD_TOKEN as string);
 }
 
 await run();
