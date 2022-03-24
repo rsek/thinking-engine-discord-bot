@@ -3,7 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node12",
@@ -23,7 +23,7 @@
     "resolveJsonModule": true,
     "removeComments": true,
     "allowUnreachableCode": true,
-    "noImplicitAny":true,
+    "noImplicitAny": true,
     "strictNullChecks": true,
     "typeRoots": [
       "node_modules/@types",
@@ -35,8 +35,9 @@
   "include": [
     "./**/*.ts",
     "./**/*.yaml",
-    "src/**/*.json"
-, "src/interactions/missChanceByActionRoll.js"  ],
+    "src/**/*.json",
+    "src/interactions/missChanceByActionRoll.js"
+  ],
   "exclude": [
     "node_modules",
     "dist"
