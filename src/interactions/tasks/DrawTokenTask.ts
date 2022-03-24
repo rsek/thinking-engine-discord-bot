@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ButtonBuilder, ButtonStyle, Embed, EmbedBuilder, MessageComponentInteraction } from "discord.js";
+import { ButtonBuilder, ButtonStyle, EmbedBuilder, MessageComponentInteraction } from "discord.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { TokenStackAction } from "../../modules/parseComponent/ITaskParams.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
