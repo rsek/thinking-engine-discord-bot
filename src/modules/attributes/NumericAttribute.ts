@@ -1,5 +1,5 @@
 import { APIEmbed } from "discord-api-types/v9";
-import { ButtonComponent, Embed, EmbedField, EmbedFieldData, SelectMenuOption } from "discord.js";
+import { ButtonBuilder, Embed, EmbedField, EmbedFieldData, SelectMenuOptionBuilder } from "discord.js";
 import PartialBy from "../../types/PartialBy.js";
 import WithRequired from "../../types/WithRequired.js";
 import { BotTask } from "../parseComponent/BotTask.js";
@@ -9,10 +9,10 @@ import { packParams } from "../parseComponent/packParams.js";
 import { currentKeyName, maxKeyName, NumericAttrPattern, NumericAttrSeparator } from "../ux/NumericAttrHash.js";
 import Attribute from "./Attribute.js";
 import INumericAttribute from "./INumericAttribute.js";
-import { IRendersButtonComponent, IRendersSelectMenuOption } from "./IRenders.js";
+import { IRendersButton, IRendersSelectMenuOption } from "./IRenders.js";
 
-export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButtonComponent, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
-  static incrementByName(embed: Embed | APIEmbed, {
+export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
+  static incrementByName(embed: APIEmbed, {
     id,  current = 1, max = 0, add = true
   }: WithRequired<IEditAttrTaskParams, "id">) {
     if (embed.fields) {
@@ -72,14 +72,14 @@ export default class NumericAttribute extends Attribute implements INumericAttri
     params.id = this.name;
     return packParams(BotTask.EditAttribute, params as IEditAttrTaskParams);
   }
-  toButtonComponent(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
+  toButton(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     const customId = this.getTaskString(params);
-    return new ButtonComponent()
+    return new ButtonBuilder()
       .setCustomId(customId);
   }
-  toSelectMenuOption(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }): SelectMenuOption {
+  toSelectMenuOption(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }): SelectMenuOptionBuilder {
     const value = this.getTaskString(params);
-    const selectMenuOption = new SelectMenuOption()
+    const selectMenuOption = new SelectMenuOptionBuilder()
       .setDefault(false)
       .setValue(value);
     return selectMenuOption;

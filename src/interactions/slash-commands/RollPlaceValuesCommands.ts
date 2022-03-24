@@ -2,9 +2,13 @@ import "reflect-metadata";
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import RollPlaceValuesTask from "../tasks/RollPlaceValuesTask.js";
+import { fileURLToPath } from "url";
+
+console.info("initializing", fileURLToPath(import.meta.url));
+
 
 @Discord()
-export default abstract class RollPlaceValuesCommands {
+export abstract class RollPlaceValuesCommands {
   @Slash("d36", {
     description: "Roll a d36 (1d3×10 + 1d6). For standard dice, use '/roll dice' instead."
   })

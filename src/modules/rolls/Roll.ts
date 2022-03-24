@@ -1,4 +1,4 @@
-import { EmbedField, Embed, InteractionReplyOptions, Widget } from "discord.js";
+import { EmbedField, InteractionReplyOptions } from "discord.js";
 import _ from "lodash-es";
 import { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../attributes/IRenders.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
@@ -153,7 +153,7 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
     return this.total;
   }
 
-  toEmbed(): Embed {
+  toEmbed() {
     const embed = buildWidgetStub(
       WidgetType.DiceRoll,
       this.toDiceExpression()

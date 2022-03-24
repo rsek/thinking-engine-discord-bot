@@ -1,11 +1,11 @@
 import "reflect-metadata";
-import { SelectMenuInteraction,SelectMenuComponent } from "discord.js";
-import { Discord, SelectMenu } from "discordx";
+import { SelectMenuInteraction } from "discord.js";
+import { Discord, SelectMenuComponent } from "discordx";
 import _ from "lodash";
 import { routeTask } from "../../modules/parseComponent/BotTask.js";
 import { unpackParams } from "../../modules/parseComponent/packParams.js";
 
-const taskMenuIdPrefix = "taskMenu";
+export const taskMenuIdPrefix = "taskMenu";
 console.log("starting TaskMenu");
 /**
  * Handler for task menus: menus where a single option is selected to perform a task.
@@ -15,8 +15,8 @@ console.log("starting TaskMenu");
  * @class TaskMenu
  */
 @Discord()
-export default abstract class TaskMenu {
-  @SelectMenu(new RegExp(`^${taskMenuIdPrefix}.*$`))
+export abstract class TaskMenu {
+  @SelectMenuComponent(new RegExp(`^${taskMenuIdPrefix}.*$`))
   async taskMenu(interaction: SelectMenuInteraction) {
     const value = interaction.values[0];
     const params = unpackParams(value);
@@ -25,10 +25,3 @@ export default abstract class TaskMenu {
   }
 }
 
-export function getTaskMenuStub(idSuffix: string) {
-  return new SelectMenuComponent()
-    .setCustomId(`${taskMenuIdPrefix}.${idSuffix}`)
-    .setMaxValues(1)
-    .setMinValues(1)
-  ;
-}

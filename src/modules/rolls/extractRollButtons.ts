@@ -1,5 +1,4 @@
-import { ButtonComponent, ButtonStyle } from "discord.js";
-import { Button } from "discordx";
+import { ButtonBuilder, ButtonStyle } from "discord.js";
 import _ from "lodash-es";
 import { BotTask } from "../parseComponent/BotTask.js";
 import { packParams } from "../parseComponent/packParams.js";
@@ -10,15 +9,15 @@ import toDiceExpression from "./toDiceExpression.js";
  *
  * @export
  * @param {string} text
- * @return {*}  {ButtonComponent[]}
+ * @return {*}  {ButtonBuilder[]}
  */
-export default function extractRollButtons(text: string): ButtonComponent[] {
+export default function extractRollButtons(text: string): ButtonBuilder[] {
   const captures = dicePattern.captureAll(text);
   const buttons = captures.map(capture => {
     const numberCapture = _.mapValues(capture, (value) => Number(value));
     const dice = toDiceExpression(numberCapture);
     const customId = packParams(BotTask.RollDice, { dice });
-    const button = new ButtonComponent()
+    const button = new ButtonBuilder()
       .setCustomId(customId)
       .setStyle(ButtonStyle.Primary)
       .setLabel(`Roll ${dice}`)

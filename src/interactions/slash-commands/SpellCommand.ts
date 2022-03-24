@@ -5,11 +5,14 @@ import GameData from "../../data/GameData.js";
 import { RefType } from "../../modules/parseComponent/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
+import { fileURLToPath } from "url";
+
+console.info("initializing", fileURLToPath(import.meta.url));
 
 @Discord()
-export default abstract class SpellCommand {
+export abstract class SpellCommand {
   @Slash("spell", { description: "Display the text of a spell." })
-  static spell(
+  async spell(
     @SlashOption( "spell-name",
       {
         description: "The spell to be displayed",

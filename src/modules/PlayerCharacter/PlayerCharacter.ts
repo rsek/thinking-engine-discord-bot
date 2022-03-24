@@ -46,7 +46,7 @@ export default class PlayerCharacter implements IRendersEmbed {
     this.Luck = new NumericAttribute("Luck", luck);
     // this.Possessions = baselinePossessions;
   }
-  toEmbed(): Embed {
+  toEmbed() {
     const embed = buildWidgetStub(WidgetType.PlayerCharacter, this.Name);
     return embed;
   }

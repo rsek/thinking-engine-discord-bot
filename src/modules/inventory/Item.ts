@@ -1,6 +1,6 @@
-import { ButtonComponent, InteractionReplyOptions } from "discord.js";
+import { ButtonBuilder, InteractionReplyOptions } from "discord.js";
 import IItem from "../../data/interfaces/IItem.js";
-import { IRendersButtonComponent, IRendersMessage } from "../attributes/IRenders.js";
+import { IRendersButton, IRendersMessage } from "../attributes/IRenders.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
 import GameObject from "./GameObject.js";
@@ -9,7 +9,7 @@ import DamageInfo from "../DamageRoll/DamageInfo.js";
 
 // might be fun to experiment with *light* nlp hre, for pluralizing items
 
-export default class Item extends GameObject implements IItem, IRendersButtonComponent, IRendersMessage {
+export default class Item extends GameObject implements IItem, IRendersButton, IRendersMessage {
   readonly Type: RefType.Item = RefType.Item;
   Name: string;
   Charges?: number | undefined;
@@ -46,7 +46,9 @@ export default class Item extends GameObject implements IItem, IRendersButtonCom
     }
     if (this.Hands && this.Hands > 1) {
       embed.addFields({
-        name: "Hands", value: this.Hands.toString(), inline: true
+        name: "Hands",
+        value: this.Hands.toString(),
+        inline: true
       });
     }
     return embed;
@@ -60,7 +62,7 @@ export default class Item extends GameObject implements IItem, IRendersButtonCom
     }
     return message;
   }
-  toButtonComponent(ephemeral: boolean): ButtonComponent {
+  toButton(ephemeral: boolean): ButtonBuilder {
     return ReferenceTask.createButton(this, ephemeral);
   }
   // TODO toString

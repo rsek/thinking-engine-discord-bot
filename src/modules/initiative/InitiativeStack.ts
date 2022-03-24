@@ -1,4 +1,4 @@
-import { ActionRow, ButtonComponent, Embed, SelectMenuComponent } from "discord.js";
+import { ButtonBuilder } from "discord.js";
 import _ from "lodash";
 import weighted from "weighted";
 import buildAddTokenMenu from "./buildAddTokenMenu.js";
@@ -6,7 +6,7 @@ import buildRemoveTokenMenu from "./buildRemoveTokenMenu.js";
 import { NumericAttrHash, fieldsToNumericAttrHash, NumericAttrFieldData, numericAttrHashToFields, maxKeyName, currentKeyName } from "../ux/NumericAttrHash.js";
 import { roundPattern, turnPattern, roundPrefix, turnPrefix } from "./InitiativeDisplay.js";
 import { endOfRoundToken, enemyToken, henchmanToken, tokenFactionsLeft } from "./initiativeTokens.js";
-import { IRendersButtonComponent, IRendersEmbed, IRendersMessage, IRendersSelectMenuComponent } from "../attributes/IRenders.js";
+import { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../attributes/IRenders.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import buildReturnTokenMenu from "./buildReturnTokenMenu.js";
 import WithRequired from "../../types/WithRequired.js";
@@ -16,6 +16,7 @@ import { WidgetType } from "../parseComponent/WidgetType.js";
 import splitCamelCase from "../text/splitCamelCase.js";
 import buildWidgetStub from "../rolls/buildEmbedStub.js";
 import { APIEmbed } from "discord-api-types/v10";
+import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from "@discordjs/builders";
 
 enum TokenMenuType {
   Remove,
@@ -23,10 +24,9 @@ enum TokenMenuType {
   Return
 }
 
-export default class InitiativeStack implements IRendersMessage, IRendersEmbed, IRendersButtonComponent, IRendersSelectMenuComponent {
-  static fromEmbed(embed: Embed | APIEmbed, resetTokens: boolean = false) {
+export default class InitiativeStack implements IRendersMessage, IRendersEmbed, IRendersButton, IRendersSelectMenu {
+  static fromEmbed(embed: APIEmbed, resetTokens: boolean = false) {
     // TODO: more robust typeguarding
-
     const title = embed.title ?? "";
     let round;
     let turn;
@@ -111,8 +111,8 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     }
     return { token, stack: this };
   }
-  toSelectMenuComponent(type: TokenMenuType): SelectMenuComponent {
-    const menu = new SelectMenuComponent();
+  toSelectMenu(type: TokenMenuType): SelectMenuBuilder {
+    const menu = new SelectMenuBuilder();
     switch (type) {
       case TokenMenuType.Remove:
         return buildRemoveTokenMenu(this.tokens);
@@ -128,14 +128,14 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     }
     return menu;
   }
-  toButtonComponent(): ButtonComponent {
+  toButton(): ButtonBuilder {
     const button = DrawTokenTask.createButton();
     if (tokenFactionsLeft(this.tokens) < 2) {
       button.setDisabled(true);
     }
     return button;
   }
-  toEmbed(): Embed {
+  toEmbed(): EmbedBuilder {
     const embedTypeString = splitCamelCase(WidgetType[WidgetType.InitiativeStack]);
     const embedDescription = `${_.sum(Object.values(this.tokens).map(item => item[currentKeyName]))} tokens remain in the stack.`;
     const embedFooter = `${roundPrefix}${this.round.toString()}, ${turnPrefix}${this.turn.toString()}`;
@@ -154,12 +154,12 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
         this.toEmbed()
       ],
       components: [
-        new ActionRow()
-          .addComponents(this.toSelectMenuComponent(TokenMenuType.Add)),
-        new ActionRow()
-          .addComponents(this.toSelectMenuComponent(TokenMenuType.Remove)),
-        new ActionRow()
-          .addComponents(this.toButtonComponent())
+        new ActionRowBuilder<SelectMenuBuilder>()
+          .addComponents(this.toSelectMenu(TokenMenuType.Add)),
+        new ActionRowBuilder<SelectMenuBuilder>()
+          .addComponents(this.toSelectMenu(TokenMenuType.Remove)),
+        new ActionRowBuilder<ButtonBuilder>()
+          .addComponents(this.toButton())
       ]
     };
     return message as WithRequired<WidgetOptions, "embeds"|"components">;

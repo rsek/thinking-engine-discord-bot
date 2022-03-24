@@ -1,5 +1,9 @@
-import { EmbedField, Embed } from "discord.js";
+import { EmbedField, EmbedBuilder } from "discord.js";
 import _ from "lodash";
+import { IRendersEmbed } from "../attributes/IRenders.js";
+import { WidgetType } from "../parseComponent/WidgetType.js";
+import splitCamelCase from "../text/splitCamelCase.js";
+import buildWidgetStub from "./buildEmbedStub.js";
 import OpponentRoll from "./OpponentRoll.js";
 
 export interface IRollVersus {
@@ -8,13 +12,13 @@ export interface IRollVersus {
   getWinner: () => OpponentRoll | null | undefined;
   isTied: () => boolean;
   toResultField: () => EmbedField;
-  toEmbed: () => Embed;
 }
 
-export default class RollVersus implements IRollVersus {
+export default class RollVersus implements IRollVersus, IRendersEmbed {
   opponents: Record<string, OpponentRoll> = {};
   description?: string | undefined;
-  constructor(opponent1bonus: number, opponent2bonus: number, opponent1name="Player", opponent2name = "Opponent", description?: string) {
+  title: string;
+  constructor(opponent1bonus: number, opponent2bonus: number, opponent1name="Player", opponent2name = "Opponent", description?: string, title?: string) {
     if (opponent1name === opponent2name) {
       opponent1name += " 1";
       opponent2name += " 2";
@@ -23,11 +27,7 @@ export default class RollVersus implements IRollVersus {
     this.opponents[opponent2name] = new OpponentRoll(opponent2name, opponent2bonus);
 
     this.description = description;
-    this.getWinner = this.getWinner.bind(this);
-    this.isTied = this.isTied.bind(this);
-    this.toResultField = this.toResultField.bind(this);
-    this.toEmbed = this.toEmbed.bind(this);
-    this.valueOf = this.valueOf.bind(this);
+    this.title = title ?? Object.keys(this.opponents).join(" vs. ");
   }
   getWinner() {
     if (this.isTied() === true) {
@@ -54,8 +54,10 @@ export default class RollVersus implements IRollVersus {
     return field;
   }
   toEmbed() {
-    const embed = new Embed()
-      .setTitle("Roll Versus")
+    const embed = buildWidgetStub(
+      WidgetType.RollVersus,
+      this.title
+    )
       .addFields(
         ..._.map(this.opponents, (opponent) => opponent.toField()),
         this.toResultField()

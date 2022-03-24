@@ -1,4 +1,3 @@
-import { EmbedField, Embed } from "discord.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 import buildWidgetStub from "./buildEmbedStub.js";
 import Roll from "./Roll.js";
@@ -47,7 +46,6 @@ export default class RollUnder extends Roll {
   // }
   toEmbed() {
     const embed =
-    // new Embed()
       buildWidgetStub(WidgetType.RollUnder, RollUnderOutcome[this.outcome], this.target.toString())
         .addFields(
           this.toResultField(),

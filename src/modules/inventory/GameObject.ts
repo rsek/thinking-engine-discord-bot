@@ -27,7 +27,7 @@ export default abstract class GameObject implements IRendersEmbed, IRendersMessa
    * @param embedSubtype An optional subtype string to be appended to the widget type.
    * @returns An embed stub.
    */
-  toEmbed(embedSubtype?: string | undefined): Embed {
+  toEmbed(embedSubtype?: string | undefined) {
     const embed = buildWidgetStub(WidgetType[WidgetType[this.Type] as keyof typeof WidgetType], this.Name ?? this.$id, embedSubtype)
       .setDescription(this.Description ?? null)
     ;

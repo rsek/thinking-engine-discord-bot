@@ -3,6 +3,9 @@ import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import RollDiceTask from "../tasks/RollDiceTask.js";
 import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
+import { fileURLToPath } from "url";
+
+console.info("initializing", fileURLToPath(import.meta.url));
 
 @Discord()
 export abstract class RollDiceCommand {

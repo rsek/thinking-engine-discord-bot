@@ -1,5 +1,5 @@
-import { EmbedField, ButtonComponent, Embed, SelectMenuOption, SelectMenuComponent } from "discord.js";
-import WithRequired from "../../types/WithRequired.js";
+import { SelectMenuBuilder } from "@discordjs/builders";
+import { EmbedField, ButtonBuilder, EmbedBuilder, SelectMenuOptionBuilder } from "discord.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 
 export interface IRendersEmbedField {
@@ -9,7 +9,7 @@ export interface IRendersEmbedField {
 }
 
 export interface IRendersEmbed {
-  toEmbed(...args: any[]): Embed;
+  toEmbed(...args: any[]): EmbedBuilder;
   // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "embeds"> | never;
 }
 
@@ -18,16 +18,16 @@ export interface IRendersMessage {
 }
 
 export interface IRendersSelectMenuOption {
-  toSelectMenuOption(...args: any[]): SelectMenuOption;
+  toSelectMenuOption(...args: any[]): SelectMenuOptionBuilder;
   // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "components"> | never;
 }
 
-export interface IRendersSelectMenuComponent {
-  toSelectMenuComponent(...args: any[]): SelectMenuComponent;
+export interface IRendersSelectMenu {
+  toSelectMenu(...args: any[]): SelectMenuBuilder;
   // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "components"> | never;
 }
 
-export interface IRendersButtonComponent {
-  toButtonComponent(...args: any[]): ButtonComponent;
+export interface IRendersButton {
+  toButton(...args: any[]): ButtonBuilder;
   // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "components"> | never;
 }

@@ -1,10 +1,10 @@
 import { enemyToken, henchmanToken, pcTokenValue } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import { SelectMenuOption } from "discord.js";
+import { SelectMenuOptionBuilder } from "discord.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
-import { getTaskMenuStub } from "../../interactions/components/TaskMenu.js";
 import { BotTask } from "../parseComponent/BotTask.js";
 import { packPartialParams } from "../parseComponent/packParams.js";
+import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
 
 export const addTokenMenuId = "addTokenMenu";
 
@@ -14,7 +14,7 @@ export default function buildAddTokenMenu() {
 
   // TODO: if EditAttribute isn't provided with an ID, it should prompt the user for one
   menu.addOptions(
-    new SelectMenuOption()
+    new SelectMenuOptionBuilder()
       .setLabel("Add player character...")
       .setEmoji({ name: "👤" })
       .setValue(packPartialParams(BotTask.EditAttribute, { current: pcTokenValue, max: pcTokenValue }) )

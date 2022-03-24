@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ButtonComponent, ButtonStyle, Embed, MessageComponentInteraction } from "discord.js";
+import { ButtonBuilder, ButtonStyle, Embed, EmbedBuilder, MessageComponentInteraction } from "discord.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { TokenStackAction } from "../../modules/parseComponent/ITaskParams.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
@@ -9,6 +9,7 @@ import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
 import { endOfRoundToken, enemyToken } from "../../modules/initiative/initiativeTokens.js";
 import { WidgetType } from "../../modules/parseComponent/WidgetType.js";
 import ColorTheme from "../../constants/ColorTheme.js";
+import { APIEmbed } from "discord-api-types/v10";
 
 
 export default abstract class DrawTokenTask {
@@ -16,7 +17,7 @@ export default abstract class DrawTokenTask {
     return packParams(BotTask.InitiativeToken, { action: TokenStackAction.Draw });
   }
   static createButton() {
-    const button = new ButtonComponent()
+    const button = new ButtonBuilder()
       .setCustomId(DrawTokenTask.taskParams)
       .setLabel("Draw token")
       .setStyle(ButtonStyle.Primary)
@@ -26,7 +27,7 @@ export default abstract class DrawTokenTask {
   // TODO: move to router, pass interaction + params there instead? or leave as is? hmm
   // @Button(taskParams)
   static drawTokenAlertEmbed(token: string, turn: number, round: number) {
-    const embed = new Embed()
+    const embed = new EmbedBuilder()
       .setAuthor({ name: "Initiative Token" })
       ;
     if (token === endOfRoundToken) {
@@ -58,7 +59,7 @@ export default abstract class DrawTokenTask {
     return embed;
   }
   static async drawToken(interaction: MessageComponentInteraction) {
-    const embeds = interaction.message.embeds as Embed[];
+    const embeds = interaction.message.embeds as APIEmbed[];
     const embed = firstEmbedOfType(WidgetType.InitiativeStack, embeds);
     if (!embed) {
       await interaction.reply(userErrorMessage());
@@ -67,7 +68,11 @@ export default abstract class DrawTokenTask {
       const token = draw.token;
       const stack = draw.stack;
       const embeds = [DrawTokenTask.drawTokenAlertEmbed(token, stack.turn, stack.round)];
-      const message = stack.toMessage();
+      const widget = stack.toMessage();
+      const message = {
+        embeds: widget.embeds.map(embed => embed.toJSON()),
+        components: widget.components.map(components => components.toJSON())
+      };
       await interaction.update(message);
       await interaction.followUp({ embeds });
     }

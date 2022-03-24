@@ -1,16 +1,15 @@
-import { ActionRow, ButtonComponent, ButtonStyle, CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
 import GameData from "../../data/GameData.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
 import { IRefTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";
 import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
 import Table from "../../modules/tables/Table.js";
-import GameObject from "../../modules/inventory/GameObject.js";
 import Spell from "../../modules/items/Spell.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
 import Item from "../../modules/inventory/Item.js";
-import ManageMessageTask from "./ManageMessageTask.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
+import ManageMessageTask from "./ManageMessageTask.js";
 
 interface IReferenceable {
   $id: string,
@@ -24,7 +23,7 @@ export default abstract class ReferenceTask {
     const params: IRefTaskParams = {
       id: target.$id, type: target.Type, ephemeral
     };
-    return new ButtonComponent()
+    return new ButtonBuilder()
       .setCustomId(packParams(BotTask.Reference, params))
       .setLabel(toSentenceCase(target.Name ?? target.name ?? target.$id))
       .setEmoji({ name: "ℹ️" })
@@ -67,9 +66,11 @@ export default abstract class ReferenceTask {
         message.components = [];
       }
       if (params.ephemeral) {
-        message.components.push(new ActionRow().addComponents(ManageMessageTask.createButton(ManageMessageAction.Reveal)));
+        message.components.push(
+          new ActionRowBuilder<ButtonBuilder>().addComponents(ManageMessageTask.createButton(ManageMessageAction.Reveal)
+          ));
       } else {
-        message.components.push(new ActionRow().addComponents(ManageMessageTask.createButton(ManageMessageAction.Delete)));
+        message.components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(ManageMessageTask.createButton(ManageMessageAction.Delete)));
       }
       await interaction.reply(message);
     }

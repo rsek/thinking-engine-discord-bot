@@ -3,7 +3,7 @@ import _ from "lodash";
 import { NumericAttrHash, currentKeyName, maxKeyName } from "../ux/NumericAttrHash.js";
 import { endOfRoundToken, isPlayerToken, henchmanToken, enemyToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import { getTaskMenuStub } from "../../interactions/components/TaskMenu.js";
+import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
 
 export const returnTokenMenuId = "returnTokenMenu";
 /**

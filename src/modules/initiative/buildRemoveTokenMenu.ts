@@ -1,14 +1,19 @@
-import { SelectMenuComponent } from "discord.js";
 import _ from "lodash";
 import { NumericAttrHash, currentKeyName } from "../ux/NumericAttrHash.js";
 import { endOfRoundToken, isPlayerToken, pcTokenValue, henchmanToken, enemyToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import { getTaskMenuStub } from "../../interactions/components/TaskMenu.js";
+import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
 
 // TODO: figure out how i'm handling/IDing the menu
 
 export const removeTokenMenuId = "removeTokenMenu";
 
+
+/**
+ * Generates a token removal menu from a set of tokens
+ * @param tokens The tokens to include on the menu.
+ * @returns A select menu builder.
+ */
 export default function buildRemoveTokenMenu(tokens: NumericAttrHash) {
   const menu = getTaskMenuStub(removeTokenMenuId)
     .setPlaceholder("Discard tokens...")

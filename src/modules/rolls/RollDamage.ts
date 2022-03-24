@@ -1,6 +1,5 @@
-import { EmbedField, Embed, InteractionReplyOptions, ActionRow } from "discord.js";
+import { EmbedField, InteractionReplyOptions, ActionRowBuilder, ButtonBuilder } from "discord.js";
 import _ from "lodash";
-import { titleCase } from "title-case";
 import Armour from "../../constants/Armour.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import DamageInfo from "../DamageRoll/DamageInfo.js";
@@ -107,7 +106,7 @@ export default class RollDamage extends Roll {
     }
     return string;
   }
-  toEmbed(): Embed {
+  toEmbed() {
     const footerText: string[] = [];
     const embed = buildWidgetStub(WidgetType.DamageRoll, this.attack.Name, this.attack["Attack type"]);
     if (this.modifier > 0) {
@@ -148,7 +147,7 @@ export default class RollDamage extends Roll {
     return {
       embeds: [this.toEmbed()],
       components: [
-        new ActionRow().addComponents(ReferenceTask.createButton(this.attack.Source, true) )
+        new ActionRowBuilder<ButtonBuilder>().addComponents(ReferenceTask.createButton(this.attack.Source, true))
       ]
     };
   }

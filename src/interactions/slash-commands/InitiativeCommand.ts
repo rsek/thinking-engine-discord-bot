@@ -5,9 +5,12 @@ import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
 import _ from "lodash";
 import { enemyToken, henchmanToken } from "../../modules/initiative/initiativeTokens.js";
 import { pcTokenValue } from "../../modules/initiative/initiativeTokens.js";
+import { fileURLToPath } from "url";
+
+console.info("initializing", fileURLToPath(import.meta.url));
 
 @Discord()
-export default abstract class InitiativeCommand {
+export abstract class InitiativeCommand {
   @Slash("initiative", {
     description: "Create an interactive initiative token stack."
   })

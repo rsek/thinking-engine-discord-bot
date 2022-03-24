@@ -1,8 +1,7 @@
-import { ActionRow } from "@discordjs/builders";
-import { Modal, SelectMenuOption, TextInputComponent } from "discord.js";
+import { SelectMenuOptionBuilder } from "discord.js";
 
 export default function emptyInventorySlotMenuOption(slotNumber: number) {
-  return new SelectMenuOption()
+  return new SelectMenuOptionBuilder()
     .setLabel(`${slotNumber}. [Empty]`)
     .setDescription("Select this slot to add an item to it.")
     .setDefault(false)

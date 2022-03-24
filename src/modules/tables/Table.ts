@@ -1,4 +1,4 @@
-import { Embed, ActionRow, ButtonStyle, MessageActionRowComponent, Collection, InteractionReplyOptions } from "discord.js";
+import { ButtonStyle,  Collection, InteractionReplyOptions, EmbedBuilder, ButtonBuilder } from "discord.js";
 import _ from "lodash";
 import { TypedRegEx } from "typed-regex";
 import ITable from "../../data/interfaces/ITable.js";
@@ -12,6 +12,8 @@ import Roll from "../rolls/Roll.js";
 import ItemIn from "../../types/ItemIn.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { ManageMessageAction } from "../parseComponent/ITaskParams.js";
+import { ActionRowBuilder } from "@discordjs/builders";
+import buildWidgetStub from "../rolls/buildEmbedStub.js";
 
 export default class Table extends GameObject implements ITable {
   readonly Roll: DiceExpression;
@@ -55,12 +57,12 @@ export default class Table extends GameObject implements ITable {
     });
     if (embeds.length > 1) {
       embeds = embeds.map((embed) => {
-        const floor = TypedRegEx("` *(?<rowNumber>[0-9]+)`").captures(embed.description as string)?.rowNumber as string;
-        const ceiling = TypedRegEx("` *(?<rowNumber>[0-9]+)`.*$").captures(embed.description as string)?.rowNumber as string;
+        const floor = TypedRegEx("` *(?<rowNumber>[0-9]+)`").captures(embed.data.description as string)?.rowNumber as string;
+        const ceiling = TypedRegEx("` *(?<rowNumber>[0-9]+)`.*$").captures(embed.data.description as string)?.rowNumber as string;
         if (floor === ceiling) {
-          embed.setTitle(embed.title as string + ` (${ceiling})`);
+          embed.setTitle(embed.data.title as string + ` (${ceiling})`);
         } else {
-          embed.setTitle(embed.title as string + ` (${floor}-${ceiling})`);
+          embed.setTitle(embed.data.title as string + ` (${floor}-${ceiling})`);
         }
         return embed;
       });
@@ -75,12 +77,8 @@ export default class Table extends GameObject implements ITable {
     };
   }
   toRollEmbed() {
-    const embed = new Embed()
-      .setAuthor({ name: WidgetType[WidgetType.TableRoll] })
-      .setTitle(this.Name ?? this.$id)
-    ;
+    const embed = buildWidgetStub(WidgetType.TableRoll, this.Name ?? this.$id);
     const result = this.roll();
-
     embed.addFields({
       name: result.roll.toString(),
       value: result.row ?? "`Error: Unknown row!`"
@@ -97,7 +95,7 @@ export default class Table extends GameObject implements ITable {
       ephemeral,
       embeds: this.toPreviewEmbeds(),
       components: [
-        new ActionRow<MessageActionRowComponent>()
+        new ActionRowBuilder<ButtonBuilder>()
           .addComponents(
             ManageMessageTask.createButton(ManageMessageAction.Reveal),
             this.getRollButton()
@@ -110,7 +108,7 @@ export default class Table extends GameObject implements ITable {
       ephemeral,
       embeds: [this.toRollEmbed()],
       components: [
-        new ActionRow<MessageActionRowComponent>().addComponents(
+        new ActionRowBuilder<ButtonBuilder>().addComponents(
           ManageMessageTask.createButton(ManageMessageAction.Delete),
           this.getRollButton("Roll again").setStyle(ButtonStyle.Secondary),
         )

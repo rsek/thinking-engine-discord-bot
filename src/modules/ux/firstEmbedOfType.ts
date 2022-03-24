@@ -1,5 +1,4 @@
 import { APIEmbed } from "discord-api-types/v10";
-import { Embed } from "discord.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 
 /**
@@ -7,7 +6,7 @@ import { WidgetType } from "../parseComponent/WidgetType.js";
  * @param embed The embed to be parsed.
  * @returns The widget type. Throws an error if it's unable to parse.
  */
-export function parseEmbedType(embed: Embed|APIEmbed): WidgetType {
+export function parseEmbedType(embed: APIEmbed): WidgetType {
   if (!embed.author) {
     throw new Error("Embed has no author text.");
   }
@@ -24,8 +23,8 @@ export function parseEmbedType(embed: Embed|APIEmbed): WidgetType {
  * @param embeds The array of embeds to search
  * @returns An embed, if any.
  */
-export function firstEmbedOfType<T extends WidgetType, E extends (Embed | APIEmbed)>(widgetType: T, embeds: E[]): E | undefined {
-  const result: E | undefined = embeds.find(embed => parseEmbedType(embed) === widgetType);
+export function firstEmbedOfType<T extends WidgetType>(widgetType: T, embeds: APIEmbed[]): APIEmbed|undefined {
+  const result: APIEmbed|undefined = embeds.find(embed => parseEmbedType(embed) === widgetType);
   return result;
 }
 /**
@@ -34,7 +33,7 @@ export function firstEmbedOfType<T extends WidgetType, E extends (Embed | APIEmb
  * @param embeds The array of embeds to search.
  * @returns The index of the embed, or -1 if it doesn't exist.
  */
-export function firstEmbedOfTypeIndex<T extends WidgetType, E extends (Embed | APIEmbed)>(widgetType: T, embeds: E[]): number {
+export function firstEmbedOfTypeIndex<T extends WidgetType>(widgetType: T, embeds: APIEmbed[]): number {
   const result: number = embeds.findIndex(embed => parseEmbedType(embed) === widgetType);
   return result;
 }

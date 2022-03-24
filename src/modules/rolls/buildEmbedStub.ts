@@ -1,4 +1,4 @@
-import { Embed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { titleCase } from "title-case";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 import splitCamelCase from "../text/splitCamelCase.js";
@@ -15,7 +15,7 @@ export default function buildWidgetStub(widgetType: WidgetType, uncasedTitle: st
   if (widgetSubtype) {
     embedTypeString += ": " + widgetSubtype;
   }
-  const embed = new Embed()
+  const embed = new EmbedBuilder()
     .setAuthor({ name: titleCase(embedTypeString) })
     .setTitle(titleCase(uncasedTitle))
     ;

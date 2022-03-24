@@ -1,4 +1,6 @@
-import { ButtonComponent, ButtonStyle, Embed, InteractionType, MessageComponentInteraction, Modal, ModalSubmitInteraction, ActionRow, SelectMenuOption, TextInputComponent, TextInputStyle, GuildCacheMessage, ModalMessageModalSubmitInteraction } from "discord.js";
+import { ActionRowBuilder, TextInputBuilder } from "@discordjs/builders";
+import { APIEmbed,APIMessage } from "discord-api-types/v10";
+import { ButtonBuilder, ButtonStyle, Embed, InteractionType, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuOptionBuilder, TextInputStyle, GuildCacheMessage, ModalMessageModalSubmitInteraction, ModalBuilder } from "discord.js";
 import NumericAttribute from "../../modules/attributes/NumericAttribute.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { IEditAttrTaskParams } from "../../modules/parseComponent/ITaskParams.js";
@@ -6,23 +8,24 @@ import { packParams } from "../../modules/parseComponent/packParams.js";
 import { WidgetType } from "../../modules/parseComponent/WidgetType.js";
 import { firstEmbedOfType, firstEmbedOfTypeIndex } from "../../modules/ux/firstEmbedOfType.js";
 import WithRequired from "../../types/WithRequired.js";
-import { receiveSubmittedModal } from "../components/TaskModal.js";
+import submitModal from "./handleModal.js";
+
 import rebuildWidget from "./rebuildWidget.js";
 
-type CreateType = typeof SelectMenuOption | typeof ButtonComponent;
+type CreateType = typeof SelectMenuOptionBuilder | typeof ButtonBuilder;
 
 export default abstract class EditAttributeTask {
   static create<T extends CreateType>(type: T, params: IEditAttrTaskParams, label: string) {
     const taskParamsString = packParams(BotTask.EditAttribute, params);
     switch (type) {
-      case ButtonComponent:
-        return new ButtonComponent()
+      case ButtonBuilder:
+        return new ButtonBuilder()
           .setCustomId(taskParamsString)
           .setLabel(label)
           .setStyle(ButtonStyle.Secondary);
         break;
-      case SelectMenuOption:
-        return new SelectMenuOption()
+      case SelectMenuOptionBuilder:
+        return new SelectMenuOptionBuilder()
           .setValue(taskParamsString)
           .setDefault(false)
           .setLabel(label);
@@ -48,7 +51,7 @@ export default abstract class EditAttributeTask {
         console.log("[Task.editAttribute] interaction is ModalSubmit");
         if (!params.id) {
           await interaction.deferUpdate();
-          return receiveSubmittedModal(interaction as ModalSubmitInteraction);
+          return submitModal(interaction as ModalSubmitInteraction);
         }
         break;
       }
@@ -58,8 +61,9 @@ export default abstract class EditAttributeTask {
     }
 
     // TODO: this is just set so i get it online; should be replaced ASAP
-    const oldEmbed = firstEmbedOfType(WidgetType.InitiativeStack, interaction.message.embeds as Embed[]);
-    const oldEmbedIndex = firstEmbedOfTypeIndex(WidgetType.InitiativeStack, interaction.message.embeds as Embed[]);
+    const oldEmbeds = interaction.message.embeds as (APIEmbed & Embed)[];
+    const oldEmbed = firstEmbedOfType(WidgetType.InitiativeStack, oldEmbeds);
+    const oldEmbedIndex = firstEmbedOfTypeIndex(WidgetType.InitiativeStack, oldEmbeds);
     if (!oldEmbed) {
       throw new Error();
     }
@@ -68,17 +72,17 @@ export default abstract class EditAttributeTask {
     const newEmbed = NumericAttribute.incrementByName(oldEmbed, params as WithRequired<IEditAttrTaskParams, "id">);
     console.log(newEmbed.fields);
     interaction.message.embeds[oldEmbedIndex] = newEmbed as Embed;
-    return interaction.update(rebuildWidget(interaction.message));
+    return interaction.update(rebuildWidget(interaction.message as APIMessage));
   }
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {
     console.log("[promptForId] no ID specified, prompting user with a modal");
-    const modal = new Modal()
+    const modal = new ModalBuilder()
       .setCustomId(packParams(BotTask.EditAttribute, params))
       .setTitle("Add New Player Character")
       .addComponents(
-        new ActionRow<TextInputComponent>()
+        new ActionRowBuilder<TextInputBuilder>()
           .addComponents(
-            new TextInputComponent()
+            new TextInputBuilder()
               .setCustomId("id")
               .setLabel("Please enter a name.")
               .setRequired(true)

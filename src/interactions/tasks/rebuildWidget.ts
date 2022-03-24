@@ -8,7 +8,7 @@ import { WidgetType } from "../../modules/parseComponent/WidgetType.js";
  * @param message The message to rebuild as a GameObject.
  * @returns The game object.
  */
-export default function rebuildWidget(message: Message): Omit<InteractionUpdateOptions,"fetchReply"> {
+export default function rebuildWidget(message: APIMessage): Omit<InteractionUpdateOptions,"fetchReply"> {
   if (!message.embeds) {
     throw new RangeError();
   }
@@ -26,7 +26,8 @@ export default function rebuildWidget(message: Message): Omit<InteractionUpdateO
         embeds: [
           InitiativeStack
             .fromEmbed(embed)
-            .toEmbed()]
+            .toEmbed()
+        ].map(embed => embed.toJSON())
       };
       break;
     default:

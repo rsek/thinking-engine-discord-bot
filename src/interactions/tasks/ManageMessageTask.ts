@@ -1,16 +1,16 @@
 import "reflect-metadata";
-import { InteractionReplyOptions, ButtonComponent, ButtonStyle, ActionRow, MessageComponentInteraction, GuildCacheMessage, CacheType, MessageActionRowComponent, Message } from "discord.js";
-import deleteByCustomId from "../../modules/ux/removeByCustomId.js";
+import { InteractionReplyOptions, ButtonBuilder, ButtonStyle, ActionRow, MessageComponentInteraction, GuildCacheMessage, CacheType, MessageActionRowComponent, Message, ComponentType } from "discord.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
 import { asEphemeral, stripEphemeral } from "../../modules/attributes/toEphemeral.js";
 import { IManageMessageTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";
-import assignToActionRow from "../../modules/attributes/assignToActionRow.js";
+import { ActionRowBuilder, MessageActionRowComponentBuilder } from "@discordjs/builders";
+import { APIActionRowComponent, APIActionRowComponentTypes, APIMessageActionRowComponent } from "discord-api-types/v10";
 
 export default abstract class ManageMessageTask {
   static createButton(action: ManageMessageAction) {
     const customId = packParams(BotTask.ManageMessage, { action });
-    const btn = new ButtonComponent().setCustomId(customId);
+    const btn = new ButtonBuilder().setCustomId(customId);
 
     switch (action) {
       case ManageMessageAction.Reveal:
@@ -34,9 +34,17 @@ export default abstract class ManageMessageTask {
     if (!newMessage.components) {
       newMessage.components = [];
     }
-    newMessage.components = newMessage.components as ActionRow<MessageActionRowComponent>[];
+    newMessage.components = newMessage.components as APIActionRowComponent<APIMessageActionRowComponent>[];
     if (newMessage.components) {
-      newMessage.components = assignToActionRow(newMessage.components, ManageMessageTask.createButton(ManageMessageAction.Reveal));
+      for (let r = 0; r < newMessage.components.length; r++) {
+        const row = newMessage.components[r];
+        if (row.components.length > 5 && row.components.every(item => item.type === ComponentType.Button)) {
+          const builder = new ActionRowBuilder<ButtonBuilder>(row).addComponents(ManageMessageTask.createButton(ManageMessageAction.Reveal));
+          newMessage.components[r] = builder.toJSON();
+          break;
+        }
+      }
+      ManageMessageTask.createButton(ManageMessageAction.Reveal);
     }
     return newMessage;
   }
@@ -54,7 +62,13 @@ export default abstract class ManageMessageTask {
         // TODO: fix stripEphemeral
         return interaction.reply({
           embeds: msg.embeds,
-          components: [new ActionRow().addComponents(ManageMessageTask.createButton(ManageMessageAction.Delete))]
+          components: [
+            new ActionRowBuilder<ButtonBuilder>()
+              .addComponents(
+                ManageMessageTask.createButton(
+                  ManageMessageAction.Delete
+                )
+              )]
         });
         break;
       default:
@@ -62,7 +76,6 @@ export default abstract class ManageMessageTask {
     }
 
     // const message = stripEphemeral(interaction.message);
-    // message.components = deleteByCustomId(message.components as ActionRow[], revealParams);
     // await interaction.reply(message as Omit<InteractionReplyOptions, "attachments">);
     // const msg = interaction.message as Message;
     // await msg.delete();

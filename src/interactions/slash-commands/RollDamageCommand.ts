@@ -8,9 +8,12 @@ import { RefType } from "../../modules/parseComponent/WidgetType.js";
 import enumToRecord from "../../utils/enumToRecord.js";
 import GameData from "../../data/GameData.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
+import { fileURLToPath } from "url";
+
+console.info("initializing", fileURLToPath(import.meta.url));
 
 @Discord()
-export default abstract class RollDamageCommand {
+export abstract class RollDamageCommand {
   @Slash("damage", { description: "Roll damage." })
   @SlashGroup("roll")
   async rollTable(
