@@ -1,1 +1,1 @@
-worker: ts-node ./src/main
+worker: node --loader ts-node/esm ./src/main.ts
