@@ -14,7 +14,8 @@
     "build": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
     "heroku-cleanup": "patch-package",
     "postinstall": "patch-package",
-    "start": "yarn run flush && yarn run build && node ."
+    "start": "yarn run flush && yarn run build && node .",
+    "tsc": "./node_modules/typescript/bin/tsc"
   },
   "author": "rsek",
   "license": "ISC",
