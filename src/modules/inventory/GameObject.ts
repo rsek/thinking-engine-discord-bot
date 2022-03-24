@@ -4,7 +4,7 @@ import ItemIn from "../../types/ItemIn.js";
 import { IRendersEmbed, IRendersMessage } from "../attributes/IRenders.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildEmbedStub.js";
+import buildWidgetStub from "../rolls/buildWidgetStub.js";
 import splitCamelCase from "../text/splitCamelCase.js";
 
 /**

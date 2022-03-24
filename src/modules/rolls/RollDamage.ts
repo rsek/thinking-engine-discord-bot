@@ -5,7 +5,7 @@ import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import DamageInfo from "../DamageRoll/DamageInfo.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildEmbedStub.js";
+import buildWidgetStub from "./buildWidgetStub.js";
 import Roll from "./Roll.js";
 
 export default class RollDamage extends Roll {

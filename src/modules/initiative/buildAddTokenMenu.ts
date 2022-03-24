@@ -10,12 +10,13 @@ export const addTokenMenuId = "addTokenMenu";
 
 export default function buildAddTokenMenu() {
   const menu = getTaskMenuStub(addTokenMenuId)
-    .setPlaceholder("Add tokens...");
+    .setPlaceholder("Add tokens to initiative...");
 
   // TODO: if EditAttribute isn't provided with an ID, it should prompt the user for one
   menu.addOptions(
     new SelectMenuOptionBuilder()
       .setLabel("Add player character...")
+      .setDescription("Add a new PC with 2 tokens")
       .setEmoji({ name: "👤" })
       .setValue(packPartialParams(BotTask.EditAttribute, { current: pcTokenValue, max: pcTokenValue }) )
   );

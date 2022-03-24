@@ -13,24 +13,23 @@ import ItemIn from "../../types/ItemIn.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { ManageMessageAction } from "../parseComponent/ITaskParams.js";
 import { ActionRowBuilder } from "@discordjs/builders";
-import buildWidgetStub from "../rolls/buildEmbedStub.js";
+import buildWidgetStub from "../rolls/buildWidgetStub.js";
+import RollPlaceValues from "../rolls/RollPlaceValues.js";
+import TableDieType from "./TableDieType.js";
 
 export default class Table extends GameObject implements ITable {
-  readonly Roll: DiceExpression;
+  readonly Roll: keyof typeof TableDieType;
   readonly Type: RefType.Table = RefType.Table;
   readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
   Table: Collection<number, string>;
   constructor(id: string, data: ITable) {
     super(id);
-    if (Array.isArray(data.Table)) {
-      this.Roll = `1d${Object.values(data.Table).length}` as DiceExpression;
-      this.Table = new Collection(data.Table.map((value, index) => [ index+1, value ]));
-    } else if (data.Roll && typeof data.Table === "object") {
+    if (data.Roll && typeof data.Table === "object") {
       this.Roll = data.Roll;
       const entries = Object.entries(data.Table as Record<number, string>).map(row => [ Number(row[0]), row[1] ] as [number, string]);
       this.Table = new Collection(entries);
     } else {
-      throw new RangeError("Table content must be either an array of strings, or Record<number, strings> with a valid Roll key.");
+      throw new RangeError();
     }
   }
   override toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
@@ -70,7 +69,10 @@ export default class Table extends GameObject implements ITable {
     return embeds;
   }
   roll() {
-    const roll = Roll.fromString(this.Roll);
+    console.log(this);
+    const dieType = TableDieType[this.Roll];
+    const roll = new RollPlaceValues(dieType);
+    // console.log(roll);
     return {
       roll,
       row: this.Table.get(roll.valueOf())

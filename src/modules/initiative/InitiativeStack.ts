@@ -4,19 +4,20 @@ import weighted from "weighted";
 import buildAddTokenMenu from "./buildAddTokenMenu.js";
 import buildRemoveTokenMenu from "./buildRemoveTokenMenu.js";
 import { NumericAttrHash, fieldsToNumericAttrHash, NumericAttrFieldData, numericAttrHashToFields, maxKeyName, currentKeyName } from "../ux/NumericAttrHash.js";
-import { roundPattern, turnPattern, roundPrefix, turnPrefix } from "./InitiativeDisplay.js";
+import { roundPattern, turnPattern } from "./InitiativeDisplay.js";
 import { endOfRoundToken, enemyToken, henchmanToken, tokenFactionsLeft } from "./initiativeTokens.js";
 import { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../attributes/IRenders.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import buildReturnTokenMenu from "./buildReturnTokenMenu.js";
 import WithRequired from "../../types/WithRequired.js";
 import WidgetOptions from "./WidgetOptions.js";
-import DrawTokenTask from "../../interactions/tasks/DrawTokenTask.js";
+import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 import splitCamelCase from "../text/splitCamelCase.js";
-import buildWidgetStub from "../rolls/buildEmbedStub.js";
+import buildWidgetStub from "../rolls/buildWidgetStub.js";
 import { APIEmbed } from "discord-api-types/v10";
-import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from "@discordjs/builders";
+import { ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, SelectMenuBuilder } from "@discordjs/builders";
+import { InitiativeAction } from "../parseComponent/ITaskParams.js";
 
 enum TokenMenuType {
   Remove,
@@ -129,39 +130,48 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     return menu;
   }
   toButton(): ButtonBuilder {
-    const button = DrawTokenTask.createButton();
+    const button = InitiativeTask.createButton(InitiativeAction.Draw);
     if (tokenFactionsLeft(this.tokens) < 2) {
       button.setDisabled(true);
     }
     return button;
   }
+  toRoundString() {
+    return InitiativeTask.roundString(this.turn, this.round);
+  }
   toEmbed(): EmbedBuilder {
-    const embedTypeString = splitCamelCase(WidgetType[WidgetType.InitiativeStack]);
     const embedDescription = `${_.sum(Object.values(this.tokens).map(item => item[currentKeyName]))} tokens remain in the stack.`;
-    const embedFooter = `${roundPrefix}${this.round.toString()}, ${turnPrefix}${this.turn.toString()}`;
     const embed = buildWidgetStub(WidgetType.InitiativeStack, this.title)
       .setDescription(embedDescription)
       .setFooter({
-        text: embedFooter
+        text: this.toRoundString()
       });
     const sortOrder = [ henchmanToken, enemyToken, endOfRoundToken ];
     embed.addFields(...numericAttrHashToFields(this.tokens,true).sort((fieldA,fieldB) => sortOrder.findIndex(item => item === fieldA.name) - sortOrder.findIndex(item => item === fieldB.name)));
     return embed;
   }
   toMessage() {
+    const components: ActionRowBuilder<MessageActionRowComponentBuilder>[] = [
+      new ActionRowBuilder<SelectMenuBuilder>()
+        .addComponents(this.toSelectMenu(TokenMenuType.Add)),
+      new ActionRowBuilder<SelectMenuBuilder>()
+        .addComponents(this.toSelectMenu(TokenMenuType.Remove)),
+    ];
+    if (_.some(this.tokens, (value) => value.current < value.max)) {
+      components.push(new ActionRowBuilder<SelectMenuBuilder>()
+        .addComponents(this.toSelectMenu(TokenMenuType.Return)));
+    }
+    components.push(
+      new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(this.toButton())
+    );
     const message = {
       embeds: [
         this.toEmbed()
       ],
-      components: [
-        new ActionRowBuilder<SelectMenuBuilder>()
-          .addComponents(this.toSelectMenu(TokenMenuType.Add)),
-        new ActionRowBuilder<SelectMenuBuilder>()
-          .addComponents(this.toSelectMenu(TokenMenuType.Remove)),
-        new ActionRowBuilder<ButtonBuilder>()
-          .addComponents(this.toButton())
-      ]
+      components
     };
+
     return message as WithRequired<WidgetOptions, "embeds"|"components">;
   }
 }

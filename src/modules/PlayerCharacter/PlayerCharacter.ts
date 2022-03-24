@@ -4,7 +4,7 @@ import NumericAttribute from "../attributes/NumericAttribute.js";
 import { IRendersEmbed } from "../attributes/IRenders.js";
 import { Embed } from "discord.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildEmbedStub.js";
+import buildWidgetStub from "../rolls/buildWidgetStub.js";
 
 
 // could skills be managed the same way?

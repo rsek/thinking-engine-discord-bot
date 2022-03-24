@@ -1,9 +1,11 @@
-import { SelectMenuComponent } from "discord.js";
 import _ from "lodash";
 import { NumericAttrHash, currentKeyName, maxKeyName } from "../ux/NumericAttrHash.js";
 import { endOfRoundToken, isPlayerToken, henchmanToken, enemyToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
 import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
+import { SelectMenuOptionBuilder } from "discord.js";
+import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
+import { InitiativeAction } from "../parseComponent/ITaskParams.js";
 
 export const returnTokenMenuId = "returnTokenMenu";
 /**
@@ -13,7 +15,7 @@ export const returnTokenMenuId = "returnTokenMenu";
  */
 export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
   const menu = getTaskMenuStub(returnTokenMenuId)
-    .setPlaceholder("Return tokens to initiative stack...")
+    .setPlaceholder("Return token to initiative stack...")
   ;
   _.forEach(tokens, (token) => {
     if (token.name !== endOfRoundToken && token[currentKeyName] < token[maxKeyName]) {
@@ -56,5 +58,10 @@ export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
       }
     }
   });
+  menu.addOptions(new SelectMenuOptionBuilder()
+    .setLabel("Return all tokens to stack")
+    .setEmoji({ name: "🔄" })
+    .setValue(InitiativeTask.taskParams(InitiativeAction.Shuffle))
+  );
   return menu;
 }

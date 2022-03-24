@@ -1,5 +1,5 @@
 import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildEmbedStub.js";
+import buildWidgetStub from "./buildWidgetStub.js";
 import Roll from "./Roll.js";
 
 enum RollUnderOutcome {
@@ -46,9 +46,17 @@ export default class RollUnder extends Roll {
   // }
   toEmbed() {
     const embed =
-      buildWidgetStub(WidgetType.RollUnder, RollUnderOutcome[this.outcome], this.target.toString())
+      buildWidgetStub(WidgetType.RollUnder, RollUnderOutcome[this.outcome],
+        // this.target.toString()
+      )
         .addFields(
+          {
+            name: "Target",
+            value: this.target.toString(),
+            inline: true
+          },
           this.toResultField(),
+          this.toTotalField()
         )
     ;
     if (this.description) {

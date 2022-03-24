@@ -76,24 +76,23 @@ export default abstract class EditAttributeTask {
   }
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {
     console.log("[promptForId] no ID specified, prompting user with a modal");
+    const textInput =
+        new TextInputBuilder()
+          .setCustomId("id")
+          .setLabel("Please enter a name.")
+          .setRequired(true)
+          .setStyle(TextInputStyle.Short)
+          .setMinLength(1)
+        // TODO: get a maximum programmatically?
+          .setMaxLength(50);
+    const actionRow = new ActionRowBuilder<TextInputBuilder>()
+      .addComponents(textInput);
     const modal = new ModalBuilder()
       .setCustomId(packParams(BotTask.EditAttribute, params))
       .setTitle("Add New Player Character")
-      .addComponents(
-        new ActionRowBuilder<TextInputBuilder>()
-          .addComponents(
-            new TextInputBuilder()
-              .setCustomId("id")
-              .setLabel("Please enter a name.")
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-              .setMinLength(1)
-            // TODO: get a maximum programmatically?
-              .setMaxLength(50)
-          )
-      )
+      .addComponents(actionRow.toJSON())
       ;
-    console.log(modal);
+    console.log("[promptForId]", modal);
     return interaction.showModal(modal);
   }
 }

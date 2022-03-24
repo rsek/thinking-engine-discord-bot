@@ -7,7 +7,7 @@ import IRoll from "./IRoll.js";
 import parseDice from "./parseDice.js";
 import IRollOptions from "./IRollOptions.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildEmbedStub.js";
+import buildWidgetStub from "./buildWidgetStub.js";
 
 export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, IRendersMessage {
   static WidgetType: WidgetType = WidgetType.DiceRoll;
@@ -21,6 +21,7 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
     }
     return new Roll(options);
   }
+  title?: string | undefined;
   description?: string | undefined;
   private _dice: number[];
   private _modifier: number = 0;
@@ -81,7 +82,7 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
     return {
       name: "Result",
       value,
-      inline: false
+      inline: true
     };
   }
   protected toTotalField(): EmbedField {
@@ -109,7 +110,7 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
   }
   toDiceExpression(): DiceExpression {
     const diceCount = _.countBy(this.dice);
-    console.log("diceCount", diceCount);
+    // console.log("diceCount", diceCount);
     const expressionFragments = _.map(diceCount, (count, dieSides) => `${count}d${dieSides}`);
     let expression = expressionFragments.join("+");
     if (this.modifier !== 0) {

@@ -5,8 +5,9 @@ import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams } from "./ITaskParams.js";
+import { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams, InitiativeAction } from "./ITaskParams.js";
 import { unpackParams } from "./packParams.js";
+import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 
 export enum BotTask {
   EditAttribute = "editAttr",
@@ -17,7 +18,7 @@ export enum BotTask {
   RollTable = "rollTbl",
   RollVersus = "rollVs",
   RollDice = "roll",
-  InitiativeToken = "token",
+  Initiative = "init",
   RollPlaceValues = "rollPV"
 }
 
@@ -31,7 +32,7 @@ export interface IBotTasksParams extends Record<BotTask, TaskParams> {
   [BotTask.RollDamage]: IRollDamageTaskParams;
   [BotTask.RollTable]: IRollTableTaskParams;
   [BotTask.RollVersus]: IRollVersusTaskParams;
-  [BotTask.InitiativeToken]: IInitiativeTokenTaskParams
+  [BotTask.Initiative]: IInitiativeTokenTaskParams
   [BotTask.RollDice]: IRollDiceTaskParams;
   [BotTask.RollPlaceValues]: IRollPlaceValuesTaskParams;
 }
@@ -50,13 +51,13 @@ export async function routeTask(tasksParams: ReturnType<typeof unpackParams>, in
       case BotTask.EditAttribute:
         return EditAttributeTask.exec(interaction as MessageComponentInteraction | ModalMessageModalSubmitInteraction, task as IEditAttrTaskParams);
         break;
-      // case BotTask.InitiativeToken: {
-      //   if (!interaction.isMessageComponent()) {
-      //     throw new Error();
-      //   }
-      //   const embed = interaction.message;
-      //   break;
-      // }
+      case BotTask.Initiative: {
+        if (!interaction.isMessageComponent()) {
+          throw new Error();
+        }
+        await InitiativeTask.exec(interaction, task as IInitiativeTokenTaskParams);
+        break;
+      }
       // case BotTask.EditText:
       //   break;
       case BotTask.ManageMessage:

@@ -65,13 +65,13 @@ export interface IManageMessageTaskParams extends TaskParams {
   action: ManageMessageAction;
 }
 
-export enum TokenStackAction {
+export enum InitiativeAction {
   Draw,
   Shuffle
 }
 
 export interface IInitiativeTokenTaskParams extends TaskParams {
-  action: TokenStackAction
+  action: InitiativeAction
 }
 
 export interface IRebuildParams extends TaskParams {
