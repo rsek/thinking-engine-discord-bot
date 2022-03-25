@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
 import { IRefTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";

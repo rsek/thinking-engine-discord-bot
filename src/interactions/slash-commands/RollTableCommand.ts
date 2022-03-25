@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, InteractionReplyOptions, InteractionType } from "discord.js";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import Table from "../../modules/tables/Table.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 @Discord()
 export abstract class RollTableCommand {

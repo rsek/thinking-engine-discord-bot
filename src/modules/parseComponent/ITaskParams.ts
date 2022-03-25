@@ -1,4 +1,4 @@
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import KeyOfMap from "../../types/KeyOfMap.js";
 import DiceExpression from "../rolls/diceExpression.js";
 import { TaskParams } from "./BotTask.js";

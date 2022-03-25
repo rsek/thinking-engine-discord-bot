@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionChoice, Collection } from "discord.js";
 import _ from "lodash-es";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import ValueOf from "../../types/ValueOf.js";
 import ValueOfMap from "../../types/ValueOfMap.js";

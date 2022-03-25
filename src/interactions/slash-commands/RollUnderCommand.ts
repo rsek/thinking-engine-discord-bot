@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup } from "discordx";
 import RollUnder from "../../modules/rolls/RollUnder.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 @Discord()
 export default class RollUnderCommand {

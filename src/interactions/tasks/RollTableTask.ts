@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import { ButtonBuilder, ButtonStyle, MessageComponentInteraction, CommandInteraction, InteractionReplyOptions } from "discord.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";

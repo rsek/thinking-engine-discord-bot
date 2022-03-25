@@ -6,11 +6,11 @@ import queryCollection from "../autocomplete/queryCollection.js";
 import RollDamage from "../../modules/rolls/RollDamage.js";
 import { RefType } from "../../modules/parseComponent/WidgetType.js";
 import enumToRecord from "../../utils/enumToRecord.js";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 @Discord()
 export abstract class RollDamageCommand {

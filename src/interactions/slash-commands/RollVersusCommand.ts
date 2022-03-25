@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup } from "discordx";
 import RollVersus from "../../modules/rolls/RollVersus.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 @Discord()
 export abstract class RollVersusCommand {

@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { AutocompleteInteraction, CommandInteraction, InteractionType, ApplicationCommandOptionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import GameData from "../../data/GameData.js";
+import GameData from "../../data/gameData.js";
 import { RefType } from "../../modules/parseComponent/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 @Discord()
 export abstract class SpellCommand {

@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import RollPlaceValuesTask from "../tasks/RollPlaceValuesTask.js";
-import { fileURLToPath } from "url";
 
-console.info("initializing", fileURLToPath(import.meta.url));
+
+
 
 
 @Discord()
