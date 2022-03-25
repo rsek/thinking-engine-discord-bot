@@ -1,16 +1,15 @@
 import { ActionRowBuilder, TextInputBuilder } from "@discordjs/builders";
-import { APIEmbed,APIMessage } from "discord-api-types/v10";
+import { APIMessage } from "discord-api-types/v10";
+import { InteractionUpdateOptions } from "discord.js";
 import { ButtonBuilder, ButtonStyle, Embed, InteractionType, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuOptionBuilder, TextInputStyle, GuildCacheMessage, ModalMessageModalSubmitInteraction, ModalBuilder } from "discord.js";
+import { IRendersMessage } from "../../modules/attributes/IRenders.js";
 import NumericAttribute from "../../modules/attributes/NumericAttribute.js";
+import IHasAttributes from "../../modules/initiative/IHasAttributes.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { IEditAttrTaskParams } from "../../modules/parseComponent/ITaskParams.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
-import { WidgetType } from "../../modules/parseComponent/WidgetType.js";
-import { firstEmbedOfType, firstEmbedOfTypeIndex } from "../../modules/ux/firstEmbedOfType.js";
-import WithRequired from "../../types/WithRequired.js";
 import submitModal from "./handleModal.js";
-
-import rebuildWidget from "./rebuildWidget.js";
+import parseWidget from "./parseWidget.js";
 
 type CreateType = typeof SelectMenuOptionBuilder | typeof ButtonBuilder;
 
@@ -36,8 +35,6 @@ export default abstract class EditAttributeTask {
   }
   static async exec(interactionData: MessageComponentInteraction | ModalMessageModalSubmitInteraction, params: IEditAttrTaskParams) {
     console.log("[Task.editAttribute]", params);
-    // TODO: this is a kluge to work around the fact that the current development version of discord.js doesn't have a message key for component interactions (!)
-    // TODO: above isn't actually true, i just didn't find the correct type. def needs a review though
     const interaction = interactionData as typeof interactionData & { message: GuildCacheMessage<"cached"> & {embeds: Embed[]} };
     switch (interaction.type) {
       case InteractionType.MessageComponent: {
@@ -59,20 +56,21 @@ export default abstract class EditAttributeTask {
         throw new Error();
         break;
     }
-
-    // TODO: this is just set so i get it online; should be replaced ASAP
-    const oldEmbeds = interaction.message.embeds as (APIEmbed & Embed)[];
-    const oldEmbed = firstEmbedOfType(WidgetType.InitiativeStack, oldEmbeds);
-    const oldEmbedIndex = firstEmbedOfTypeIndex(WidgetType.InitiativeStack, oldEmbeds);
-    if (!oldEmbed) {
-      throw new Error();
+    const widget = parseWidget(interaction.message as APIMessage) as IRendersMessage & IHasAttributes;
+    if (!widget.attributes[params.id]) {
+      widget.attributes[params.id] = new NumericAttribute(params.id, params.current ?? params.max ?? 0, params.max);
+    } else {
+      if (params.max) {
+        widget.attributes[params.id].max += params.max;
+      }
+      if (params.current) {
+        widget.attributes[params.id].current += params.current;
+      }
+      if (widget.attributes[params.id].current > widget.attributes[params.id].max) {
+        widget.attributes[params.id].current = widget.attributes[params.id].max;
+      }
     }
-    // another quick fix
-    params.add = true;
-    const newEmbed = NumericAttribute.incrementByName(oldEmbed, params as WithRequired<IEditAttrTaskParams, "id">);
-    console.log(newEmbed.fields);
-    interaction.message.embeds[oldEmbedIndex] = newEmbed as Embed;
-    return interaction.update(rebuildWidget(interaction.message as APIMessage));
+    return interaction.update(widget.toMessage() as InteractionUpdateOptions);
   }
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {
     console.log("[promptForId] no ID specified, prompting user with a modal");

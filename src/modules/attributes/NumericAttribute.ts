@@ -12,7 +12,10 @@ import INumericAttribute from "./INumericAttribute.js";
 import { IRendersButton, IRendersSelectMenuOption } from "./IRenders.js";
 
 export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
-  static incrementByName(embed: APIEmbed, {
+  incrementByName() {
+
+  }
+  static incrementEmbedByName(embed: APIEmbed, {
     id,  current = 1, max = 0, add = true
   }: WithRequired<IEditAttrTaskParams, "id">) {
     if (embed.fields) {

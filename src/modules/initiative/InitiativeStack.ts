@@ -13,11 +13,12 @@ import WithRequired from "../../types/WithRequired.js";
 import WidgetOptions from "./WidgetOptions.js";
 import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
-import splitCamelCase from "../text/splitCamelCase.js";
 import buildWidgetStub from "../rolls/buildWidgetStub.js";
 import { APIEmbed } from "discord-api-types/v10";
 import { ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, SelectMenuBuilder } from "@discordjs/builders";
 import { InitiativeAction } from "../parseComponent/ITaskParams.js";
+import IHasAttributes from "./IHasAttributes.js";
+import sortRecord from "../../interactions/tasks/sortRecord.js";
 
 enum TokenMenuType {
   Remove,
@@ -25,7 +26,7 @@ enum TokenMenuType {
   Return
 }
 
-export default class InitiativeStack implements IRendersMessage, IRendersEmbed, IRendersButton, IRendersSelectMenu {
+export default class InitiativeStack implements IRendersMessage, IRendersEmbed, IRendersButton, IRendersSelectMenu, IHasAttributes {
   static fromEmbed(embed: APIEmbed, resetTokens: boolean = false) {
     // TODO: more robust typeguarding
     const title = embed.title ?? "";
@@ -70,6 +71,12 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
   }
   public set turn(value: number) {
     this._turn = value;
+  }
+  public get attributes(): NumericAttrHash {
+    return this.tokens;
+  }
+  public set attributes(value: NumericAttrHash) {
+    this.tokens = value;
   }
   public get tokens(): NumericAttrHash {
     return this._tokens;
@@ -139,6 +146,18 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
   toRoundString() {
     return InitiativeTask.roundString(this.turn, this.round);
   }
+  sortAttributes(): void {
+    const sortOrder = [ henchmanToken, enemyToken, endOfRoundToken ];
+    const func = (a: [string, unknown], b: [string, unknown]) => {
+      const sortValue =
+      sortOrder.findIndex(item => item === a[0]) - sortOrder.findIndex(item => item === b[0]);
+      if (sortValue !== 0) {
+        return a[0].localeCompare(b[0]);
+      }
+      return sortValue;
+    };
+    this.attributes = sortRecord(this.attributes, func);
+  }
   toEmbed(): EmbedBuilder {
     const embedDescription = `${_.sum(Object.values(this.tokens).map(item => item[currentKeyName]))} tokens remain in the stack.`;
     const embed = buildWidgetStub(WidgetType.InitiativeStack, this.title)
@@ -151,6 +170,7 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     return embed;
   }
   toMessage() {
+    this.sortAttributes();
     const components: ActionRowBuilder<MessageActionRowComponentBuilder>[] = [
       new ActionRowBuilder<SelectMenuBuilder>()
         .addComponents(this.toSelectMenu(TokenMenuType.Add)),
@@ -166,9 +186,7 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
         .addComponents(this.toButton())
     );
     const message = {
-      embeds: [
-        this.toEmbed()
-      ],
+      embeds: [this.toEmbed()],
       components
     };
 
