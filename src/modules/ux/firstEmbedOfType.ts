@@ -2,7 +2,7 @@ import { APIEmbed } from "discord-api-types/v10";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 
 /**
- * Attempts to parse the TroikaBot-specific embed type from an embed's author text.
+ * Attempts to parse the Thinking Engine-specific embed type from an embed's author text.
  * @param embed The embed to be parsed.
  * @returns The widget type. Throws an error if it's unable to parse.
  */
