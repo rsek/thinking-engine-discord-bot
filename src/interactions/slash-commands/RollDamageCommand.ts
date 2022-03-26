@@ -32,10 +32,17 @@ export abstract class RollDamageCommand {
     @SlashOption("armour", {
       description: "The armour type of the target.",
     })
-    // discord.ts claims this can be done with just the enum, but it apparently requires a standard object.
+    // FIXME: discord.ts claims this can be done with just the enum, but it apparently requires a standard object.
     // if they fixed it, 'armour' can instead be passed directly
-    @SlashChoice(enumToRecord(Armour))
-      armour: Armour,
+    @SlashChoice({
+      "0 (Unarmoured)": 0,
+      "1 (Lightly Armoured)": 1,
+      "2 (Modestly Armoured)": 2,
+      "3 (Heavily Armoured)": 3,
+      4: 4,
+      5: 5,
+    })
+      armour: number,
 
     @SlashOption("modifier", {
       description: "Any additional modifiers to the damage roll.",

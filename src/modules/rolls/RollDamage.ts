@@ -1,6 +1,5 @@
 import { EmbedField, InteractionReplyOptions, ActionRowBuilder, ButtonBuilder } from "discord.js";
 import _ from "lodash";
-import Armour from "../../constants/Armour.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import DamageInfo from "../DamageRoll/DamageInfo.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
@@ -13,12 +12,12 @@ export default class RollDamage extends Roll {
   static maxRoll = 7;
   // alternately: mighty blow toggle via button?
   attack: DamageInfo;
-  armour: Armour;
+  armour: number;
   isMightyBlow: boolean;
   shield: number;
-  constructor(attack: DamageInfo, bonus: number, armour: Armour, shield: number, description?: string | undefined, isMightyBlow = false) {
+  constructor(attack: DamageInfo, modifier: number, armour: number, shield: number, description?: string | undefined, isMightyBlow = false) {
     super({
-      dice: [6], modifier: bonus, description
+      dice: [6], modifier, description
     });
     this.attack = attack;
     this.armour = armour;
@@ -56,7 +55,7 @@ export default class RollDamage extends Roll {
       }
     }
     return {
-      name: Armour[this.armour],
+      name: "Armour",
       value: `${armourValueString}`,
       inline: true
     };
