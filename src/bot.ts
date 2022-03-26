@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import "source-map-support/register.js";
 import type { ArgsOf } from "discordx";
-import {  Client, Discord, On, Once } from "discordx";
+import { Client, Discord, On, Once } from "discordx";
 import { dirname, importx } from "@discordx/importer";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log(process.env);
+// console.log(process.env);
 
 console.log("Bot is starting...");
 
@@ -14,8 +14,7 @@ console.log("Bot is starting...");
 // const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8")) as configType;
 
 export const client = new Client({
-  botId: process.env.CLIENT_ID,
-  botGuilds: process.env.GUILDS?.split(",") ?? undefined,
+  botGuilds: process.env.GUILD ? [process.env.GUILD] : undefined,
   intents: [
     "Guilds",
     "GuildMessages",
@@ -34,17 +33,23 @@ export abstract class AppDiscord {
   // make sure all guilds are in cache
     await client.guilds.fetch();
     // init all application commands
-    await client.initApplicationCommands({
-      guild: { log: true },
-    // global: { log: true },
-    });
+    if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
+      await client.initApplicationCommands({
+        global: { log: true },
+      });
+    } else {
+      await client.initApplicationCommands({
+        guild: { log: true },
+      });
+    }
     // init permissions; enabled log to see changes
     await client.initApplicationPermissions(true);
-    // uncomment this line to clear all guild commands,
-    // useful when moving to global commands from guild commands
-    //  await client.clearApplicationCommands(
-    //    ...client.guilds.cache.map((g) => g.id)
-    //  );
+    // clear all guild commands
+    if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
+      await client.clearApplicationCommands(
+        ...client.guilds.cache.map((g) => g.id)
+      );
+    }
     console.log("Bot started");
   }
   @On("interactionCreate")
@@ -58,9 +63,7 @@ export abstract class AppDiscord {
 
 async function run() {
   await importx(
-  // dirname(import.meta.url) + "/interactions/{autocomplete,components,slash-commands}/**/*.{ts,js}"
     dirname(import.meta.url) + "/interactions/{slash-commands,components}/**/*.{ts,js}"
-  // it seems to be having problems with the autocomplete specifically, IDFK why - but it's not something it cares about anyways
   );
 
   const commands = await client.CommandByGuild();
