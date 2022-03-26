@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc --build --clean && tsc --build  --verbose .",
     "postinstall": "patch-package",
-    "start": "yarn build && node ."
+    "start": "pm2 start dist/bot.js --name troika-bot",
+    "stop": "pm2 stop troika-bot"
   },
   "author": "rsek",
   "license": "ISC",
@@ -45,6 +46,7 @@
     "@typescript-eslint/parser": "^5.12.1",
     "eslint": "^8.10.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-sort-class-members": "^1.14.1"
+    "eslint-plugin-sort-class-members": "^1.14.1",
+    "pm2": "^5.2.0"
   }
 }
