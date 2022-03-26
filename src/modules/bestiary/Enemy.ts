@@ -1,4 +1,4 @@
-import { EmbedBuilder, InteractionReplyOptions } from "discord.js";
+import { ActionRowBuilder, EmbedBuilder, InteractionReplyOptions } from "discord.js";
 import { IRendersEmbed } from "../attributes/IRenders.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import IHasAttributes from "../initiative/IHasAttributes.js";
@@ -12,6 +12,7 @@ import { NumericAttrHash, numericAttrHashToFields } from "../ux/NumericAttrHash.
 import IEnemyYaml from "./IEnemyYaml.js";
 import IEnemyBase from "./IEnemyBase.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
+import { ButtonBuilder } from "@discordjs/builders";
 
 export type EnemyAttrHash = NumericAttrHash & {
   Skill: NumericAttribute,
@@ -65,9 +66,17 @@ export default class Enemy implements IEnemyBase, IGameObject, IRendersEmbed, IH
     return embed;
   }
   toMessage(ephemeral: boolean = true): WidgetOptions<InteractionReplyOptions> {
-    const enemyEmbed = this.toEmbed();
-    const tableMsg = this.Mien.toPreviewMessage(ephemeral);
-    tableMsg.embeds.unshift(enemyEmbed);
-    return tableMsg;
+    const embed = this.toEmbed();
+    const message = {
+      embeds: [embed],
+      ephemeral,
+      components: [
+        new ActionRowBuilder<ButtonBuilder>()
+          .addComponents(
+            this.Mien.getRollButton().setLabel("Roll Mien")
+          )
+      ]
+    };
+    return message;
   }
 }
