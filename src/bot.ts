@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import "source-map-support/register.js";
-import type { ArgsOf } from "discordx";
+import type { ArgsOf, DApplicationCommand } from "discordx";
 import { Client, Discord, On, Once } from "discordx";
 import { dirname, importx } from "@discordx/importer";
 import dotenv from "dotenv";
 
 dotenv.config();
-// console.log(process.env);
+console.log(process.env);
 
 console.log("Bot is starting...");
 
@@ -44,10 +44,17 @@ export abstract class AppDiscord {
     }
     // init permissions; enabled log to see changes
     await client.initApplicationPermissions(true);
+
     // clear all guild commands
+    // can be commented out after transitioning to global commands
     if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
+      const guildCommands: Map<string, DApplicationCommand[]> = await client.CommandByGuild();
+      const guilds = Array.from(
+        guildCommands.values()).flat(1)
+        .map(item => item.guilds)
+        .flat(5);
       await client.clearApplicationCommands(
-        ...client.guilds.cache.map((g) => g.id)
+        ...guilds as string[]
       );
     }
     console.log("Bot started");
