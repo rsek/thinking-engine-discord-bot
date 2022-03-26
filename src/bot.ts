@@ -1,17 +1,13 @@
 import "reflect-metadata";
 import "source-map-support/register.js";
-import type { ArgsOf, DApplicationCommand } from "discordx";
+import type { ArgsOf } from "discordx";
 import { Client, Discord, On, Once } from "discordx";
 import { dirname, importx } from "@discordx/importer";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log(process.env);
 
 console.log("Bot is starting...");
-
-// type configType = {clientId: string, guildIds: string[], token: string };
-// const config: configType = JSON.parse(readFileSync("./src/config.json", "utf-8")) as configType;
 
 export const client = new Client({
   botGuilds: process.env.GUILD ? [process.env.GUILD] : undefined,
@@ -23,8 +19,6 @@ export const client = new Client({
   ],
   silent: false,
 });
-
-// console.log("dirname:", dirname(import.meta.url));
 
 @Discord()
 export abstract class AppDiscord {
@@ -45,18 +39,6 @@ export abstract class AppDiscord {
     // init permissions; enabled log to see changes
     await client.initApplicationPermissions(true);
 
-    // clear all guild commands
-    // can be commented out after transitioning to global commands
-    if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
-      const guildCommands: Map<string, DApplicationCommand[]> = await client.CommandByGuild();
-      const guilds = Array.from(
-        guildCommands.values()).flat(1)
-        .map(item => item.guilds)
-        .flat(5);
-      await client.clearApplicationCommands(
-        ...guilds as string[]
-      );
-    }
     console.log("Bot started");
   }
   @On("interactionCreate")
@@ -67,7 +49,9 @@ export abstract class AppDiscord {
     await client.executeInteraction(interaction);
   }
 }
-
+/**
+ * Starts the bot.
+ */
 async function run() {
   await importx(
     dirname(import.meta.url) + "/interactions/{slash-commands,components}/**/*.{ts,js}"
@@ -75,10 +59,10 @@ async function run() {
 
   const commands = await client.CommandByGuild();
 
-  // if (!process.env.DISCORD_TOKEN) {
-  //   throw Error("No config.token found!");
-  // }
-  await client.login(process.env.DISCORD_TOKEN as string);
+  if (!process.env.DISCORD_TOKEN) {
+    throw Error("No DISCORD_TOKEN found in .env file.");
+  }
+  await client.login(process.env.DISCORD_TOKEN );
 }
 
 await run();

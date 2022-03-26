@@ -1,11 +1,9 @@
 import "reflect-metadata";
 import { CommandInteraction, AutocompleteInteraction, ApplicationCommandOptionType, InteractionType, Collection } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
-import Armour from "../../constants/Armour.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import RollDamage from "../../modules/rolls/RollDamage.js";
 import { RefType } from "../../modules/parseComponent/WidgetType.js";
-import enumToRecord from "../../utils/enumToRecord.js";
 import GameData from "../../data/gameData.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
 

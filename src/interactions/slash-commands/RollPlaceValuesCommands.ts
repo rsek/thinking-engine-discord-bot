@@ -6,7 +6,7 @@ import RollPlaceValuesTask from "../tasks/RollPlaceValuesTask.js";
 @Discord()
 export abstract class RollPlaceValuesCommands {
   @Slash("d36", {
-    description: "Roll a d36 (1d3×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use \"table\"."
+    description: "Roll a d36 (1d3×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use \"/table\"."
   })
   @SlashGroup("roll")
   async d36(
@@ -21,7 +21,7 @@ export abstract class RollPlaceValuesCommands {
     return RollPlaceValuesTask.exec(interaction, { dieType }, description);
   }
   @Slash("d66", {
-    description: "Roll a d66 (1d6×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use 'table'."
+    description: "Roll a d66 (1d6×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use \"/table\"."
   })
   @SlashGroup("roll")
   async d66(
@@ -35,7 +35,7 @@ export abstract class RollPlaceValuesCommands {
     const dieType = 66;
     return RollPlaceValuesTask.exec(interaction, { dieType }, description);
   }
-  @Slash("d666", { description: "Roll a d666 (1d6×100 + 1d6×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use 'table'." })
+  @Slash("d666", { description: "Roll a d666 (1d6×100 + 1d6×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use \"/table\"." })
   @SlashGroup("roll")
   async d666(
     @SlashOption("description", {
