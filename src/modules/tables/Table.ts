@@ -1,38 +1,39 @@
-import { ButtonStyle,  Collection, InteractionReplyOptions, EmbedBuilder, ButtonBuilder } from "discord.js";
-import _ from "lodash";
-import { TypedRegEx } from "typed-regex";
-import ITable from "../../data/interfaces/ITable.js";
-import joinToMaxLength from "../text/joinToMaxLength.js";
-import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
+import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonStyle, Collection, EmbedBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
-import GameObject from "../inventory/GameObject.js";
-import DiceExpression from "../rolls/diceExpression.js";
-import Roll from "../rolls/Roll.js";
-import ItemIn from "../../types/ItemIn.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
-import { ManageMessageAction } from "../parseComponent/ITaskParams.js";
-import { ActionRowBuilder } from "@discordjs/builders";
+import IGameObject from "../inventory/IGameObject.js";
+import { WidgetType, RefType } from "../parseComponent/WidgetType.js";
 import buildWidgetStub from "../rolls/buildWidgetStub.js";
-import RollPlaceValues from "../rolls/RollPlaceValues.js";
-import TableDieType from "./TableDieType.js";
+import ItemIn from "../../types/ItemIn.js";
+import embedLength from "../text/embedLength.js";
+import { MAX_EMBED_FIELDS, MAX_LENGTH_EMBED_TOTAL } from "../text/embedLimits.js";
+import embedFieldLength from "../text/embedFieldLength.js";
 
-export default class Table extends GameObject implements ITable {
-  readonly Roll: keyof typeof TableDieType;
-  readonly Type: RefType.Table = RefType.Table;
+export default class Table extends Collection<number, string> implements IGameObject {
+  // static fromArray(rows: string[]) {
+
+  // }
   readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
-  Table: Collection<number, string>;
-  constructor(id: string, data: ITable) {
-    super(id);
-    if (data.Roll && typeof data.Table === "object") {
-      this.Roll = data.Roll;
-      const entries = Object.entries(data.Table as Record<number, string>).map(row => [ Number(row[0]), row[1] ] as [number, string]);
-      this.Table = new Collection(entries);
-    } else {
-      throw new RangeError();
-    }
+  readonly Type: RefType.Table = RefType.Table;
+  $id: string;
+  Name: string;
+  Description?: string | undefined;
+  private readonly _rollFunc: () => number;
+
+  constructor(name: string, rows: Record<number, string>, rollFunc: () => number, id: string = name, description?: string | undefined) {
+    super(Object.entries(rows).map(row => [ Number(row[0]), row[1] ]));
+    this.Name = name;
+    this.$id = id;
+    this.Description = description;
+    this._rollFunc = rollFunc;
   }
-  override toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
+  toEmbed(...args: any[]): EmbedBuilder {
+    throw new Error("Method not implemented.");
+  }
+  toEmbedGroup(...args: any[]): EmbedBuilder[] {
+    throw new Error("Method not implemented.");
+  }
+  toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
     switch (type) {
       case WidgetType.Table:
         return this.toPreviewMessage(ephemeral);
@@ -46,72 +47,79 @@ export default class Table extends GameObject implements ITable {
     }
   }
   private toPreviewEmbeds() {
-    const tableRows = this.Table
-      .map((rowText, rowNumber) => `\`${rowNumber.toString().padStart(3, " ")}.\` ${rowText}`);
-    const splitTables = joinToMaxLength("\n", 2000, ...tableRows);
-    let embeds = splitTables.map((tablePart) => {
-      const embed = super.toEmbed()
-        .setDescription(tablePart);
-      return embed;
-    });
+    const rowFields: EmbedField[] = this
+      .map((rowText, rowNumber) => ({
+        name: rowNumber.toString(),
+        value: rowText,
+        inline: false
+      }));
+    let embeds: EmbedBuilder[] = [];
+    for (let i = 0, embedCount = 0; i < rowFields.length; i++) {
+      const field = rowFields[i];
+      if (!embeds[embedCount]) {
+        embeds.push(buildWidgetStub(WidgetType.Table, this.Name));
+      }
+      if ((embedLength(embeds[embedCount]) + embedFieldLength(field)) > MAX_LENGTH_EMBED_TOTAL ||
+      ((embeds[embedCount].data.fields?.length ?? 0) >= MAX_EMBED_FIELDS)) {
+        embeds.push(buildWidgetStub(WidgetType.Table, `${this.Name}`));
+        embedCount++;
+      }
+      embeds[embedCount].addFields(field);
+    }
     if (embeds.length > 1) {
-      embeds = embeds.map((embed) => {
-        const floor = TypedRegEx("` *(?<rowNumber>[0-9]+)`").captures(embed.data.description as string)?.rowNumber as string;
-        const ceiling = TypedRegEx("` *(?<rowNumber>[0-9]+)`.*$").captures(embed.data.description as string)?.rowNumber as string;
+      embeds = embeds.map(embed => {
+        const fields = embed.data.fields as APIEmbedField[];
+        let newTitle = embed.data.title as string;
+        const floor: string = fields[0].name;
+        const ceiling: string = fields[fields.length-1].name;
         if (floor === ceiling) {
-          embed.setTitle(embed.data.title as string + ` (${ceiling})`);
+          newTitle += `(${ceiling})`;
         } else {
-          embed.setTitle(embed.data.title as string + ` (${floor}-${ceiling})`);
+          newTitle += `(${floor}-${ceiling})`;
         }
-        return embed;
+        return embed.setTitle(newTitle);
       });
     }
+    // TODO: title split?
     return embeds;
   }
   roll() {
-    console.log(this);
-    const dieType = TableDieType[this.Roll];
-    const roll = new RollPlaceValues(dieType);
-    // console.log(roll);
+    const roll = this._rollFunc();
     return {
       roll,
-      row: this.Table.get(roll.valueOf())
+      row: this.get(roll)
     };
   }
   toRollEmbed() {
-    const embed = buildWidgetStub(WidgetType.TableRoll, this.Name ?? this.$id);
+    const embed = buildWidgetStub(WidgetType.TableRoll, this.Name);
     const result = this.roll();
     embed.addFields({
       name: result.roll.toString(),
       value: result.row ?? "`Error: Unknown row!`"
     });
-
     return embed;
   }
   getRollButton(label = "Roll on table") {
     return RollTableTask.toButton(this.$id, label);
   }
-
-  private toPreviewMessage(ephemeral: boolean = true) {
+  toPreviewMessage(ephemeral: boolean = true) {
     return {
       ephemeral,
       embeds: this.toPreviewEmbeds(),
       components: [
         new ActionRowBuilder<ButtonBuilder>()
           .addComponents(
-            ManageMessageTask.createButton(ManageMessageAction.Reveal),
             this.getRollButton()
           )
       ],
     };
   }
-  private toRollMessage(ephemeral: boolean = false) {
+  toRollMessage(ephemeral: boolean = false) {
     return {
       ephemeral,
       embeds: [this.toRollEmbed()],
       components: [
         new ActionRowBuilder<ButtonBuilder>().addComponents(
-          ManageMessageTask.createButton(ManageMessageAction.Delete),
           this.getRollButton("Roll again").setStyle(ButtonStyle.Secondary),
         )
       ]

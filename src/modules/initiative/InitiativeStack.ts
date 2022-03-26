@@ -146,7 +146,7 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
   toRoundString() {
     return InitiativeTask.roundString(this.turn, this.round);
   }
-  sortAttributes(): void {
+  private sortAttributes(): void {
     const sortOrder = [ henchmanToken, enemyToken, endOfRoundToken ];
     const func = (a: [string, unknown], b: [string, unknown]) => {
       const sortValue =

@@ -5,7 +5,7 @@ Ardent Giant of Corda: #11
   Possessions:
     # TODO: description + simple notation for item choice
     # options
-    - An Artefact of Lost Corda, being either an enormous Blue Star Map which can tell you where any portal leads (with a successful Astrology test) or a pocket barometer for forecasting the weather (5 in 6 accuracy) or a Ruby Lorgnette granting +2 Second Sight.
+    - Description: An Artefact of Lost Corda, being either an enormous Blue Star Map which can tell you where any portal leads (with a successful Astrology test) or a pocket barometer for forecasting the weather (5 in 6 accuracy) or a Ruby Lorgnette granting +2 Second Sight.
 
   Advanced Skills:
     Strength: 4
@@ -18,15 +18,15 @@ Befouler of Ponds: #12
     You’re a wise man, a high priest, a pond-pisser, a typical but committed adherent of P!P!Ssshrp. The bloated Toad God has no church other than the periphery of ponds where the foulness catches in the reeds and no congregation other than the gnats and dragonflies. You minister to them all the same.
 
   Possessions:
-    - Sackcloth Robes, caked in stinking mud and undergrowth. +1 to Sneak rolls in marshy terrain while wearing them, -1 everywhere else ‘cos it stinks!
-    - A Large, Worn Wooden Ladle (Damage as Mace).
+    - Description: Sackcloth Robes, caked in stinking mud and undergrowth. +1 to Sneak rolls in marshy terrain while wearing them, -1 everywhere else ‘cos it stinks!
+    - Description: A Large, Worn Wooden Ladle (Damage as Mace).
 
   Advanced Skills:
-    Spell – Drown: 3
+    Spell - Drown: 3
     Swim: 3
-    Spell – Tongue Twister: 2
-    Spell – Undo: 2
-    Spell – Web: 1
+    Spell - Tongue Twister: 2
+    Spell - Undo: 2
+    Spell - Web: 1
     Sneak: 1
     Second Sight: 1
 
@@ -38,9 +38,9 @@ Burglar: #13
     As a second-story man you often have cause to wander. Enemies come naturally from both sides of the law and it pays to keep ahead of trouble.
 
   Possessions:
-    - Crossbow and 18 Bolts.
-    - Roll of Lock Picks.
-    - Grappling Hook.
+    - Description: Crossbow and 18 Bolts.
+    - Description: Roll of Lock Picks.
+    - Description: Grappling Hook.
 
   Advanced Skills:
     Sneak: 2
@@ -59,16 +59,17 @@ Cacogen: #14
     You are Those-Filthy-Born, spawned in the hump-backed sky lit only by great black anti-suns and false light. Your mother was sailing on the golden barges or caught in some more abstract fate when she passed you, far from the protective malaise of the million spheres. You were receptive to the power and the glory at a generative time and it shows in your teratoid form.
 
   Possessions:
-    - Fusil.
-    - 2d6 Plasmic Cores.
-    - Sword.
-    - Velare.
+    - Description: Fusil.
+    - Description: 2d6 Plasmic Cores.
+      Quantity: 2d6
+    - Description: Sword.
+    - Description: Velare.
 
   Advanced Skills:
     Fusil Fighting: 2
     Astrology: 2
     Second Sight: 2
-    Spell – Random: [2, 2, 1]
+    Spell - Random: [2, 2, 1]
     Golden Barge Pilot: 2
     Sword Fighting: 1
 
@@ -77,16 +78,16 @@ Chaos Champion: #15
     You no longer don the spiked brass armour but you still have the ear of your Chaos patron. They’re happy for you to experiment with not plunging your world into disorder and, ultimately, darkness, but the door is always open.
 
   Possessions:
-    - Ritual Scars.
-    - A Huge Maul.
-    - Assortment of Ragged Armour (counts as Modest Armour).
-    - Dream Journal, almost full.
+    - Description: Ritual Scars.
+    - Description: A Huge Maul.
+    - Description: Assortment of Ragged Armour (counts as Modest Armour).
+    - Description: Dream Journal, almost full.
 
   Advanced Skills:
-    Language – Kurgan: 6
+    Language - Kurgan: 6
     Maul Fighting: 3
-    Secret Signs – Chaos Patron: 3
-    Spell – Random: 1
+    Secret Signs - Chaos Patron: 3
+    Spell - Random: 1
     Second Sight: 1
 
   Special: |-
@@ -95,36 +96,36 @@ Chaos Champion: #15
 Claviger: #16
   Description: |-
     The Key Masters wander the universe fathoming the workings of all entryways. Though they’re
-    - quite fascinated with simple chests and doors they are most excited by metaphysical and metaphorical barriers. You might find small conclaves of Clavigers camped around the feet of Demon Gates, debating appropriate methods of attack, or building obscure machines of entry.
+    - Description: quite fascinated with simple chests and doors they are most excited by metaphysical and metaphorical barriers. You might find small conclaves of Clavigers camped around the feet of Demon Gates, debating appropriate methods of attack, or building obscure machines of entry.
 
   Possessions:
-    - Festooned with Keys (counts as Modest Armour).
-    - A Distinguished Sledgehammer (Damage as Maul).
-    - Lock Picking Tools.
+    - Description: Festooned with Keys (counts as Modest Armour).
+    - Description: A Distinguished Sledgehammer (Damage as Maul).
+    - Description: Lock Picking Tools.
 
   Advanced Skills:
     Locks: 4
     Strength: 3
     Trapping: 3
-    Spell – Open: 2
-    Spell – See Through: 1
+    Spell - Open: 2
+    Spell - See Through: 1
     Maul Fighting: 1
-    Spell – Lock: 1
+    Spell - Lock: 1
 
 Demon Stalker: #21
   Description: |-
     You stake your reputation upon your ability to hunt and kill demonic creatures and those who break bread with them. Goat men in the wilds or the Angel cults of the slums, all need
-    - to be driven back off the edge of the map and onto the shores of chaos.
+    - Description: to be driven back off the edge of the map and onto the shores of chaos.
 
   Possessions:
-    - A Silver Sword.
-    - 16 Silver Arrows and Bow.
-    - Pouch of Salt.
-    - Vial of Demon Blood.
+    - Description: A Silver Sword.
+    - Description: 16 Silver Arrows and Bow.
+    - Description: Pouch of Salt.
+    - Description: Vial of Demon Blood.
 
   Advanced Skills:
-    Language – Abyssal: 5
-    Spell – Blood Shroud: 3
+    Language - Abyssal: 5
+    Spell - Blood Shroud: 3
     Second Sight: 2
     Sword Fighting: 2
     Bow Fighting: 2
@@ -136,8 +137,8 @@ Dwarf: #22
     You are a short, hairy, belligerent, alcohol dependent creature. Dwarfs are a sculpted people, ungendered, and thus there are no Dwarf children or Dwarf families to prevent you from fully committing to the important Dwarfy endeavours of creating fine art in unusual places. You intend to find the most unusual places in all the million spheres.
 
   Possessions:
-    - Masonry Hammer.
-    - Roll of Artist’s Supplies.
+    - Description: Masonry Hammer.
+    - Description: Roll of Artist’s Supplies.
 
   Advanced Skills:
     Awareness: 3
@@ -158,9 +159,9 @@ Epopt: #23
     You are a roaming seer, selling your visions at courts and fetes. You are instantly recognisable by your yellow coif and habit as being open for business. Road weary and worldwise, your unpopular visions cause you to constantly move on.
 
   Possessions:
-    - Yellow Epopt Outfit, padded for protection against unhappy clients (counts as Modest Armour).
-    - Epopt Staff, being a walking staff with seeing crystal on one end (Damage as Staff).
-    - Collapsible Tent, large enough for your stall.
+    - Description: Yellow Epopt Outfit, padded for protection against unhappy clients (counts as Modest Armour).
+    - Description: Epopt Staff, being a walking staff with seeing crystal on one end (Damage as Staff).
+    - Description: Collapsible Tent, large enough for your stall.
 
   Advanced Skills:
     Awareness: 2
@@ -178,11 +179,11 @@ Exographer: #24
     Where you come from it’s become quite normal to traverse the Spheres. Idle academics like yourself have even begun to study these more remote reaches of the divine effluvia. Though these rural indwellers may never appreciate your important work, you continually, thanklessly measure their latent phlogiston. For posterity.
 
   Possessions:
-    - Hermetically Sealed Rubber Suit (counts as Heavy Armour)
-    - Exographical Surveyors Box
-    - Spring-Loaded Measuring Tape
-    - Pistolet
-    - 1d6 Plasmic Cores
+    - Description: Hermetically Sealed Rubber Suit (counts as Heavy Armour)
+    - Description: Exographical Surveyors Box
+    - Description: Spring-Loaded Measuring Tape
+    - Description: Pistolet
+    - Description: 1d6 Plasmic Cores
 
   Advanced Skills:
     Exography: 4
@@ -193,27 +194,27 @@ Exographer: #24
 The Fellowship of Knidos: #25
   Description: |-
     Mathmologists honour the clean and unambiguous truths of mathematics and coordinate them with their observations of the multiverse. All things can be measured and predicted with the application of the correct mathmological ratios, those methods applied to penetrate the ethereal
-    - surface and glimpse the fundamental numbers below.
+    - Description: surface and glimpse the fundamental numbers below.
 
   Possessions:
-    - Large Astrolabe (Damage as Mace).
-    - Abacus.
-    - Lots of Scrolls and Writing Equipment.
+    - Description: Large Astrolabe (Damage as Mace).
+    - Description: Abacus.
+    - Description: Lots of Scrolls and Writing Equipment.
 
   Advanced Skills:
     Mathmology: 3
     Astrology: 2
-    Spell – Find: 2
+    Spell - Find: 2
 
 Fellow of the Peerage of Porters & Basin Fillers: #26
   Description: |-
     Luggers are a servile group by nature, most often found in the service of others, weighed down by loads that would buckle a donkey. You take pride in this, so much so that the everyday assignments of the guild cannot sate your desire to serve, causing you to venture out in search of a real challenge for such a talented varlet.
 
   Possessions:
-    - A Wooden Yoke.
-    - Brown Overcoat and Soft Doffing Cap of the Guild.
-    - A Bale Hook (Damage as Knife and +1 on rolls to lift heavy objects).
-    - Length of Rope.
+    - Description: A Wooden Yoke.
+    - Description: Brown Overcoat and Soft Doffing Cap of the Guild.
+    - Description: A Bale Hook (Damage as Knife and +1 on rolls to lift heavy objects).
+    - Description: Length of Rope.
 
   Advanced Skills:
     Strength: 4
@@ -228,12 +229,12 @@ Gremlin Catcher: #31
     No matter what country, sphere, or abstract dimension you may find yourself in, be assured that gremlins will be there digging their warrens and bothering nice people willing to pay you a shiny penny to bash their little heads in.
 
   Possessions:
-    - Small but Vicious Dog.
-    - Flat Cap.
-    - A Club.
-    - A Sack.
-    - 1d6 Empty Gremlin Jars.
-    - A Jar with a Pissed–off Gremlin Inside.
+    - Description: Small but Vicious Dog.
+    - Description: Flat Cap.
+    - Description: A Club.
+    - Description: A Sack.
+    - Description: 1d6 Empty Gremlin Jars.
+    - Description: A Jar with a Pissed–off Gremlin Inside.
 
   Advanced Skills:
     Tunnel Fighting: 4
@@ -249,11 +250,11 @@ Journeyman of the Guild of Sharp Corners: #32
     You are an assassin in training, graduated from fighting dummies and branding practise clients, freshly imbued with a license to ply your trade. You haven’t fully developed the idiosyncratic methods required of a master but you are on the path.
 
   Possessions:
-    - Black Clothes of the Apprentice.
-    - Garrotte.
-    - Curved Sword.
-    - 3 Vials of Poison.
-    - Crossbow and 6 Bolts.
+    - Description: Black Clothes of the Apprentice.
+    - Description: Garrotte.
+    - Description: Curved Sword.
+    - Description: 3 Vials of Poison.
+    - Description: Crossbow and 6 Bolts.
 
   Advanced Skills:
     Poison: 1
@@ -271,10 +272,10 @@ Lansquenet: #33
     You were a mercenary retained in the exclusive service of the Phoenix Throne, handsomely paid and sent to distant spheres on golden ships to spread the ineffable glory of your lords at the tip of your flaming sword.
 
   Possessions:
-    - Exquisite Pistolet.
-    - Bandolier containing 18 Plasmic Cores.
-    - Greatsword.
-    - Brightly Coloured Clothing with lots of tassels and bells (impossible to sneak). Though frivolous looking it is in fact built with the Autarch’s divine alchemy and considered Modest Armour while weighing the same as normal clothing (takes no slots in your inventory).
+    - Description: Exquisite Pistolet.
+    - Description: Bandolier containing 18 Plasmic Cores.
+    - Description: Greatsword.
+    - Description: Brightly Coloured Clothing with lots of tassels and bells (impossible to sneak). Though frivolous looking it is in fact built with the Autarch’s divine alchemy and considered Modest Armour while weighing the same as normal clothing (takes no slots in your inventory).
 
   Advanced Skills:
     Greatsword Fighting: 2
@@ -286,12 +287,12 @@ Lansquenet: #33
 Lonesome Monarch: #34
   Description: |-
     You were the ruler of all you surveyed, a great conqueror, a lawbringer! Unfortunately your horse sped off into the pixie forest, or the court magician ensured you disappeared, or you led a sortie into the stars to put your stamp on them as well. Either way you are now a lost and lonely
-    - sovereign without a kingdom — no one has heard of you or your people. Most don’t believe you and laugh, or worse, they do believe you and shrug at the vagaries of fate.
+    - Description: sovereign without a kingdom — no one has heard of you or your people. Most don’t believe you and laugh, or worse, they do believe you and shrug at the vagaries of fate.
 
   Possessions:
-    - Nice Weapon of your choice.
-    - Crown.
-    - Tired Horse.
+    - Description: Nice Weapon of your choice.
+    - Description: Crown.
+    - Description: Tired Horse.
 
   Advanced Skills:
     Etiquette: 3
@@ -302,11 +303,11 @@ Lonesome Monarch: #34
 Member of Miss Kinsey’s Dining Club: #35
   Description: |-
     The Eaters know that there are only two worlds: the Without and the Within. They intend to insert as much of the prior into the latter as they can while experiencing the finest delights
-    - available. All culinary experience is open to them as nothing is forbidden at Miss Kinsey’s. Try the other, other, other white meat.
+    - Description: available. All culinary experience is open to them as nothing is forbidden at Miss Kinsey’s. Try the other, other, other white meat.
 
   Possessions:
-    - Sharp metal dentures (Damage as Sword) or forked metal dentures (Damage as Knife. On a Mighty Blow you may cleanly strip all the flesh from one small appendage) or blunt metal dentures (Damage as Knife. May be used to eat hard objects).
-    - Embroidered napkin.
+    - Description: Sharp metal dentures (Damage as Sword) or forked metal dentures (Damage as Knife. On a Mighty Blow you may cleanly strip all the flesh from one small appendage) or blunt metal dentures (Damage as Knife. May be used to eat hard objects).
+    - Description: Embroidered napkin.
 
   Advanced Skills:
     Etiquette: 3
@@ -321,14 +322,14 @@ Member of Miss Kinsey’s Dining Club: #35
 Monkeymonger: #36
   Description: |-
     Life on The Wall is hard. One is never more than a few yards from an endless fall yet those precarious villages still need to eat. This is where you come in with your Edible Monkeys (the
-    - distinction is purely for appeal since all monkeys are of course edible). You used to spend days on end dangling your feet off the edge of the world, watching over your chittering livestock while they scampered hither and thither, but there was no future in monkey meat. You wanted much
-    - more and so stepped off. Or you fell off. Either way you and some unlucky monkeys are here now and that’s all that matters.
+    - Description: distinction is purely for appeal since all monkeys are of course edible). You used to spend days on end dangling your feet off the edge of the world, watching over your chittering livestock while they scampered hither and thither, but there was no future in monkey meat. You wanted much
+    - Description: more and so stepped off. Or you fell off. Either way you and some unlucky monkeys are here now and that’s all that matters.
 
   Possessions:
-    - Monkey Club.
-    - Butcher’s Knife.
-    - 1d6 Small Monkeys that do not heed commands but are too scared and hungry to travel far from you.
-    - A Pocket Full of Monkey Treats.
+    - Description: Monkey Club.
+    - Description: Butcher’s Knife.
+    - Description: 1d6 Small Monkeys that do not heed commands but are too scared and hungry to travel far from you.
+    - Description: A Pocket Full of Monkey Treats.
 
   Advanced Skills:
     Climb: 4
@@ -339,7 +340,7 @@ Monkeymonger: #36
   Special: |-
     The GM may choose to roll on this table anytime the Mien of monkeys must be determined.
 
-    - Mien
+    - Description: Mien
     Playful: 1
     Stalking: 2
     Hungry: 3
@@ -350,19 +351,19 @@ Monkeymonger: #36
 Necromancer: #41
   Description: |-
     The least popular of magical practitioners, Necromancers are shunned by the major centres of
-    - learning, left to their own devices on the edges of society, passing on knowledge in the time honoured master–student dynamic. This loneliness encourages students to make their own friends.
+    - Description: learning, left to their own devices on the edges of society, passing on knowledge in the time honoured master–student dynamic. This loneliness encourages students to make their own friends.
 
   Possessions:
-    - Dusty Robes.
-    - The Skull of your Master or Zombie Servant or Ghost with whom you have developed a codependent relationship.
+    - Description: Dusty Robes.
+    - Description: The Skull of your Master or Zombie Servant or Ghost with whom you have developed a codependent relationship.
 
   Advanced Skills:
     Healing: 2
     Mortuary Science: 2
     Relationship Counseling: 2
-    Spell – Posthumous Vitality: 1
-    Spell – Skeletal Counsel: 1
-    Spell – Torpor: 1
+    Spell - Posthumous Vitality: 1
+    Spell - Skeletal Counsel: 1
+    Spell - Torpor: 1
     Sneak: 1
 
 Parchment Witch: #42
@@ -370,21 +371,21 @@ Parchment Witch: #42
     Known for their smooth skin, midnight gatherings, and preternatural fear of rain and open flames; the Parchment Witches are long-dead sorcerers who cannot give up the vanity of life. They cover themselves in perfect paper skin, a patiently painted and immaculately folded imitation of life intended to hide ancient bone and gristle.
 
   Possessions:
-    - d6 Rolls of Parchment.
-    - Vials of Pigments and Powders.
-    - Collection of Brushes.
-    - Sword Cane.
+    - Description: d6 Rolls of Parchment.
+    - Description: Vials of Pigments and Powders.
+    - Description: Collection of Brushes.
+    - Description: Sword Cane.
 
   Advanced Skills:
-    Spell – Protection From Rain: 2
-    Spell – Callous Strike: 2
-    Spell – Quench: 2
-    Spell – True Seeing: 2
+    Spell - Protection From Rain: 2
+    Spell - Callous Strike: 2
+    Spell - Quench: 2
+    Spell - True Seeing: 2
     Disguise: 2
     Second Sight: 2
     Healing: 1
-    Spell – Undo: 1
-    Spell – Random: 1
+    Spell - Undo: 1
+    Spell - Random: 1
 
   Special: |-
     You are undead and so do not need to breathe or circulate blood. You take double Damage from Silver Weapons and regain Stamina half as effectively from all sources. You must Test your Luck if outside in the rain, are made wet, are close to open flames, or suffer generally grievous wounds. A failure will see your skin ruined. If your skin is compromised you are very obviously a walking corpse.
@@ -394,8 +395,8 @@ Derivative Dwarf: #43
     Dwarfs are known for being the finest artisans of the million spheres. Give a Dwarf a rock and they will make gold, give a Dwarf a boulder and they will make a Dwarf. You were supposed to be the finest expression of Dwarfy craftsmanship, a true masterpiece, a brand new step in aesthetic design, a jump not seen since the old masters.
 
   Possessions:
-    - Woodsman’s Axe.
-    - Empty Firkin.
+    - Description: Woodsman’s Axe.
+    - Description: Empty Firkin.
 
   Advanced Skills:
     Fist Fighting: 3
@@ -406,19 +407,19 @@ Derivative Dwarf: #43
 
   Special: |-
     As 22 Dwarf but additionally:
-    - To non-Dwarfy eyes you look like any other Dwarf. Only Dwarfs can see the derivative or uninspired parts of your creation. Other Dwarfs will completely ignore you since you remind them of their fading novelty. You have +4 Sneak versus Dwarfs.
+    - Description: To non-Dwarfy eyes you look like any other Dwarf. Only Dwarfs can see the derivative or uninspired parts of your creation. Other Dwarfs will completely ignore you since you remind them of their fading novelty. You have +4 Sneak versus Dwarfs.
 
 Questing Knight: #44
   Description: |-
     You are on a quest for the grail, or the sword, or the throne, or for god, or a lost love, or some other significant object. Your sort are common enough, wandering the worlds, acting out - your romantic melodrama, accusing good folk of being demons or faeries. Questing Knights are generally considered to be harmless.
 
   Possessions:
-    - Heavy Armour.
-    - Horse.
-    - Lance (Damage as Spear).
-    - Sword.
-    - Shield.
-    - A Quixotic Undertaking.
+    - Description: Heavy Armour.
+    - Description: Horse.
+    - Description: Lance (Damage as Spear).
+    - Description: Sword.
+    - Description: Shield.
+    - Description: A Quixotic Undertaking.
 
   Advanced Skills:
     Jousting: 3
@@ -432,31 +433,31 @@ Red Priest: #45
     You are an evangelist of the Red Redemption, wandering confessor, cauterizer of the festering wound of sin: the constant accumulation and recreational consumption of Mass. How can your spirit fly free while shackled and flabby?
 
   Possessions:
-    - Red Robes.
-    - Traditional Faceless Metal Helmet of
-    - your order (Modest Armour).
-    - Symbolic (but fully sized and fully functional) Single Headed Greataxe, to help batter down the door to sin (Damage as Greatsword).
+    - Description: Red Robes.
+    - Description: Traditional Faceless Metal Helmet of
+    - Description: your order (Modest Armour).
+    - Description: Symbolic (but fully sized and fully functional) Single Headed Greataxe, to help batter down the door to sin (Damage as Greatsword).
 
   Advanced Skills:
-    Spell – Ember: 2
-    Spell – Fire Bolt: 2
-    Spell – Flash: 2
+    Spell - Ember: 2
+    Spell - Fire Bolt: 2
+    Spell - Flash: 2
     Great Axe Fighting: 2
     Second Sight: 1
-    Spell – Exorcism: 1
+    Spell - Exorcism: 1
 
 Rhino-Man: #46
   Description: |-
     The original Rhino-Men were created by an insane sorcerer several centuries ago but rebelled and killed him. They are fairly rare creatures, serving as formidable and loyal guards to those - who can afford their services.
 
   Possessions:
-    - Horn (Damage as Knife).
-    - Thick Skin (Rhino Men always count
-    - as being Modestly Armoured).
-    - Undersized Spear.
-    - Tiny, Useless Helmet.
-    - Knuckle Dice.
-    - Half Full Firkin of Rhino-beer (20 Provisions worth).
+    - Description: Horn (Damage as Knife).
+    - Description: Thick Skin (Rhino Men always count
+    - Description: as being Modestly Armoured).
+    - Description: Undersized Spear.
+    - Description: Tiny, Useless Helmet.
+    - Description: Knuckle Dice.
+    - Description: Half Full Firkin of Rhino-beer (20 Provisions worth).
 
   Advanced Skills:
     Spear Fighting: 3
@@ -469,15 +470,15 @@ Sceptical Lamassu: #51
     With the body of a bull, the head of a man, the forelegs of a cat, and the wings of a swan you are the sweetest of the children of the gods. You, however, were not content to rest on your cloud and instead descended from the heavens or crawled up from the abyss and set about finding your own path among the stars.
 
   Possessions:
-    - Incidental Sacred Jewellery worth 10d6 Silver pence if traded.
-    - Pillbox Hat.
-    - Claws (Damage as Sword).
-    - Hooves (Damage as Club).
-    - Wings — able to fly as fast as a running man over clear ground.
+    - Description: Incidental Sacred Jewellery worth 10d6 Silver pence if traded.
+    - Description: Pillbox Hat.
+    - Description: Claws (Damage as Sword).
+    - Description: Hooves (Damage as Club).
+    - Description: Wings — able to fly as fast as a running man over clear ground.
 
   Advanced Skills:
     Fly: 3
-    Spell – Random: [3, 3, 3]
+    Spell - Random: [3, 3, 3]
     Claw Fighting: 2
     Hoof Fighting: 1
 
@@ -486,52 +487,52 @@ Sorcerer of the Academy of Doors: #52
     You are a student at Troika’s most prestigious wizarding academy (pride of the city, experts in pan-dimensional mobility) you were finally able to penetrate the (2d6)th door. You are no master but few outside your peers can claim to know more about the vagaries of skyward travel than you.
 
   Possessions:
-    - Small Functional Door worn on your forehead through which you channel your magic.
-    - Flashy Robes.
+    - Description: Small Functional Door worn on your forehead through which you channel your magic.
+    - Description: Flashy Robes.
 
   Advanced Skills:
     Astrology: 3
     Second Sight: 2
-    Spell – Astral Reach: 2
-    Spell – Teleport: 1
-    Spell – Web: 1
-    Spell – Random: [1, 1, 1]
+    Spell - Astral Reach: 2
+    Spell - Teleport: 1
+    Spell - Web: 1
+    Spell - Random: [1, 1, 1]
 
 Sorcerer of the College of Friends: #53
   Description: |-
     As an integral part of your tutelage in the sub-dimensional academy of the Cordial Wizard God you spent your childhood learning about the fate of pixies, the colour of magic, ritual grammar, and endless other theoretical topics. Now you’re out in the world, discovering that your - education hardly accounted for any of the things that you’ve seen.
 
   Possessions:
-    - Pointed Wizard Hat you received at graduation.
-    - Pocket Full of Wizard Biscuits (2d6, each counts as a Provision).
-    - Wand used to help focus new apprentices, now kept for sentimental reasons.
+    - Description: Pointed Wizard Hat you received at graduation.
+    - Description: Pocket Full of Wizard Biscuits (2d6, each counts as a Provision).
+    - Description: Wand used to help focus new apprentices, now kept for sentimental reasons.
 
   Advanced Skills:
-    Secret Signs – Witching Words: 4
+    Secret Signs - Witching Words: 4
     Run: 2
     Climb: 1
     Sleight of Hand: 1
     Swim: 1
     Sneak: 1
     Second Sight: 1
-    Spell – Jolt: 1
-    Spell – Amity: 1
-    Spell – Mirror Selves: 1
-    Spell – Protection from Rain: 1
-    Spell – Helping Hands: 1
-    Spell – Purple Lens: 1
-    Spell – Random: 1
+    Spell - Jolt: 1
+    Spell - Amity: 1
+    Spell - Mirror Selves: 1
+    Spell - Protection from Rain: 1
+    Spell - Helping Hands: 1
+    Spell - Purple Lens: 1
+    Spell - Random: 1
 
 Fellow of The Sublime Society of Beef Steaks: #54
   Description: |-
     Brawlers believe the application of might and a good beef steak is the universal truth. Words have no power and can no more define the universe than they can build a house, lift a cup, or sear a steak. Might can! Really, they have thought a lot about this.
 
   Possessions:
-    - Weapon of your choice.
-    - Small Gridiron.
-    - 2kg of Premium Meat Cuts.
-    - Waistcoat.
-    - Bottle of Strong but Fancy Wine.
+    - Description: Weapon of your choice.
+    - Description: Small Gridiron.
+    - Description: 2kg of Premium Meat Cuts.
+    - Description: Waistcoat.
+    - Description: Bottle of Strong but Fancy Wine.
 
   Advanced Skills:
     in a Fighting Skill of your choice: 2
@@ -545,11 +546,11 @@ Fellow of The Sublime Society of Beef Steaks: #54
 Temple Knight of Telak the Swordbringer: #55
   Description: |-
     You were once (and possibly still are) a fanatical monk set to maintain constant, vigilant martial readiness in preparation for the end times, when all doorways crumble inwards. You are
-    - always prepared and never unready.
+    - Description: always prepared and never unready.
 
   Possessions:
-    - The Blessing of Telak.
-    - 6 Swords of your choice.
+    - Description: The Blessing of Telak.
+    - Description: 6 Swords of your choice.
 
   Advanced Skills:
     Awareness: 3
@@ -565,17 +566,17 @@ Thaumaturge: #56
     Wandering miracle workers, the depths of whose clothes are filled with pouches of unguents, holy icons and herbs. No matter the metaphysical need, you are always prepared.
 
   Possessions:
-    - Thaumaturgic Fez.
-    - Staff, bedecked with charms and bells. May reroll one die on the Oops! Table if using this staff, however, may never sneak up on anyone because of the ringing and clattering it makes.
-    - Curled Shoes.
-    - Voluminous Robes.
+    - Description: Thaumaturgic Fez.
+    - Description: Staff, bedecked with charms and bells. May reroll one die on the Oops! Table if using this staff, however, may never sneak up on anyone because of the ringing and clattering it makes.
+    - Description: Curled Shoes.
+    - Description: Voluminous Robes.
 
   Advanced Skills:
-    Spell – Undo: 3
-    Spell – Assume Shape: 2
-    Spell – Thunder: 2
-    Spell – Random: [2, 1]
-    Spell – Brittle Twigs: 1
+    Spell - Undo: 3
+    Spell - Assume Shape: 2
+    Spell - Thunder: 2
+    Spell - Random: [2, 1]
+    Spell - Brittle Twigs: 1
     Second Sight: 1
     Astrology: 1
 
@@ -587,8 +588,8 @@ Thinking Engine: #61
     Your eyes are dull ruby spheres, your skin is hard and smooth like ivory but brown and whorled like wood. You are clearly broken, you have no memory of your creation or purpose, and some days your white internal juices ooze thickly from cracks in your skin.
 
   Possessions:
-    - Soldering iron.
-    - Detachable autonomous hands or centaur body (+4 Run) or inbuilt particle detector (+4 Second Sight) or one random Spell at rank 3.
+    - Description: Soldering iron.
+    - Description: Detachable autonomous hands or centaur body (+4 Run) or inbuilt particle detector (+4 Second Sight) or one random Spell at rank 3.
 
   Advanced Skills:
     Golden Barge Pilot: 3
@@ -602,17 +603,17 @@ Thinking Engine: #61
   Special: |-
     You don’t recover Stamina by resting in the usual manner — instead you must spend a full rest period with a hot iron welding your skin back together like putty. For each hour of rest with access to the right tools you regain 3 Stamina.
 
-    - You may recharge plasmic machines by hooking your fluids to them and spending Stamina at a rate of 1 Stamina and 6 minutes per charge.
+    - Description: You may recharge plasmic machines by hooking your fluids to them and spending Stamina at a rate of 1 Stamina and 6 minutes per charge.
 
-    - You always count as being at least Lightly Armoured.
+    - Description: You always count as being at least Lightly Armoured.
 
 Vengeful Child: #62
   Description: |-
     Your village was burnt down by ruffians, or your mother was beheaded by snake cultists, or your father was hung by corrupt officials. Either way you took umbrage and entered the world with a chip on one shoulder and an oversized Sword on the other.
 
   Possessions:
-    - Too-Large Sword that provides +1 to Longsword Fighting and Damage while using it. Only you may benefit from this bonus; it’s not magic, just sentimental.
-    - Old Hunting Bow and 12 Arrows.
+    - Description: Too-Large Sword that provides +1 to Longsword Fighting and Damage while using it. Only you may benefit from this bonus; it’s not magic, just sentimental.
+    - Description: Old Hunting Bow and 12 Arrows.
 
   Advanced Skills:
     Longsword Fighting: 3
@@ -628,17 +629,17 @@ Venturesome Academic: #63
     You’re a classically trained Academic, a product of the universities of the Brass City, the Palace of Tigers, or some other less prestigious centre of learning among the spheres.
 
   Possessions:
-    - Reading Glasses in a sturdy case (you cannot read without them).
-    - Small Sword.
-    - Bundle of Candles and Matches.
-    - Writing materials.
-    - Journal.
+    - Description: Reading Glasses in a sturdy case (you cannot read without them).
+    - Description: Small Sword.
+    - Description: Bundle of Candles and Matches.
+    - Description: Writing materials.
+    - Description: Journal.
 
   Advanced Skills:
     Evaluate: 2
     Astrology: 2
     Healing: 1
-    Spell – Random: 1
+    Spell - Random: 1
     Sword Fighting: 1
     Sleight of Hand: 1
 
@@ -650,12 +651,12 @@ Wizard Hunter: #64
     Some people say man is the most dangerous prey. They’re wrong. Can men ignite the air and freeze your blood? Can men turn into flocks of seagulls when cornered in an alley? No, they can’t. Wizards are the most dangerous prey.
 
   Possessions:
-    - Large Sack.
-    - Witch-hair Rope.
-    - Crossbow and 12 Bolts.
-    - Sword.
-    - 1d6 Pocket Gods.
-    - Ruby Lorgnette.
+    - Description: Large Sack.
+    - Description: Witch-hair Rope.
+    - Description: Crossbow and 12 Bolts.
+    - Description: Sword.
+    - Description: 1d6 Pocket Gods.
+    - Description: Ruby Lorgnette.
 
   Advanced Skills:
     Tracking: 2
@@ -671,9 +672,9 @@ Yongardy Lawyer: #65
     Down in Yongardy they do things differently. They respect the Law. Every day there is a queue outside the courts to get a seat to see the latest up and coming barrister defend their case with a metre of steel. The people follow the careers of their favourite solicitors, watch all their cases, collect their portraits, and sneak into the court after hours to dab the patches of blood on white handkerchiefs. In Yongardy, they love the Law.
 
   Possessions:
-    - Rapier (Damage as Sword) and Puffy Shirt or Sjambok (Damage as Club) and Lots of Scars or Longsword and Heavy Armour or Hammer and Gargantuan Shield.
-    - Manual on Yongardy Law.
-    - Barrister’s Wig.
+    - Description: Rapier (Damage as Sword) and Puffy Shirt or Sjambok (Damage as Club) and Lots of Scars or Longsword and Heavy Armour or Hammer and Gargantuan Shield.
+    - Description: Manual on Yongardy Law.
+    - Description: Barrister’s Wig.
 
   Advanced Skills:
     Fighting in your chosen Weapon: 4
@@ -685,7 +686,7 @@ Zoanthrop: #66
     At some point in your past you decided you didn’t need it anymore: you found a Zoanthropologist and paid them well to remove your troublesome forebrain and elevate you to the pure and unburdened beast you are today.
 
   Possessions:
-    - No starting possessions; you have thrown off the shackles of civilisation. You are probably nude.
+    - Description: No starting possessions; you have thrown off the shackles of civilisation. You are probably nude.
 
   Advanced Skills:
     Climb: 3

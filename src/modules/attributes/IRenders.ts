@@ -12,6 +12,10 @@ export interface IRendersEmbed {
   toEmbed(...args: any[]): EmbedBuilder;
   // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "embeds"> | never;
 }
+export interface IRendersEmbedGroup {
+  toEmbedGroup(...args: any[]): EmbedBuilder[];
+  // toMessage(...args: any[]): WithRequired<ReturnType<IRendersMessage["toMessage"]>, "embeds"> | never;
+}
 
 export interface IRendersMessage {
   toMessage(...args: any[]): WidgetOptions;

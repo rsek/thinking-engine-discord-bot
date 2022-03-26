@@ -4,12 +4,13 @@ import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
 import { IRefTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";
 import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
-import Table from "../../modules/tables/Table.js";
 import Spell from "../../modules/items/Spell.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
 import Item from "../../modules/inventory/Item.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import ManageMessageTask from "./ManageMessageTask.js";
+import Table from "../../modules/tables/Table.js";
+import Enemy from "../../modules/bestiary/Enemy.js";
 
 interface IReferenceable {
   $id: string,
@@ -41,11 +42,14 @@ export default abstract class ReferenceTask {
     } else {
       const item = collection.get(params.id);
       switch (params.type) {
+        // case RefType.Background:
+        //   break;
+        case RefType.Bestiary:
+          message = (item as Enemy).toMessage( params.ephemeral);
+          break;
         case RefType.DamageTable:
           message = (item as DamageInfo).toMessage(WidgetType.DamageTable, params.ephemeral);
           break;
-        // case RefType.Background:
-        //   break;
         case RefType.Item:
           message = (item as Item).toMessage();
           message.ephemeral = params.ephemeral;

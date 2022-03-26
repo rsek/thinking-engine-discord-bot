@@ -5,12 +5,12 @@ import { IRendersEmbed, IRendersMessage } from "../attributes/IRenders.js";
 import WidgetOptions from "../initiative/WidgetOptions.js";
 import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
 import buildWidgetStub from "../rolls/buildWidgetStub.js";
-import splitCamelCase from "../text/splitCamelCase.js";
+import IGameObject from "./IGameObject.js";
 
 /**
  * Base class for static game data objects.
  */
-export default abstract class GameObject implements IRendersEmbed, IRendersMessage {
+export default abstract class GameObject implements IGameObject {
   readonly WidgetTypes: WidgetType[] = [];
   readonly Type!: RefType;
   $id: string;

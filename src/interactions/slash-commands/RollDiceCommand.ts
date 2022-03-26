@@ -4,13 +4,10 @@ import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import RollDiceTask from "../tasks/RollDiceTask.js";
 import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
 
-
-
-
 @Discord()
 export abstract class RollDiceCommand {
   @Slash("dice", {
-    description: "Roll generic dice. For d36, d66, and d666, try \"/roll d36\", \"/roll d66\", and \"/roll d666\" instead."
+    description: "Roll generic dice. For d36, d66, or d666, try \"/roll d36\", \"/roll d66\", or \"/roll d666\"."
   })
   @SlashGroup("roll")
   async dice(

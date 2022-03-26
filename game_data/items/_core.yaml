@@ -33,18 +33,21 @@ mace:
       Ignore armour: 1
       Damage: [2, 4, 4, 6, 6, 8, 10]
 polearm:
+  Slots: 2
   Attacks:
     - Attack type: melee
       Hands: 2
       Ignore armour: 1
       Damage: [2, 4, 4, 8, 12, 14, 18]
 maul:
+  Slots: 2
   Attacks:
     - Attack type: melee
       Hands: 2
       Ignore armour: 1
       Damage: [1, 2, 3, 6, 12, 13, 14]
 greatsword:
+  Slots: 2
   Attacks:
     - Attack type: melee
       Hands: 2
@@ -66,6 +69,7 @@ fusil:
   Description: |-
     A fusil is a long Weapon that looks like a rifle and can be used in melee as a Club. A Fusil holds 6 charges before the plasmic core needs replacing.
   Charges: 6
+  Slots: 2
   Attacks:
     - Attack type: ranged
       Hands: 2
@@ -73,11 +77,13 @@ fusil:
       Damage: [2, 4, 4, 6, 12, 18, 24]
     - *attack:club
 bow:
+  Slots: 2
   Attacks:
     - Attack type: ranged
       Hands: 2
       Damage: [2, 4, 6, 8, 8, 10, 12]
 crossbow:
+  Slots: 2
   Attacks:
     - Attack type: ranged
       Hands: 2
@@ -158,3 +164,12 @@ witch-hair:
 yoke:
   Description: |-
     A yoke gives you +4 carry capacity while worn but you can’t use your hands while wearing it.
+light armour:
+  Armour: 1
+  Slots: 2
+modest armour:
+  Armour: 2
+  Slots: 4
+heavy armour:
+  Armour: 3
+  Slots: 4

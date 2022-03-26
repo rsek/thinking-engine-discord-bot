@@ -2,7 +2,7 @@
   "name": "troika-bot",
   "version": "0.0.1",
   "description": "",
-  "main": "./dist/main.js",
+  "main": "./dist/bot.js",
   "type": "module",
   "engines": {
     "node": "17.x",
@@ -10,10 +10,9 @@
     "yarn": "1.22"
   },
   "scripts": {
-    "flush": "rm -R ./dist",
-    "build": "tsc -p . && cp -R ./src/data/yaml ./dist/data",
+    "build": "tsc --build --clean && tsc --build  --verbose .",
     "postinstall": "patch-package",
-    "start": "yarn run flush && yarn run build && node ."
+    "start": "yarn build && node ."
   },
   "author": "rsek",
   "license": "ISC",

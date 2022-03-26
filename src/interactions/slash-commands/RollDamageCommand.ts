@@ -9,9 +9,6 @@ import enumToRecord from "../../utils/enumToRecord.js";
 import GameData from "../../data/gameData.js";
 import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
 
-
-
-
 @Discord()
 export abstract class RollDamageCommand {
   @Slash("damage", { description: "Roll damage." })

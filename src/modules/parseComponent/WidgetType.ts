@@ -1,14 +1,16 @@
 export enum RefType {
   Background,
+  Bestiary,
   DamageTable,
   Item,
   Skill,
   Spell,
-  Table
+  Table,
 }
 
 export enum WidgetType {
   Background,
+  Bestiary,
   DamageTable,
   Item,
   Skill,

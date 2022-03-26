@@ -7,12 +7,12 @@ import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
 
 @Discord()
-export abstract class SpellCommand {
-  @Slash("spell", { description: "Display the text of a spell." })
-  async spell(
-    @SlashOption( "spell-name",
+export abstract class BestiaryCommand {
+  @Slash("bestiary", { description: "Display a bestiary entry." })
+  async bestiary(
+    @SlashOption( "enemy-name",
       {
-        description: "The spell to be displayed",
+        description: "The enemy to be displayed",
         type: ApplicationCommandOptionType.String,
         autocomplete: true
       })
@@ -31,20 +31,20 @@ export abstract class SpellCommand {
       case InteractionType.ApplicationCommandAutocomplete: {
         interaction = interaction as AutocompleteInteraction;
         const focusedOption = interaction.options.getFocused(true);
-        if (focusedOption.name === "spell-name") {
+        if (focusedOption.name === "enemy-name") {
           return interaction.respond(
-            queryCollection(focusedOption.value as string, GameData[RefType.Spell])
+            queryCollection(focusedOption.value as string, GameData[RefType.Bestiary])
           );
         }
         break;
       }
       case InteractionType.ApplicationCommand: {
         return ReferenceTask.exec(interaction as CommandInteraction, {
-          ephemeral, id, type: RefType.Spell
+          ephemeral, id, type: RefType.Bestiary
         });
       }
       default:
-        throw new Error("[SpellCommand] Received unexpected interaction.");
+        throw new Error("[BestiaryCommand] Received unexpected interaction.");
         break;
     }
   }

@@ -1,3 +1,3 @@
-const yamlRoot = "./dist/data/yaml/";
+const yamlRoot = "./game_data/";
 
 export default yamlRoot;

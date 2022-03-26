@@ -1,18 +1,14 @@
 import "reflect-metadata";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
-import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, InteractionReplyOptions, InteractionType } from "discord.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, InteractionType } from "discord.js";
 import GameData from "../../data/gameData.js";
 import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import Table from "../../modules/tables/Table.js";
 
-
-
-
 @Discord()
 export abstract class RollTableCommand {
   @Slash("table", { description: "Roll on a table." })
-  @SlashGroup("roll")
   async rollTable(
     @SlashOption( "table-name",
       {

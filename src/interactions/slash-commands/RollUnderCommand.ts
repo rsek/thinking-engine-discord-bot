@@ -3,9 +3,6 @@ import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup } from "discordx";
 import RollUnder from "../../modules/rolls/RollUnder.js";
 
-
-
-
 @Discord()
 export default class RollUnderCommand {
   @Slash("under", { description: "Make a roll to score equal to or under a target number" })

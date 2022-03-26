@@ -6,9 +6,6 @@ import _ from "lodash";
 import { enemyToken, henchmanToken } from "../../modules/initiative/initiativeTokens.js";
 import { pcTokenValue } from "../../modules/initiative/initiativeTokens.js";
 
-
-
-
 @Discord()
 export abstract class InitiativeCommand {
   @Slash("initiative", {

@@ -5,9 +5,12 @@ import DiceExpression from "../../modules/rolls/diceExpression.js";
 import TableDieType from "../../modules/tables/TableDieType.js";
 import IGameDataBase from "./IGameDataBase.js";
 
-export default interface ITable extends IGameDataBase {
+// TODO: extend Collection to a Table class
+// TODO: use paging mechanism for table display?
+
+export default interface ITableYaml extends IGameDataBase {
   Roll: keyof typeof TableDieType;
-  Table: Record<number, string> | string[] | Collection<number, string>;
+  Table: Record<number, string>;
 }
 
 // make it optional and have it infer roll type?
