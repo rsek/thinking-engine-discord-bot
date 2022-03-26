@@ -127,8 +127,6 @@ Dragon:
   Special: |- #TODO: smarter way to render tables here?
     Once per Round they may douse a 24 foot area in beautiful Dragon-Fire. Everyone in the area is automatically hit but may Test their Luck to reduce the Damage Roll by 1.
 
-    {{damage:dragon-fire}}
-
     Dragons are immune to high temperatures, including Dragon-Fire.
 Ekodat:
   Skill: 8
