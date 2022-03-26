@@ -2,7 +2,6 @@ import Skill from "./Skill.js";
 import Roll from "../rolls/Roll.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import { IRendersEmbed } from "../attributes/IRenders.js";
-import { Embed } from "discord.js";
 import { WidgetType } from "../parseComponent/WidgetType.js";
 import buildWidgetStub from "../rolls/buildWidgetStub.js";
 
