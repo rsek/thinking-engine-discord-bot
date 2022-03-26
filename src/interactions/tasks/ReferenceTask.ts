@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, ComponentType, InteractionReplyOptions, MessageActionRowComponentBuilder, MessageComponentInteraction } from "discord.js";
 import GameData from "../../data/gameData.js";
 import { BotTask } from "../../modules/parseComponent/BotTask.js";
 import { packParams } from "../../modules/parseComponent/packParams.js";
@@ -11,6 +11,7 @@ import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import ManageMessageTask from "./ManageMessageTask.js";
 import Table from "../../modules/tables/Table.js";
 import Enemy from "../../modules/bestiary/Enemy.js";
+import WidgetOptions from "../../modules/initiative/WidgetOptions.js";
 
 interface IReferenceable {
   $id: string,
@@ -36,7 +37,7 @@ export default abstract class ReferenceTask {
   static async exec(interaction: MessageComponentInteraction | CommandInteraction, params: IRefTaskParams) {
     // TODO: refactor: show item as ephemeral. should also work with slash command
     const collection = GameData[params.type];
-    let message: InteractionReplyOptions = { };
+    let message: WidgetOptions<InteractionReplyOptions> = { };
     if (!collection.has(params.id)) {
       message = { content: `Could not find \`${params.id }\` in \`\``, ephemeral: true };
     } else {
@@ -67,15 +68,20 @@ export default abstract class ReferenceTask {
           break;
       }
       if (!message.components) {
-        message.components = [];
+        message.components = [
+          new ActionRowBuilder<ButtonBuilder>()
+        ];
       }
+      message.components = message.components as ActionRowBuilder<MessageActionRowComponentBuilder>[];
+
+      const targetRowIndex = message.components.findIndex(row => row.toJSON().components.length === 0 || row.toJSON().components.find(item => item.type === ComponentType.Button) && row.toJSON().components.length < 5);
+      let buttonToAdd: ButtonBuilder;
       if (params.ephemeral) {
-        message.components.push(
-          new ActionRowBuilder<ButtonBuilder>().addComponents(ManageMessageTask.createButton(ManageMessageAction.Reveal)
-          ));
+        buttonToAdd = ManageMessageTask.createButton(ManageMessageAction.Reveal);
       } else {
-        message.components.push(new ActionRowBuilder<ButtonBuilder>().addComponents(ManageMessageTask.createButton(ManageMessageAction.Delete)));
+        buttonToAdd = ManageMessageTask.createButton(ManageMessageAction.Delete);
       }
+      message.components[targetRowIndex].addComponents(buttonToAdd);
       await interaction.reply(message);
     }
   }
