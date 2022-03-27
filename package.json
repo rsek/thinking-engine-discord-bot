@@ -10,11 +10,14 @@
     "yarn": "1.22"
   },
   "scripts": {
+    "flush": "rm -r ./dist",
     "build": "tsc --build --clean && tsc --build  --verbose .",
+    "rebuild": "yarn flush && yarn build",
+    "debug": "yarn rebuild && node .",
     "postinstall": "patch-package",
-    "start": "pm2 start dist/bot.js --name \"Thinking Engine\"",
+    "start": "yarn rebuild && pm2 start ./dist/bot.js --name \"Thinking Engine\"",
     "stop": "pm2 stop \"Thinking Engine\"",
-    "kill": "pm2 delete \"Thinking Engine\""
+    "kill": "yarn stop && pm2 delete \"Thinking Engine\""
   },
   "author": "rsek",
   "license": "ISC",
