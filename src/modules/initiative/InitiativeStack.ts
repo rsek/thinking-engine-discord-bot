@@ -3,7 +3,6 @@ import _ from "lodash";
 import weighted from "weighted";
 import buildAddTokenMenu from "./buildAddTokenMenu.js";
 import buildRemoveTokenMenu from "./buildRemoveTokenMenu.js";
-import { NumericAttrHash, fieldsToNumericAttrHash, NumericAttrFieldData, numericAttrHashToFields, maxKeyName, currentKeyName } from "../ux/NumericAttrHash.js";
 import { roundPattern, turnPattern } from "./InitiativeDisplay.js";
 import { endOfRoundToken, enemyToken, henchmanToken, tokenFactionsLeft } from "./initiativeTokens.js";
 import { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../attributes/IRenders.js";
@@ -19,6 +18,7 @@ import { ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, Selec
 import { InitiativeAction } from "../parseComponent/ITaskParams.js";
 import IHasAttributes from "./IHasAttributes.js";
 import sortRecord from "../../interactions/tasks/sortRecord.js";
+import { currentKeyName, fieldsToNumericAttrHash, maxKeyName, NumericAttrFieldData, NumericAttrHash, numericAttrHashToFields } from "../ux/NumericAttrHash.js";
 
 enum TokenMenuType {
   Remove,
