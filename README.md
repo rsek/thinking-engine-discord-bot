@@ -1,6 +1,8 @@
 # Thinking Engine
 
-Thinking Engine is a Discord bot to assist in playing the [*Troika!* TTRPG](https://www.melsonia.com/). In addition to managing Initiative and resolving various dice rolls, it can reference.
+Thinking Engine is a Discord bot to assist in playing the [*Troika!* TTRPG](https://www.melsonia.com/). In addition to managing Initiative and resolving various dice rolls, it can reference game material like spells, enemies, tables, and items.
+
+You can invite Thinking Engine to your discord server by using [this link](https://discord.com/api/oauth2/authorize?client_id=945547039138254938&permissions=380104902656&scope=bot%20applications.commands). Alternatively, you could build and host the bot yourself (which is mainly of interest if you want to use the bot with your own homebrew content).
 
 ## Game Content
 
