@@ -50,6 +50,7 @@ export abstract class Bot {
   async onceReady( ) {
     await Bot.client.guilds.fetch();
 
+
     if (process.env.NODE_ENV === "development" && process.env.GUILD) {
       Bot.client.botGuilds = [process.env.GUILD];
     } else {
@@ -67,6 +68,8 @@ export abstract class Bot {
     // await Bot.client.initApplicationPermissions(true);
 
     console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
+
+    console.log(`Bot is a member of ${Bot.client.guilds.cache.size} guilds.`);
   }
   @On("interactionCreate")
   async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
