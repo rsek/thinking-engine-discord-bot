@@ -34,18 +34,18 @@ export default abstract class EditAttributeTask {
     }
   }
   static async exec(interactionData: MessageComponentInteraction | ModalMessageModalSubmitInteraction, params: IEditAttrTaskParams) {
-    console.log("[Task.editAttribute]", params);
+    // console.log("[Task.editAttribute]", params);
     const interaction = interactionData as typeof interactionData & { message: GuildCacheMessage<"cached"> & {embeds: Embed[]} };
     switch (interaction.type) {
       case InteractionType.MessageComponent: {
-        console.log("[Task.editAttribute] interaction is MessageComponent");
+        // console.log("[Task.editAttribute] interaction is MessageComponent");
         if (!params.id) {
           return EditAttributeTask.promptForId(interaction as MessageComponentInteraction, params);
         }
         break;
       }
       case InteractionType.ModalSubmit: {
-        console.log("[Task.editAttribute] interaction is ModalSubmit");
+        // console.log("[Task.editAttribute] interaction is ModalSubmit");
         if (!params.id) {
           await interaction.deferUpdate();
           return submitModal(interaction as ModalSubmitInteraction);
@@ -73,7 +73,7 @@ export default abstract class EditAttributeTask {
     return interaction.update(widget.toMessage() as InteractionUpdateOptions);
   }
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {
-    console.log("[promptForId] no ID specified, prompting user with a modal");
+    // console.log("[promptForId] no ID specified, prompting user with a modal");
     const textInput =
         new TextInputBuilder()
           .setCustomId("id")
@@ -90,7 +90,7 @@ export default abstract class EditAttributeTask {
       .setTitle("Add New Player Character")
       .addComponents(actionRow.toJSON())
       ;
-    console.log("[promptForId]", modal);
+    // console.log("[promptForId]", modal);
     return interaction.showModal(modal);
   }
 }

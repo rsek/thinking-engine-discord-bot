@@ -26,7 +26,7 @@ export function packMissingParam<T extends BotTask>(task: T, key: (keyof IBotTas
 }
 
 export function unpackMissingParam<T extends BotTask = BotTask>(params: string) {
-  console.log("incoming missing params", params);
+  // console.log("incoming missing params", params);
   // const deserializedAsBuffer = Buffer.from(params, encoding);
   // const paramsObj = decode(deserializedAsBuffer) as TaskMissingParam<T>;
   const paramsObj = JSON.parse(params) as  TaskMissingParam<T>;
@@ -60,7 +60,7 @@ export function packPartialParams<T extends BotTask = BotTask>(
 }
 
 export function unpackParams(params: string) {
-  console.log("incoming params", params);
+  // console.log("incoming params", params);
   // TODO:
   // throw if doesn't decode to json.
   // const deserializedAsBuffer = Buffer.from(params, encoding);

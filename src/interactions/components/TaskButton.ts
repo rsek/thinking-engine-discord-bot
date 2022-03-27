@@ -13,7 +13,6 @@ export abstract class TaskButton {
   @ButtonComponent(/.*/)
   async taskButton(interaction: ButtonInteraction) {
     const params = unpackParams(interaction.customId);
-    console.log("Button Interaction:", params);
     return routeTask(params, interaction);
   }
 }

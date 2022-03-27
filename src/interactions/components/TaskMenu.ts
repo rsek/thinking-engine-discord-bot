@@ -20,7 +20,7 @@ export abstract class TaskMenu {
   async taskMenu(interaction: SelectMenuInteraction) {
     const value = interaction.values[0];
     const params = unpackParams(value);
-    console.log("Interaction:", interaction.customId, params);
+    // console.log("Interaction:", interaction.customId, params);
     return routeTask(params, interaction);
   }
 }

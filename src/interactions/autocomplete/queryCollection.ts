@@ -28,7 +28,7 @@ export default function queryCollection<T extends SearchableCollection>(query: s
     filtered = collection.filter(item => isAutocompleteMatch(query, item)) as T;
   }
   results = filtered.map((value: {$id: string, Name?: string | undefined}) => toAutocompleteOption(value)).slice(0,maxOptions);
-  console.log("autocomplete results:", results);
+  // console.log("autocomplete results:", results);
   return results;
 }
 

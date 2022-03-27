@@ -46,7 +46,7 @@ export default abstract class ReferenceTask {
         // case RefType.Background:
         //   break;
         case RefType.Bestiary:
-          message = (item as Enemy).toMessage( params.ephemeral);
+          message = (item as Enemy).toMessage(params.ephemeral);
           break;
         case RefType.DamageTable:
           message = (item as DamageInfo).toMessage(WidgetType.DamageTable, params.ephemeral);
@@ -78,10 +78,14 @@ export default abstract class ReferenceTask {
       let buttonToAdd: ButtonBuilder;
       if (params.ephemeral) {
         buttonToAdd = ManageMessageTask.createButton(ManageMessageAction.Reveal);
-      } else {
-        buttonToAdd = ManageMessageTask.createButton(ManageMessageAction.Delete);
+        message.components[targetRowIndex].addComponents(buttonToAdd);
       }
-      message.components[targetRowIndex].addComponents(buttonToAdd);
+      // FIXME: dismiss button requires certain message permissions, but i'm not 100% clear on what they are. disabling for now. it may just need to be disabled in DMs, etc
+
+      // else {
+      //   buttonToAdd = ManageMessageTask.createButton(ManageMessageAction.Delete);
+      // }
+      // message.components[targetRowIndex].addComponents(buttonToAdd);
       await interaction.reply(message);
     }
   }

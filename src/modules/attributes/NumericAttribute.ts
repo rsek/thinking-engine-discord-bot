@@ -12,9 +12,6 @@ import INumericAttribute from "./INumericAttribute.js";
 import { IRendersButton, IRendersSelectMenuOption } from "./IRenders.js";
 
 export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
-  incrementByName() {
-
-  }
   static incrementEmbedByName(embed: APIEmbed, {
     id,  current = 1, max = 0, add = true
   }: WithRequired<IEditAttrTaskParams, "id">) {
@@ -22,14 +19,14 @@ export default class NumericAttribute extends Attribute implements INumericAttri
       const fieldIndex = embed.fields.findIndex(field => field.name === id);
       const field = embed.fields[fieldIndex];
       if (fieldIndex !== -1 && NumericAttrPattern.isMatch(field?.value)) {
-        console.log("[NumericAttribute] Field is valid. Incrementing...");
+        // console.log("[NumericAttribute] Field is valid. Incrementing...");
         const attr = NumericAttribute.fromField(field);
         attr[currentKeyName] += current;
         attr[maxKeyName] += max;
         if (attr[currentKeyName] > attr[maxKeyName]) {
           attr[currentKeyName] = attr[maxKeyName];
         }
-        console.log("[NumericAttribute] Built new attribute", attr);
+        // console.log("[NumericAttribute] Built new attribute", attr);
         embed.fields[fieldIndex] = attr.toEmbedField();
       } else if (fieldIndex === -1 && add === true) {
         const newCurrent = Math.max(current, 0);
@@ -42,7 +39,7 @@ export default class NumericAttribute extends Attribute implements INumericAttri
         embed.fields.push(newAttr.toEmbedField());
       }
     }
-    console.log("[NumericAttribute] updated fields", embed.fields);
+    // console.log("[NumericAttribute] updated fields", embed.fields);
     return embed;
   }
   static fromField(field: EmbedFieldData): NumericAttribute {
@@ -63,6 +60,11 @@ export default class NumericAttribute extends Attribute implements INumericAttri
     this[currentKeyName] = current;
     this[maxKeyName] = max;
   }
+  // incrementByName() {
+
+  // }
+
+
   toEmbedField(inline: boolean = true): EmbedField {
     const value = this[currentKeyName] === this[maxKeyName] ? this[maxKeyName].toString() : `${this[currentKeyName]}${NumericAttrSeparator}${this[maxKeyName]}`;
     return {
