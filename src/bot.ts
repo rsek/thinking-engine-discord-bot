@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { IntentsBitField } from "discord.js";
+import { CommandInteraction, ComponentType, IntentsBitField, InteractionType, MessageComponentInteraction, SelectMenuInteraction } from "discord.js";
 import { dirname, importx } from "@discordx/importer";
 import { ArgsOf, Client, Discord, On, Once } from "discordx";
 import dotenv from "dotenv";
@@ -24,7 +24,7 @@ export abstract class Bot {
     if (process.env.NODE_ENV === "development" && !process.env.GUILD) {
       throw new Error("NODE_ENV is set to development, but no test guild ID was provided.");
     }
-    const botGuilds = process.env.NODE_ENV === "development" && process.env.GUILD ? [process.env.GUILD] : undefined;
+
 
     const intents =  [
       IntentsBitField.Flags.Guilds,
@@ -35,11 +35,16 @@ export abstract class Bot {
       IntentsBitField.Flags.DirectMessages
     ];
 
+    // const botGuilds = process.env.NODE_ENV === "development" && process.env.GUILD ? [process.env.GUILD] : undefined;
+
     this._client = new Client({
-      botGuilds,
       intents,
       silent: false,
     });
+
+    if (process.env.NODE_ENV === "development" && process.env.GUILD) {
+      this._client.botGuilds = [process.env.GUILD];
+    }
 
     await this._client.login(process.env.DISCORD_TOKEN);
   }
@@ -54,14 +59,33 @@ export abstract class Bot {
     } else  {
       await Bot.client.initApplicationCommands();
     }
-    await Bot.client.initApplicationPermissions(true);
+    // FIXME: disabling this to see what breaks. if it's not needed, get rid of it.
+    // await Bot.client.initApplicationPermissions(true);
 
     console.log("Bot started");
   }
   @On("interactionCreate")
   async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
     console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
-    console.log("[interactionCreate]", interaction);
+    const logItems = ["[interactionCreate]"];
+
+    switch (interaction.type) {
+      case InteractionType.ApplicationCommand: {
+        logItems.push("Application Command", (interaction as CommandInteraction).commandName);
+        break;}
+      case InteractionType.MessageComponent: {
+        logItems.push("Message Component",
+          ComponentType[(interaction as MessageComponentInteraction).componentType],
+          (interaction as MessageComponentInteraction).customId);
+        if ((interaction as MessageComponentInteraction).componentType === ComponentType.SelectMenu) {
+          logItems.push((interaction as SelectMenuInteraction).valueOf(),...(interaction as SelectMenuInteraction).values);
+        }
+        break;
+      }
+      default:
+        break;
+    }
+    console.log(...logItems);
     await Bot.client.executeInteraction(interaction, true);
   }
 }
