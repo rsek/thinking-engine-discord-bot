@@ -17,7 +17,6 @@
     "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
     /* Advanced Options */
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
