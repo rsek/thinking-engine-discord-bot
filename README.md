@@ -45,3 +45,8 @@ Make a 'Roll Versus' roll.
 ### `/roll dice`
 
 Roll generic dice.
+
+## Credits
+
+* Includes content from the *Troika!* System Resource Document, [available here](https://docs.google.com/document/d/1haUfSVekt2gNab3V2CrL1Pg_sZ-ZlskphwXmSnGT9aw/edit#)
+* Icon by Lorc, [available here](https://game-icons.net/1x1/lorc/clockwork.html). Used under the [CC BY 3.0 license](https://creativecommons.org/licenses/by/3.0/).
