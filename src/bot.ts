@@ -42,10 +42,6 @@ export abstract class Bot {
       silent: false,
     });
 
-    if (process.env.NODE_ENV === "development" && process.env.GUILD) {
-      this._client.botGuilds = [process.env.GUILD];
-    }
-
     await this._client.login(process.env.DISCORD_TOKEN);
   }
   private static _client: Client;
@@ -53,6 +49,14 @@ export abstract class Bot {
   @Once("ready")
   async onceReady( ) {
     await Bot.client.guilds.fetch();
+
+    if (process.env.NODE_ENV === "development" && process.env.GUILD) {
+      Bot.client.botGuilds = [process.env.GUILD];
+    } else {
+      Bot.client.botGuilds = [(client) => client.guilds.cache.map((guild) => guild.id)];
+    }
+
+    console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
 
     if (process.env.NODE_ENV === "production") {
       await Bot.client.initGlobalApplicationCommands();
@@ -62,7 +66,7 @@ export abstract class Bot {
     // FIXME: disabling this to see what breaks. if it's not needed, get rid of it.
     // await Bot.client.initApplicationPermissions(true);
 
-    console.log("Bot started");
+    console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
   }
   @On("interactionCreate")
   async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
