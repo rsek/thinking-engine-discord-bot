@@ -39,7 +39,7 @@ export default abstract class ReferenceTask {
     const collection = GameData[params.type];
     let message: WidgetOptions<InteractionReplyOptions> = { };
     if (!collection.has(params.id)) {
-      message = { content: `Could not find \`${params.id }\` in \`\``, ephemeral: true };
+      message = { content: `Could not find \`${params.id }\`.`, ephemeral: true };
     } else {
       const item = collection.get(params.id);
       switch (params.type) {
