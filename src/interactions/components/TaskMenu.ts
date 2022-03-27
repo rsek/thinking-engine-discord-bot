@@ -6,7 +6,6 @@ import { routeTask } from "../../modules/parseComponent/BotTask.js";
 import { unpackParams } from "../../modules/parseComponent/packParams.js";
 
 export const taskMenuIdPrefix = "taskMenu";
-console.log("starting TaskMenu");
 /**
  * Handler for task menus: menus where a single option is selected to perform a task.
  *
