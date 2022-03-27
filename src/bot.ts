@@ -56,7 +56,7 @@ export abstract class Bot {
       Bot.client.botGuilds = [(client) => client.guilds.cache.map((guild) => guild.id)];
     }
 
-    console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
+    // console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
 
     if (process.env.NODE_ENV === "production") {
       await Bot.client.initGlobalApplicationCommands();
@@ -70,7 +70,7 @@ export abstract class Bot {
   }
   @On("interactionCreate")
   async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
-    console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
+    // console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
     const logItems = ["[interactionCreate]"];
 
     switch (interaction.type) {
