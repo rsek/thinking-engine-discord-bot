@@ -17,15 +17,12 @@ export abstract class Bot {
       dirname(import.meta.url) +
       "/interactions/{slash-commands,components}/**/*.{ts,js}"
     );
-
     if (!process.env.DISCORD_TOKEN) {
       throw Error("Could not find DISCORD_TOKEN in your environment");
     }
     if (process.env.NODE_ENV === "development" && !process.env.GUILD) {
       throw new Error("NODE_ENV is set to development, but no test guild ID was provided.");
     }
-
-
     const intents =  [
       IntentsBitField.Flags.Guilds,
       // FIXME: not sure if this one is needed. determine if anything breaks when you turn it off.
@@ -49,7 +46,6 @@ export abstract class Bot {
   @Once("ready")
   async onceReady( ) {
     await Bot.client.guilds.fetch();
-
 
     if (process.env.NODE_ENV === "development" && process.env.GUILD) {
       Bot.client.botGuilds = [process.env.GUILD];
