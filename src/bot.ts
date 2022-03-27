@@ -13,6 +13,11 @@ export abstract class Bot {
     return this._client;
   }
   static async start(): Promise<void> {
+    await importx(
+      dirname(import.meta.url) +
+      "/interactions/{slash-commands,components}/**/*.{ts,js}"
+    );
+
     if (!process.env.DISCORD_TOKEN) {
       throw Error("Could not find DISCORD_TOKEN in your environment");
     }
@@ -36,27 +41,27 @@ export abstract class Bot {
       silent: false,
     });
 
-    await importx(
-      dirname(import.meta.url) +
-      "/interactions/{slash-commands,components}/**/*.{ts,js}"
-    );
-
     await this._client.login(process.env.DISCORD_TOKEN);
   }
   private static _client: Client;
 
   @Once("ready")
   async onceReady( ) {
+    await Bot.client.guilds.fetch();
+
     if (process.env.NODE_ENV === "production") {
       await Bot.client.initGlobalApplicationCommands();
     } else  {
       await Bot.client.initApplicationCommands();
     }
     await Bot.client.initApplicationPermissions(true);
+
     console.log("Bot started");
   }
   @On("interactionCreate")
-  async onInteractionCreate( [interaction]: ArgsOf<"interactionCreate">, ) {
+  async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
+    console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
+    console.log("[interactionCreate]", interaction);
     await Bot.client.executeInteraction(interaction, true);
   }
 }

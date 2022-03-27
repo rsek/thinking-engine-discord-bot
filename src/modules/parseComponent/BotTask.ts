@@ -45,7 +45,7 @@ export interface IBotTasksParams extends Record<BotTask, TaskParams> {
  * @param {Interaction} interaction
  */
 export async function routeTask(tasksParams: ReturnType<typeof unpackParams>, interaction: Interaction) {
-  console.log("[routeTask]", tasksParams, interaction);
+  console.log("[routeTask]", tasksParams);
   _.forEach(tasksParams, async (task, taskId) => {
     switch (taskId) {
       case BotTask.EditAttribute:
