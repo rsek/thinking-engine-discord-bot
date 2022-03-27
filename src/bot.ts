@@ -1,68 +1,64 @@
 import "reflect-metadata";
-import "source-map-support/register.js";
-import type { ArgsOf } from "discordx";
-import { Client, Discord, On, Once } from "discordx";
+
+import { IntentsBitField } from "discord.js";
 import { dirname, importx } from "@discordx/importer";
+import { ArgsOf, Client, Discord, On, Once } from "discordx";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-console.log("Bot is starting...");
-
-export const client = new Client({
-  botGuilds: process.env.GUILD ? [process.env.GUILD] : undefined,
-  intents: [
-    "Guilds",
-    "GuildMessages",
-    "GuildWebhooks",
-    "DirectMessages",
-  ],
-  silent: false,
-});
-
 @Discord()
-export abstract class AppDiscord {
-  @Once("ready")
-  async onceReady() {
-  // make sure all guilds are in cache
-    await client.guilds.fetch();
-    // init all application commands
-    if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
-      await client.initApplicationCommands({
-        global: { log: true },
-      });
-    } else {
-      await client.initApplicationCommands({
-        guild: { log: true },
-      });
+export abstract class Bot {
+  static get client(): Client {
+    return this._client;
+  }
+  static async start(): Promise<void> {
+    if (!process.env.DISCORD_TOKEN) {
+      throw Error("Could not find DISCORD_TOKEN in your environment");
     }
-    // init permissions; enabled log to see changes
-    await client.initApplicationPermissions(true);
+    if (process.env.NODE_ENV === "development" && !process.env.GUILD) {
+      throw new Error("NODE_ENV is set to development, but no test guild ID was provided.");
+    }
+    const botGuilds = process.env.NODE_ENV === "development" && process.env.GUILD ? [process.env.GUILD] : undefined;
 
+    const intents =  [
+      IntentsBitField.Flags.Guilds,
+      // FIXME: not sure if this one is needed. determine if anything breaks when you turn it off.
+      IntentsBitField.Flags.GuildMessages,
+      // FIXME: not sure if this one is needed. determine if anything breaks when you turn it off.
+      // IntentsBitField.Flags.GuildWebhooks,
+      IntentsBitField.Flags.DirectMessages
+    ];
+
+    this._client = new Client({
+      botGuilds,
+      intents,
+      silent: false,
+    });
+
+    await importx(
+      dirname(import.meta.url) +
+      "/interactions/{slash-commands,components}/**/*.{ts,js}"
+    );
+
+    await this._client.login(process.env.DISCORD_TOKEN);
+  }
+  private static _client: Client;
+
+  @Once("ready")
+  async onceReady( ) {
+    if (process.env.NODE_ENV === "production") {
+      await Bot.client.initGlobalApplicationCommands();
+    } else  {
+      await Bot.client.initApplicationCommands();
+    }
+    await Bot.client.initApplicationPermissions(true);
     console.log("Bot started");
   }
   @On("interactionCreate")
-  async onInteraction(
-    [interaction]: ArgsOf<"interactionCreate">,
-    client: Client
-  ) {
-    await client.executeInteraction(interaction);
+  async onInteractionCreate( [interaction]: ArgsOf<"interactionCreate">, ) {
+    await Bot.client.executeInteraction(interaction, true);
   }
 }
-/**
- * Starts the bot.
- */
-async function run() {
-  await importx(
-    dirname(import.meta.url) + "/interactions/{slash-commands,components}/**/*.{ts,js}"
-  );
 
-  const commands = await client.CommandByGuild();
-
-  if (!process.env.DISCORD_TOKEN) {
-    throw Error("No DISCORD_TOKEN found in .env file.");
-  }
-  await client.login(process.env.DISCORD_TOKEN );
-}
-
-await run();
+void Bot.start();
