@@ -16,7 +16,7 @@
     "debug": "yarn rebuild && node .",
     "postinstall": "patch-package",
     "start": "yarn rebuild && pm2 start ./dist/bot.js --name \"Thinking Engine\"",
-    "restart": "yarn rebuild && pm2 restart \"Thinking Engine\"",
+    "restart": "yarn rebuild && pm2 restart \"Thinking Engine\" --update-env",
     "stop": "pm2 stop \"Thinking Engine\"",
     "kill": "yarn stop && pm2 delete \"Thinking Engine\""
   },
