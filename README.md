@@ -6,7 +6,7 @@ You can invite Thinking Engine to your discord server by using [this link](https
 
 ## Game Content
 
-Thinking Engine includes game data for the spells, enemies, tables, and items. The data is formatted as YAML and lives in the `game_data` directory. I have yet to document the structure (mainly because I'm still tweaking it); that said, I've kept it pretty simple.
+Thinking Engine includes game data for the spells, enemies, tables, and items. The data is formatted as YAML and lives in the `game_data` directory. I have yet to document the structure (mainly because I'm still tweaking it); that said, I've kept it pretty simple, so you might be able to muddle through.
 
 You can add your own custom content by creating YAML files following the format of existing SRD content, and adding them to the appropriate sub-directory in `game_data`. The key for each object should be unique, or it will overwrite previous objects with the same key; this can be leveraged to override SRD content.
 
