@@ -74,24 +74,24 @@ export abstract class Bot {
   @On("interactionCreate")
   async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
     // console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
-    const logItems = ["[interactionCreate]"];
+    // const logItems = ["[interactionCreate]"];
 
-    switch (interaction.type) {
-      case InteractionType.ApplicationCommand: {
-        logItems.push("Application Command", (interaction as CommandInteraction).commandName);
-        break;}
-      case InteractionType.MessageComponent: {
-        logItems.push("Message Component",
-          ComponentType[(interaction as MessageComponentInteraction).componentType],
-          (interaction as MessageComponentInteraction).customId);
-        if ((interaction as MessageComponentInteraction).componentType === ComponentType.SelectMenu) {
-          logItems.push((interaction as SelectMenuInteraction).valueOf(),...(interaction as SelectMenuInteraction).values);
-        }
-        break;
-      }
-      default:
-        break;
-    }
+    // switch (interaction.type) {
+    //   case InteractionType.ApplicationCommand: {
+    //     logItems.push("Application Command", (interaction as CommandInteraction).commandName);
+    //     break;}
+    //   case InteractionType.MessageComponent: {
+    //     logItems.push("Message Component",
+    //       ComponentType[(interaction as MessageComponentInteraction).componentType],
+    //       (interaction as MessageComponentInteraction).customId);
+    //     if ((interaction as MessageComponentInteraction).componentType === ComponentType.SelectMenu) {
+    //       logItems.push((interaction as SelectMenuInteraction).valueOf(),...(interaction as SelectMenuInteraction).values);
+    //     }
+    //     break;
+    //   }
+    //   default:
+    //     break;
+    // }
     // console.log(...logItems);
     await Bot.client.executeInteraction(interaction, true);
   }
