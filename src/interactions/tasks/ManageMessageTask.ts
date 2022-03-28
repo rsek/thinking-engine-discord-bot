@@ -1,11 +1,11 @@
-import "reflect-metadata";
-import { InteractionReplyOptions, ButtonBuilder, ButtonStyle, ActionRow, MessageComponentInteraction, GuildCacheMessage, CacheType, MessageActionRowComponent, Message, ComponentType } from "discord.js";
-import { BotTask } from "../../modules/parseComponent/BotTask.js";
-import { packParams } from "../../modules/parseComponent/packParams.js";
-import { asEphemeral, stripEphemeral } from "../../modules/attributes/toEphemeral.js";
-import { IManageMessageTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";
-import { ActionRowBuilder, MessageActionRowComponentBuilder } from "@discordjs/builders";
-import { APIActionRowComponent, APIActionRowComponentTypes, APIMessageActionRowComponent } from "discord-api-types/v10";
+
+import { ButtonBuilder, ButtonStyle, MessageComponentInteraction, GuildCacheMessage, CacheType, Message, ComponentType } from "discord.js";
+import { BotTask } from "../../modules/tasks/BotTask.js";
+import { packParams } from "../../modules/tasks/packParams.js";
+import { asEphemeral } from "../../modules/attributes/toEphemeral.js";
+import { IManageMessageTaskParams, ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
+import { ActionRowBuilder } from "@discordjs/builders";
+import { APIActionRowComponent, APIMessageActionRowComponent } from "discord-api-types/v10";
 
 export default abstract class ManageMessageTask {
   static createButton(action: ManageMessageAction) {

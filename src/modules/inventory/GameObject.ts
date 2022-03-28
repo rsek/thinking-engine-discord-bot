@@ -1,10 +1,10 @@
 import { Embed, InteractionReplyOptions } from "discord.js";
 import { titleCase } from "title-case";
 import ItemIn from "../../types/ItemIn.js";
-import { IRendersEmbed, IRendersMessage } from "../attributes/IRenders.js";
-import WidgetOptions from "../initiative/WidgetOptions.js";
-import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildWidgetStub.js";
+import { IRendersEmbed, IRendersMessage } from "../widgets/IRenders.js";
+import WidgetOptions from "../widgets/WidgetOptions.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import IGameObject from "./IGameObject.js";
 
 /**

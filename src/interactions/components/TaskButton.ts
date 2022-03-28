@@ -1,9 +1,8 @@
-import "reflect-metadata";
 
 import { ButtonInteraction } from "discord.js";
 import { ButtonComponent, Discord } from "discordx";
-import { routeTask } from "../../modules/parseComponent/BotTask.js";
-import { unpackParams } from "../../modules/parseComponent/packParams.js";
+import { routeTask } from "../../modules/tasks/routeTask.js";
+import { unpackParams } from "../../modules/tasks/packParams.js";
 
 const buttonPattern = new RegExp(/./);
 

@@ -1,17 +1,8 @@
 import { ApplicationCommandOptionChoice, Collection } from "discord.js";
-import _ from "lodash-es";
-import GameData from "../../data/gameData.js";
+import IGameObject from "../../modules/inventory/IGameObject.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
-import ValueOf from "../../types/ValueOf.js";
-import ValueOfMap from "../../types/ValueOfMap.js";
-
-//         (item.Name ?? item.$id).toLowerCase().startsWith(query.toLowerCase())
-
-type SearchableCollection = ValueOf<typeof GameData>;
-type SearchableItem = ValueOfMap<SearchableCollection>;
 
 const maxOptions = 25;
-
 
 /**
  * Generic function for querying the bot's game data.
@@ -19,13 +10,13 @@ const maxOptions = 25;
  * @param collection The collection of game objects to be searched.
  * @returns An array of autocomplete result data.
  */
-export default function queryCollection<T extends SearchableCollection>(query: string, collection: T): ApplicationCommandOptionChoice[] {
+export default function queryCollection<T extends IGameObject>(query: string, collection: Collection<string, T>): ApplicationCommandOptionChoice[] {
   let results: ApplicationCommandOptionChoice[] = [];
-  let filtered: T;
+  let filtered: typeof collection;
   if (!query.length) {
     filtered = collection;
   } else {
-    filtered = collection.filter(item => isAutocompleteMatch(query, item)) as T;
+    filtered = collection.filter(item => isAutocompleteMatch(query, item));
   }
   results = filtered.map((value: {$id: string, Name?: string | undefined}) => toAutocompleteOption(value)).slice(0,maxOptions);
   // console.log("autocomplete results:", results);

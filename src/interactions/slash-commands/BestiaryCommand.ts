@@ -1,13 +1,16 @@
 import "reflect-metadata";
+
 import { AutocompleteInteraction, CommandInteraction, InteractionType, ApplicationCommandOptionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import GameData from "../../data/gameData.js";
-import { RefType } from "../../modules/parseComponent/WidgetType.js";
+import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
+import { container } from "tsyringe";
+import Bestiary from "../../data/Bestiary.js";
 
 @Discord()
 export abstract class BestiaryCommand {
+  readonly _gameData = container.resolve(Bestiary);
   @Slash("bestiary", { description: "Display a bestiary entry." })
   async bestiary(
     @SlashOption( "enemy-name",
@@ -33,7 +36,7 @@ export abstract class BestiaryCommand {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === "enemy-name") {
           return interaction.respond(
-            queryCollection(focusedOption.value as string, GameData[RefType.Bestiary])
+            queryCollection(focusedOption.value as string, this._gameData)
           );
         }
         break;

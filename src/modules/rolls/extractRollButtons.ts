@@ -1,7 +1,7 @@
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 import _ from "lodash-es";
-import { BotTask } from "../parseComponent/BotTask.js";
-import { packParams } from "../parseComponent/packParams.js";
+import { BotTask } from "../tasks/BotTask.js";
+import { packParams } from "../tasks/packParams.js";
 import { dicePattern } from "./diceExpression.js";
 import toDiceExpression from "./toDiceExpression.js";
 /**

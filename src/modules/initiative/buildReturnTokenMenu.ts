@@ -1,13 +1,13 @@
-import _ from "lodash";
-import { NumericAttrHash, currentKeyName, maxKeyName } from "../ux/NumericAttrHash.js";
-import { endOfRoundToken, isPlayerToken, henchmanToken, enemyToken } from "./initiativeTokens.js";
+import _ from "lodash-es";
+import { NumericAttrHash, currentKeyName, maxKeyName } from "../attributes/NumericAttrConstants.js";
+import { isPlayerToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
+import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
 import { SelectMenuOptionBuilder } from "discord.js";
-import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
-import { InitiativeAction } from "../parseComponent/ITaskParams.js";
+import { InitiativeAction } from "../tasks/ITaskParams.js";
+import { endOfRoundToken, henchmanToken, enemyToken, returnTokenMenuId } from "./InitiativeConstants.js";
+import packInitiativeParams from "./packInitiativeTaskParams.js";
 
-export const returnTokenMenuId = "returnTokenMenu";
 /**
  * Builds a select menu used to return tokens to the initiative token stack.
  * @param tokens The token attributes to use when building the menu.
@@ -61,7 +61,7 @@ export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
   menu.addOptions(new SelectMenuOptionBuilder()
     .setLabel("Return all tokens to stack")
     .setEmoji({ name: "🔄" })
-    .setValue(InitiativeTask.taskParams(InitiativeAction.Shuffle))
+    .setValue(packInitiativeParams(InitiativeAction.Shuffle))
   );
   return menu;
 }

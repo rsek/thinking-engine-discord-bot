@@ -1,5 +1,5 @@
 import Tuple from "../../types/Tuple.js";
-import IGameDataBase from "./IGameDataBase.js";
+import IGameDataBase from "./IGameObjectBase.js";
 import IItem from "./IItem.js";
 import AttackType from "../../constants/AttackType.js";
 

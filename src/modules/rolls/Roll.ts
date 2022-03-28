@@ -1,13 +1,13 @@
 import { EmbedField, InteractionReplyOptions } from "discord.js";
 import _ from "lodash-es";
-import { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../attributes/IRenders.js";
-import WidgetOptions from "../initiative/WidgetOptions.js";
+import { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
+import WidgetOptions from "../widgets/WidgetOptions.js";
 import DiceExpression, { dicePattern } from "./diceExpression.js";
 import IRoll from "./IRoll.js";
 import parseDice from "./parseDice.js";
 import IRollOptions from "./IRollOptions.js";
-import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildWidgetStub.js";
+import { WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 
 export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, IRendersMessage {
   static WidgetType: WidgetType = WidgetType.DiceRoll;

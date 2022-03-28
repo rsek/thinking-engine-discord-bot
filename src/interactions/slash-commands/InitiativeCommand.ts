@@ -1,10 +1,8 @@
-import "reflect-metadata";
 import { Discord, Slash, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
-import _ from "lodash";
-import { enemyToken, henchmanToken } from "../../modules/initiative/initiativeTokens.js";
-import { pcTokenValue } from "../../modules/initiative/initiativeTokens.js";
+import _ from "lodash-es";
+import { pcTokenValue, henchmanToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
 
 @Discord()
 export abstract class InitiativeCommand {

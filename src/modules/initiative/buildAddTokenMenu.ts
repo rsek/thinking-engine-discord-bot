@@ -1,12 +1,11 @@
-import { enemyToken, henchmanToken, pcTokenValue } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
 import { SelectMenuOptionBuilder } from "discord.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
-import { BotTask } from "../parseComponent/BotTask.js";
-import { packPartialParams } from "../parseComponent/packParams.js";
-import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
+import { BotTask } from "../tasks/BotTask.js";
+import { packPartialParams } from "../tasks/packParams.js";
+import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
+import { pcTokenValue, henchmanToken, enemyToken, addTokenMenuId } from "./InitiativeConstants.js";
 
-export const addTokenMenuId = "addTokenMenu";
 
 export default function buildAddTokenMenu() {
   const menu = getTaskMenuStub(addTokenMenuId)

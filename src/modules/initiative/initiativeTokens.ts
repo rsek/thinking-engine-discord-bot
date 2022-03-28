@@ -1,14 +1,7 @@
-// get round + turn count with typed regex
-// timer element - component? lasts a set number of turns or rounds.
+import { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import { endOfRoundToken, enemyToken, nonPlayerTokens } from "./InitiativeConstants.js";
 
-import { NumericAttrHash } from "../ux/NumericAttrHash.js";
 
-export const enemyToken = "Enemies";
-export const henchmanToken = "Henchmen";
-export const endOfRoundToken = "End of the Round";
-export const pcTokenValue = 2;
-
-const nonPlayerTokens = [ enemyToken, henchmanToken, endOfRoundToken ];
 
 export function isPlayerToken(token: string) {
   return !nonPlayerTokens.includes(token);

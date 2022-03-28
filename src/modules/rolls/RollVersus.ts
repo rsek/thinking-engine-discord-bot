@@ -1,8 +1,8 @@
 import { EmbedField } from "discord.js";
-import _ from "lodash";
-import { IRendersEmbed } from "../attributes/IRenders.js";
-import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildWidgetStub.js";
+import _ from "lodash-es";
+import { IRendersEmbed } from "../widgets/IRenders.js";
+import { WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import OpponentRoll from "./OpponentRoll.js";
 
 export interface IRollVersus {

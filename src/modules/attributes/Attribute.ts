@@ -1,7 +1,6 @@
-import { EmbedField, EmbedFieldData } from "discord.js";
-import StaticImplements from "../decorators/StaticImplements.js";
+import { EmbedField } from "discord.js";
 import IAttribute from "./IAttribute.js";
-import { IRendersEmbedField } from "./IRenders.js";
+import { IRendersEmbedField } from "../widgets/IRenders.js";
 
 export default abstract class Attribute implements IAttribute, IRendersEmbedField {
   name: string;

@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { Discord, SlashGroup } from "discordx";
 
 @Discord()

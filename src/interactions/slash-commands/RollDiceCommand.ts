@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import RollDiceTask from "../tasks/RollDiceTask.js";

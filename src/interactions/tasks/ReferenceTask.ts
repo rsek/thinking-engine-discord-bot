@@ -1,17 +1,22 @@
+import "reflect-metadata";
+
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, ComponentType, InteractionReplyOptions, MessageActionRowComponentBuilder, MessageComponentInteraction } from "discord.js";
-import GameData from "../../data/gameData.js";
-import { BotTask } from "../../modules/parseComponent/BotTask.js";
-import { packParams } from "../../modules/parseComponent/packParams.js";
-import { IRefTaskParams, ManageMessageAction } from "../../modules/parseComponent/ITaskParams.js";
-import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
-import Spell from "../../modules/items/Spell.js";
-import DamageInfo from "../../modules/DamageRoll/DamageInfo.js";
-import Item from "../../modules/inventory/Item.js";
+import { BotTask } from "../../modules/tasks/BotTask.js";
+import { packParams } from "../../modules/tasks/packParams.js";
+import { IRefTaskParams, ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
+import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import ManageMessageTask from "./ManageMessageTask.js";
-import Table from "../../modules/tables/Table.js";
-import Enemy from "../../modules/bestiary/Enemy.js";
-import WidgetOptions from "../../modules/initiative/WidgetOptions.js";
+import WidgetOptions from "../../modules/widgets/WidgetOptions.js";
+import { container } from "tsyringe";
+import IGameObject from "../../modules/inventory/IGameObject.js";
+import Backgrounds from "../../data/Backgrounds.js";
+import Bestiary from "../../data/Bestiary.js";
+import DamageTables from "../../data/DamageTables.js";
+import Items from "../../data/Items.js";
+import Skills from "../../data/Skills.js";
+import Spells from "../../data/Spells.js";
+import Tables from "../../data/Tables.js";
 
 interface IReferenceable {
   $id: string,
@@ -32,41 +37,40 @@ export default abstract class ReferenceTask {
       .setStyle(ButtonStyle.Secondary)
     ;
   }
-  // TODO: custom id etc
   // consider: a selectMenu handler that's flagged with the relevant stuff such that its content can be detected via regex and redirected to appropriate handler.
   static async exec(interaction: MessageComponentInteraction | CommandInteraction, params: IRefTaskParams) {
     // TODO: refactor: show item as ephemeral. should also work with slash command
-    const collection = GameData[params.type];
+    const collection = ReferenceTask._gameData[params.type];
     let message: WidgetOptions<InteractionReplyOptions> = { };
     if (!collection.has(params.id)) {
       message = { content: `Could not find \`${params.id }\`.`, ephemeral: true };
     } else {
-      const item = collection.get(params.id);
+      const item = collection.get(params.id) as IGameObject;
       switch (params.type) {
         // case RefType.Background:
         //   break;
         case RefType.Bestiary:
-          message = (item as Enemy).toMessage(params.ephemeral);
+          message = item.toMessage();
           break;
         case RefType.DamageTable:
-          message = (item as DamageInfo).toMessage(WidgetType.DamageTable, params.ephemeral);
+          message = item.toMessage(WidgetType.DamageTable);
           break;
         case RefType.Item:
-          message = (item as Item).toMessage();
-          message.ephemeral = params.ephemeral;
+          message = item.toMessage();
           break;
         // case RefType.Skill:
         //   break;
         case RefType.Table:
-          message = (item as Table).toMessage(WidgetType.Table, params.ephemeral);
+          message = item.toMessage(WidgetType.Table);
           break;
         case RefType.Spell:
-          message = (item as Spell).toMessage(WidgetType.Spell, params.ephemeral);
+          message = item.toMessage(WidgetType.Spell);
           break;
         default:
           throw new RangeError();
           break;
       }
+      message.ephemeral = params.ephemeral;
       if (!message.components) {
         message.components = [
           new ActionRowBuilder<ButtonBuilder>()
@@ -89,4 +93,16 @@ export default abstract class ReferenceTask {
       await interaction.reply(message);
     }
   }
+  // static readonly _gameData = container.resolve(GameData);
+  static readonly _gameData =   {
+    [RefType.Background]: container.resolve(Backgrounds),
+    [RefType.Bestiary]: container.resolve(Bestiary),
+    [RefType.DamageTable]: container.resolve(DamageTables),
+    [RefType.Item]: container.resolve(Items),
+    [RefType.Skill]: container.resolve(Skills),
+    [RefType.Spell]: container.resolve(Spells),
+    [RefType.Table]: container.resolve(Tables),
+  };
+
+  // TODO: custom id etc
 }

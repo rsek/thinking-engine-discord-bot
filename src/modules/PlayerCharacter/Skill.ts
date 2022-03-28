@@ -1,6 +1,6 @@
 import { InteractionReplyOptions } from "discord.js";
 import ItemIn from "../../types/ItemIn.js";
-import WidgetOptions from "../initiative/WidgetOptions.js";
+import WidgetOptions from "../widgets/WidgetOptions.js";
 import GameObject from "../inventory/GameObject.js";
 import ISkill from "./ISkill.js";
 

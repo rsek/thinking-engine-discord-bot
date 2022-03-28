@@ -1,15 +1,16 @@
 import "reflect-metadata";
-import GameData from "../../data/gameData.js";
+
 import { ButtonBuilder, ButtonStyle, MessageComponentInteraction, CommandInteraction, InteractionReplyOptions } from "discord.js";
-import { BotTask } from "../../modules/parseComponent/BotTask.js";
-import { packParams } from "../../modules/parseComponent/packParams.js";
-import { IRollTableTaskParams } from "../../modules/parseComponent/ITaskParams.js";
-import userErrorMessage from "./userErrorMessage.js";
-import { RefType, WidgetType } from "../../modules/parseComponent/WidgetType.js";
+import { BotTask } from "../../modules/tasks/BotTask.js";
+import { packParams } from "../../modules/tasks/packParams.js";
+import { IRollTableTaskParams } from "../../modules/tasks/ITaskParams.js";
+import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
+import { WidgetType } from "../../modules/widgets/WidgetType.js";
 import Table from "../../modules/tables/Table.js";
+import { container } from "tsyringe";
+import Tables from "../../data/Tables.js";
 
 export default abstract class RollTableTask {
-  // TODO: better method naming?
   static toButton(id: IRollTableTaskParams["id"], label: string = "Roll on table") {
     return new ButtonBuilder()
       .setLabel(label)
@@ -18,7 +19,7 @@ export default abstract class RollTableTask {
       .setCustomId(packParams(BotTask.RollTable, { id }) );
   }
   static async exec(interaction: MessageComponentInteraction|CommandInteraction, params: IRollTableTaskParams) {
-    const collection = GameData[RefType.Table];
+    const collection = RollTableTask._gameData;
     let message: InteractionReplyOptions;
     if (!collection.has(params.id)) {
       message = userErrorMessage();
@@ -28,4 +29,5 @@ export default abstract class RollTableTask {
     }
     await interaction.reply(message);
   }
+  static readonly _gameData = container.resolve(Tables);
 }

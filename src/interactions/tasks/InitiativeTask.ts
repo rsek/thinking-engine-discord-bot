@@ -1,48 +1,19 @@
-import "reflect-metadata";
-import { ButtonBuilder, ButtonStyle, EmbedBuilder, MessageComponentInteraction } from "discord.js";
-import { BotTask } from "../../modules/parseComponent/BotTask.js";
-import { IInitiativeTokenTaskParams, InitiativeAction } from "../../modules/parseComponent/ITaskParams.js";
-import { packParams } from "../../modules/parseComponent/packParams.js";
-import { firstEmbedOfType } from "../../modules/ux/firstEmbedOfType.js";
-import userErrorMessage from "./userErrorMessage.js";
+
+import { EmbedBuilder, MessageComponentInteraction } from "discord.js";
+import { IInitiativeTokenTaskParams, InitiativeAction } from "../../modules/tasks/ITaskParams.js";
+import { firstEmbedOfType } from "../../utils/firstEmbedOfType.js";
+import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
-import { endOfRoundToken, enemyToken } from "../../modules/initiative/initiativeTokens.js";
-import { WidgetType } from "../../modules/parseComponent/WidgetType.js";
+import { WidgetType } from "../../modules/widgets/WidgetType.js";
 import ColorTheme from "../../constants/ColorTheme.js";
 import { APIEmbed } from "discord-api-types/v10";
-import { roundPrefix, turnPrefix } from "../../modules/initiative/InitiativeDisplay.js";
+import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
 
 export default abstract class InitiativeTask {
-  static taskParams<T extends InitiativeAction>(tokenStackAction: T) {
-    return packParams(BotTask.Initiative, { action: tokenStackAction });
-  }
-  static createButton<T extends InitiativeAction>(tokenStackAction: T) {
-    const button = new ButtonBuilder()
-      .setCustomId(InitiativeTask.taskParams(tokenStackAction))
-      ;
-    switch (tokenStackAction) {
-      case InitiativeAction.Draw:
-        button
-          .setLabel("Draw token")
-          .setStyle(ButtonStyle.Primary);
-        break;
-      case InitiativeAction.Shuffle:
-        button
-          .setLabel("Return all tokens and shuffle")
-          .setStyle(ButtonStyle.Danger);
-        break;
-      default:
-        break;
-    }
-    return button;
-  }
-  static roundString(turn: number, round: number) {
-    return `${roundPrefix}${round.toString()}, ${turnPrefix}${turn.toString()}`;
-  }
   static drawAlertEmbed(token: string, turn: number, round: number) {
     const embed = new EmbedBuilder()
       .setAuthor({ name: "Initiative Token" })
-      .setFooter({ text: this.roundString(turn, round) })
+      .setFooter({ text: InitiativeStack.roundString(turn, round) })
       .setTitle(token)
       ;
     if (token === endOfRoundToken) {
@@ -51,7 +22,7 @@ export default abstract class InitiativeTask {
         text: "Remove Tokens contributed by dead characters and enemies, resolve any per Round or end of Round activities such as magic effects, Drowning, fire, poison, or bleeding, then draw another Token and carry on."
       });
       // TODO: consider ways to signal this as complete.
-      // can any interactives be removed after a single use?
+      // can any interactive components be removed after a single use?
       // this could be generalized to a property representing, like, uses remaining.
       // every time the interaction successfully fires, it's decremented.
       // then a single function can clear all buttons where the key equals zero?

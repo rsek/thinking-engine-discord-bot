@@ -1,12 +1,11 @@
-import _ from "lodash";
-import { NumericAttrHash, currentKeyName } from "../ux/NumericAttrHash.js";
-import { endOfRoundToken, isPlayerToken, pcTokenValue, henchmanToken, enemyToken } from "./initiativeTokens.js";
+import _ from "lodash-es";
+import { NumericAttrHash, currentKeyName } from "../attributes/NumericAttrConstants.js";
+import { isPlayerToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import getTaskMenuStub from "../../interactions/tasks/getTaskMenuStub.js";
+import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
+import { endOfRoundToken, pcTokenValue, henchmanToken, enemyToken, removeTokenMenuId } from "./InitiativeConstants.js";
 
 // TODO: figure out how i'm handling/IDing the menu
-
-export const removeTokenMenuId = "removeTokenMenu";
 
 
 /**
@@ -40,7 +39,7 @@ export default function buildRemoveTokenMenu(tokens: NumericAttrHash) {
           break;
         }
         case token.name === enemyToken: {
-          const enemyOptions = numberEmoji.slice(1,Math.min(6, token[currentKeyName])).map((emoji, index) => {
+          const enemyOptions = numberEmoji.slice(1, Math.min(6, token[currentKeyName])).map((emoji, index) => {
             const currentValue = index+1;
             return token
               .toSelectMenuOption({ current: 0, max: -currentValue })

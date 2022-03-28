@@ -1,5 +1,5 @@
-import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "./buildWidgetStub.js";
+import { WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import Roll from "./Roll.js";
 
 enum RollUnderOutcome {

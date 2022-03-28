@@ -1,5 +1,6 @@
+
 import { CommandInteraction, MessageComponentInteraction } from "discord.js";
-import { IRollPlaceValuesTaskParams } from "../../modules/parseComponent/ITaskParams.js";
+import { IRollPlaceValuesTaskParams } from "../../modules/tasks/ITaskParams.js";
 import RollPlaceValues from "../../modules/rolls/RollPlaceValues.js";
 
 export default abstract class RollPlaceValuesTask {

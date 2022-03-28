@@ -1,24 +1,27 @@
-import { ButtonBuilder } from "discord.js";
-import _ from "lodash";
+import { ButtonBuilder, ButtonStyle } from "discord.js";
+import _ from "lodash-es";
 import weighted from "weighted";
 import buildAddTokenMenu from "./buildAddTokenMenu.js";
 import buildRemoveTokenMenu from "./buildRemoveTokenMenu.js";
-import { roundPattern, turnPattern } from "./InitiativeDisplay.js";
-import { endOfRoundToken, enemyToken, henchmanToken, tokenFactionsLeft } from "./initiativeTokens.js";
-import { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../attributes/IRenders.js";
+import { endOfRoundToken, enemyToken, henchmanToken, roundPattern, turnPattern } from "./InitiativeConstants.js";
+import { tokenFactionsLeft } from "./initiativeTokens.js";
+import { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../widgets/IRenders.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import buildReturnTokenMenu from "./buildReturnTokenMenu.js";
 import WithRequired from "../../types/WithRequired.js";
-import WidgetOptions from "./WidgetOptions.js";
-import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
-import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildWidgetStub.js";
+import WidgetOptions from "../widgets/WidgetOptions.js";
+import { WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import { APIEmbed } from "discord-api-types/v10";
 import { ActionRowBuilder, EmbedBuilder, MessageActionRowComponentBuilder, SelectMenuBuilder } from "@discordjs/builders";
-import { InitiativeAction } from "../parseComponent/ITaskParams.js";
-import IHasAttributes from "./IHasAttributes.js";
-import sortRecord from "../../interactions/tasks/sortRecord.js";
-import { currentKeyName, fieldsToNumericAttrHash, maxKeyName, NumericAttrFieldData, NumericAttrHash, numericAttrHashToFields } from "../ux/NumericAttrHash.js";
+import { InitiativeAction } from "../tasks/ITaskParams.js";
+import IHasAttributes from "../attributes/IHasAttributes.js";
+import sortRecord from "../../utils/sortRecord.js";
+import { fieldsToNumericAttrHash, numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
+import { NumericAttrFieldData } from "../attributes/NumericAttrFieldData";
+import { currentKeyName, maxKeyName, NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import { roundPrefix, turnPrefix } from "./InitiativeConstants.js";
+import packInitiativeParams from "./packInitiativeTaskParams.js";
 
 enum TokenMenuType {
   Remove,
@@ -44,6 +47,10 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
       stack = stack.shuffleTokens();
     }
     return stack;
+  }
+
+  static roundString(turn: number, round: number) {
+    return `${roundPrefix}${round.toString()}, ${turnPrefix}${turn.toString()}`;
   }
   title: string;
   private _round: number;
@@ -136,15 +143,33 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     }
     return menu;
   }
-  toButton(): ButtonBuilder {
-    const button = InitiativeTask.createButton(InitiativeAction.Draw);
-    if (tokenFactionsLeft(this.tokens) < 2) {
-      button.setDisabled(true);
+
+  toButton<T extends InitiativeAction>(tokenStackAction: T) {
+    const button = new ButtonBuilder()
+      .setCustomId(packInitiativeParams(tokenStackAction))
+      ;
+    switch (tokenStackAction) {
+      case InitiativeAction.Draw:
+        button
+          .setLabel("Draw token")
+          .setStyle(ButtonStyle.Primary);
+        if (tokenFactionsLeft(this.tokens) < 2) {
+          button.setDisabled(true);
+        }
+        break;
+      case InitiativeAction.Shuffle:
+        button
+          .setLabel("Return all tokens and shuffle")
+          .setStyle(ButtonStyle.Danger);
+        break;
+      default:
+        break;
     }
     return button;
   }
+
   toRoundString() {
-    return InitiativeTask.roundString(this.turn, this.round);
+    return InitiativeStack.roundString(this.turn, this.round);
   }
   private sortAttributes(): void {
     const sortOrder = [ henchmanToken, enemyToken, endOfRoundToken ];
@@ -183,13 +208,12 @@ export default class InitiativeStack implements IRendersMessage, IRendersEmbed, 
     }
     components.push(
       new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(this.toButton())
+        .addComponents(this.toButton(InitiativeAction.Draw))
     );
     const message = {
       embeds: [this.toEmbed()],
       components
     };
-
     return message as WithRequired<WidgetOptions, "embeds"|"components">;
   }
 }

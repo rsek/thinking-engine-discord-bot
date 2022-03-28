@@ -1,5 +1,5 @@
-import { IRendersEmbed, IRendersMessage } from "../attributes/IRenders.js";
-import { RefType, WidgetType } from "../parseComponent/WidgetType.js";
+import { IRendersMessage } from "../widgets/IRenders.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 
 export default interface IGameObject extends  IRendersMessage {

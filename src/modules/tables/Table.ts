@@ -1,25 +1,23 @@
 import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonStyle, Collection, EmbedBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import WidgetOptions from "../initiative/WidgetOptions.js";
+import WidgetOptions from "../widgets/WidgetOptions.js";
 import IGameObject from "../inventory/IGameObject.js";
-import { WidgetType, RefType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildWidgetStub.js";
+import { WidgetType, RefType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import ItemIn from "../../types/ItemIn.js";
 import embedLength from "../text/embedLength.js";
 import { MAX_EMBED_FIELDS, MAX_LENGTH_EMBED_TOTAL } from "../text/embedLimits.js";
 import embedFieldLength from "../text/embedFieldLength.js";
+import { injectable } from "tsyringe";
 
+@injectable()
 export default class Table extends Collection<number, string> implements IGameObject {
-  // static fromArray(rows: string[]) {
-
-  // }
   readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
   readonly Type: RefType.Table = RefType.Table;
   $id: string;
   Name: string;
   Description?: string | undefined;
   private readonly _rollFunc: () => number;
-
   constructor(name: string, rows: Record<number, string>, rollFunc: () => number, id: string = name, description?: string | undefined) {
     super(Object.entries(rows).map(row => [ Number(row[0]), row[1] ]));
     this.Name = name;

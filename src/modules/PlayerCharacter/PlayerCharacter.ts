@@ -1,9 +1,9 @@
 import Skill from "./Skill.js";
 import Roll from "../rolls/Roll.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
-import { IRendersEmbed } from "../attributes/IRenders.js";
-import { WidgetType } from "../parseComponent/WidgetType.js";
-import buildWidgetStub from "../rolls/buildWidgetStub.js";
+import { IRendersEmbed } from "../widgets/IRenders.js";
+import { WidgetType } from "../widgets/WidgetType.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 
 
 // could skills be managed the same way?

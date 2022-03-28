@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption , SlashGroup } from "discordx";
 import RollVersus from "../../modules/rolls/RollVersus.js";

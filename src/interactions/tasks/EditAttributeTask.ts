@@ -1,38 +1,20 @@
+
 import { ActionRowBuilder, TextInputBuilder } from "@discordjs/builders";
 import { APIMessage } from "discord-api-types/v10";
 import { InteractionUpdateOptions } from "discord.js";
-import { ButtonBuilder, ButtonStyle, Embed, InteractionType, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuOptionBuilder, TextInputStyle, GuildCacheMessage, ModalMessageModalSubmitInteraction, ModalBuilder } from "discord.js";
-import { IRendersMessage } from "../../modules/attributes/IRenders.js";
+import { ButtonBuilder, Embed, InteractionType, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuOptionBuilder, TextInputStyle, GuildCacheMessage, ModalMessageModalSubmitInteraction, ModalBuilder } from "discord.js";
+import { IRendersMessage } from "../../modules/widgets/IRenders.js";
 import NumericAttribute from "../../modules/attributes/NumericAttribute.js";
-import IHasAttributes from "../../modules/initiative/IHasAttributes.js";
-import { BotTask } from "../../modules/parseComponent/BotTask.js";
-import { IEditAttrTaskParams } from "../../modules/parseComponent/ITaskParams.js";
-import { packParams } from "../../modules/parseComponent/packParams.js";
-import submitModal from "./handleModal.js";
-import parseWidget from "./parseWidget.js";
+import IHasAttributes from "../../modules/attributes/IHasAttributes.js";
+import { BotTask } from "../../modules/tasks/BotTask.js";
+import { IEditAttrTaskParams } from "../../modules/tasks/ITaskParams.js";
+import { packParams } from "../../modules/tasks/packParams.js";
+import unpackSubmittedModal from "../../modules/tasks/unpackSubmittedModal.js";
+import parseWidget from "../../modules/widgets/parseWidget.js";
 
 type CreateType = typeof SelectMenuOptionBuilder | typeof ButtonBuilder;
 
 export default abstract class EditAttributeTask {
-  static create<T extends CreateType>(type: T, params: IEditAttrTaskParams, label: string) {
-    const taskParamsString = packParams(BotTask.EditAttribute, params);
-    switch (type) {
-      case ButtonBuilder:
-        return new ButtonBuilder()
-          .setCustomId(taskParamsString)
-          .setLabel(label)
-          .setStyle(ButtonStyle.Secondary);
-        break;
-      case SelectMenuOptionBuilder:
-        return new SelectMenuOptionBuilder()
-          .setValue(taskParamsString)
-          .setDefault(false)
-          .setLabel(label);
-        break;
-      default:
-        break;
-    }
-  }
   static async exec(interactionData: MessageComponentInteraction | ModalMessageModalSubmitInteraction, params: IEditAttrTaskParams) {
     // console.log("[Task.editAttribute]", params);
     const interaction = interactionData as typeof interactionData & { message: GuildCacheMessage<"cached"> & {embeds: Embed[]} };
@@ -48,7 +30,7 @@ export default abstract class EditAttributeTask {
         // console.log("[Task.editAttribute] interaction is ModalSubmit");
         if (!params.id) {
           await interaction.deferUpdate();
-          return submitModal(interaction as ModalSubmitInteraction);
+          return unpackSubmittedModal(interaction as ModalSubmitInteraction);
         }
         break;
       }

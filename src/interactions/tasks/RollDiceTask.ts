@@ -1,5 +1,7 @@
+
+
 import { CommandInteraction, MessageComponentInteraction } from "discord.js";
-import { IRollDiceTaskParams } from "../../modules/parseComponent/ITaskParams.js";
+import { IRollDiceTaskParams } from "../../modules/tasks/ITaskParams.js";
 import Roll from "../../modules/rolls/Roll.js";
 
 export default abstract class RollDiceTask {

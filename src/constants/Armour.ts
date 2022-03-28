@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _ from "lodash-es";
 
 enum Armour {
   "Unarmoured" = 0,

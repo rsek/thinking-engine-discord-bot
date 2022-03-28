@@ -1,5 +1,5 @@
 import IDamageInfo from "./IDamageInfo.js";
-import IGameDataBase from "./IGameDataBase.js";
+import IGameDataBase from "./IGameObjectBase.js";
 
 export default interface IItem extends IGameDataBase {
   Description?: string | undefined;
