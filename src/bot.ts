@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { CommandInteraction, ComponentType, IntentsBitField, InteractionType, MessageComponentInteraction, SelectMenuInteraction } from "discord.js";
+import { IntentsBitField } from "discord.js";
 import { dirname, importx } from "@discordx/importer";
 import { ArgsOf, Client, Discord, On, Once } from "discordx";
 import dotenv from "dotenv";
@@ -25,10 +25,7 @@ export abstract class Bot {
     }
     const intents =  [
       IntentsBitField.Flags.Guilds,
-      // FIXME: not sure if this one is needed. determine if anything breaks when you turn it off.
       IntentsBitField.Flags.GuildMessages,
-      // FIXME: not sure if this one is needed. determine if anything breaks when you turn it off.
-      // IntentsBitField.Flags.GuildWebhooks,
       IntentsBitField.Flags.DirectMessages
     ];
 
@@ -49,27 +46,25 @@ export abstract class Bot {
 
     if (process.env.NODE_ENV === "development" && process.env.GUILD) {
       Bot.client.botGuilds = [process.env.GUILD];
-    } else {
-      Bot.client.botGuilds = [(client) => client.guilds.cache.map((guild) => guild.id)];
     }
+    // else {
+    //   Bot.client.botGuilds = [(client) => client.guilds.cache.map((guild) => guild.id)];
+    // }
 
-    // console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
+    // if (process.env.NODE_ENV === "production") {
+    //   console.log("Initializing global application commands...");
+    //   await Bot.client.initGlobalApplicationCommands({ log: true });
+    // } else  {
+    console.log("Initializing application commands...");
+    await Bot.client.initApplicationCommands({ guild: { log: true }, global: { log: true } });
+    // }
 
-    if (process.env.NODE_ENV === "production") {
-      console.log("Initializing global commands...");
-      await Bot.client.initGlobalApplicationCommands({ log: true });
-    } else  {
-      console.log("Initializing guild commands...");
-      await Bot.client.initApplicationCommands({ guild: { log: true } });
-    }
-    // FIXME: disabling this to see what breaks. if it's not needed, get rid of it.
-
-    console.log("Updating command permissions...");
+    console.log("Initializing application command permissions...");
     await Bot.client.initApplicationPermissions(true);
 
     const commands = await Bot.client.fetchApplicationCommands();
 
-    console.log("Bot has the following commands:");
+    console.log("Bot has the following commands registered:");
     console.log(commands);
 
     console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
