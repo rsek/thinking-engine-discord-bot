@@ -56,12 +56,16 @@ export abstract class Bot {
     // console.log("[Bot.client.botGuilds]", Bot.client.botGuilds);
 
     if (process.env.NODE_ENV === "production") {
-      await Bot.client.initGlobalApplicationCommands();
+      console.log("Initializing global commands...");
+      await Bot.client.initGlobalApplicationCommands({ log: true });
     } else  {
-      await Bot.client.initApplicationCommands();
+      console.log("Initializing guild commands...");
+      await Bot.client.initApplicationCommands({ guild: { log: true } });
     }
     // FIXME: disabling this to see what breaks. if it's not needed, get rid of it.
-    // await Bot.client.initApplicationPermissions(true);
+
+    console.log("Updating command permissions...");
+    await Bot.client.initApplicationPermissions(true);
 
     console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
 
