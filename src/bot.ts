@@ -67,6 +67,11 @@ export abstract class Bot {
     console.log("Updating command permissions...");
     await Bot.client.initApplicationPermissions(true);
 
+    const commands = await Bot.client.fetchApplicationCommands();
+
+    console.log("Bot has the following commands:");
+    console.log(commands);
+
     console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
 
     console.log(`Bot is a member of ${Bot.client.guilds.cache.size} guilds.`);
