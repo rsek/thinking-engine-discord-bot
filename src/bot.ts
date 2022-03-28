@@ -88,7 +88,7 @@ export abstract class Bot {
       default:
         break;
     }
-    console.log(...logItems);
+    // console.log(...logItems);
     await Bot.client.executeInteraction(interaction, true);
   }
 }
