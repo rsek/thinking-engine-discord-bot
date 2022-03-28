@@ -65,7 +65,7 @@ export abstract class Bot {
     const commands = await Bot.client.fetchApplicationCommands();
 
     console.log("Bot has the following commands registered:");
-    console.log(commands);
+    console.log(commands?.values());
 
     console.log(`Bot started in ${process.env.NODE_ENV ?? "[ERROR]"} mode.`);
 
