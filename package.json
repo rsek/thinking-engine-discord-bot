@@ -10,7 +10,7 @@
     "yarn": "1.22"
   },
   "scripts": {
-    "flush": "rm -r ./dist",
+    "flush": "rm -r ./dist && mkdir dist",
     "build": "tsc --build --clean && tsc --build  --verbose .",
     "rebuild": "yarn flush && yarn build",
     "debug": "yarn rebuild && node .",
