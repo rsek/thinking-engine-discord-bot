@@ -1,4 +1,4 @@
-import type { APIEmbed } from "discord-api-types/v9";
+import type { APIEmbed } from "discord-api-types/v10";
 import type { EmbedField, EmbedFieldData } from "discord.js";
 import { ButtonBuilder, ButtonStyle, SelectMenuOptionBuilder } from "discord.js";
 import type PartialBy from "../../types/PartialBy.js";
