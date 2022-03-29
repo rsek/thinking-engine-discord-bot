@@ -4,6 +4,10 @@
   "description": "A Discord bot to assist in playing the Troika! TTRPG.",
   "main": "./dist/bot.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rsek/thinking-engine-discord-bot.git"
+  },
   "engines": {
     "node": "17.x",
     "npm": "8.x",
@@ -13,8 +17,8 @@
     "flush": "rm -r ./dist && mkdir dist",
     "build": "tsc --build --clean && tsc --build  --verbose .",
     "rebuild": "yarn flush && yarn build",
-    "debug": "yarn rebuild && node .",
     "postinstall": "patch-package",
+    "debug": "yarn rebuild && node .",
     "start": "yarn rebuild && pm2 start ./dist/bot.js --name \"Thinking Engine\"",
     "restart": "yarn rebuild && pm2 restart \"Thinking Engine\" --update-env",
     "stop": "pm2 stop \"Thinking Engine\"",
