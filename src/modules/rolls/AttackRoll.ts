@@ -1,3 +1,4 @@
+// NYI - may not be a practical way to distinguish these unless i implement character DB support
 import type { IOpponentRoll } from "./OpponentRoll.js";
 import OpponentRoll from "./OpponentRoll.js";
 
