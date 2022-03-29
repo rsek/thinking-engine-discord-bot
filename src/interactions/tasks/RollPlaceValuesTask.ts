@@ -1,12 +1,23 @@
 
-import { CommandInteraction, MessageComponentInteraction } from "discord.js";
-import { IRollPlaceValuesTaskParams } from "../../modules/tasks/ITaskParams.js";
+import type { CommandInteraction, MessageComponentInteraction } from "discord.js";
+import type { IRollPlaceValuesTaskParams } from "../../modules/tasks/ITaskParams.js";
 import RollPlaceValues from "../../modules/rolls/RollPlaceValues.js";
+import Task from "./Task.js";
+import type GameData from "../../data/GameData.js";
 
-export default abstract class RollPlaceValuesTask {
-  static async exec(interaction: MessageComponentInteraction|CommandInteraction, params: IRollPlaceValuesTaskParams, description?: string | undefined) {
-    const dieType = params.dieType;
-    const roll = new RollPlaceValues(dieType, description);
-    return interaction.reply(roll.toMessage());
+export default class RollPlaceValuesTask extends Task<MessageComponentInteraction|CommandInteraction, IRollPlaceValuesTaskParams> {
+  description?: string | undefined;
+  constructor(
+    interaction: MessageComponentInteraction|CommandInteraction,
+    params: IRollPlaceValuesTaskParams,
+    gameData: GameData,
+    description?: string | undefined) {
+    super(interaction, params, gameData);
+    this.description = description;
+  }
+  run(): Promise<void> {
+    const dieType = this.params.dieType;
+    const roll = new RollPlaceValues(dieType, this.description);
+    return this.interaction.reply(roll.toMessage());
   }
 }

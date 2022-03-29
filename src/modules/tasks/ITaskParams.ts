@@ -1,8 +1,8 @@
-import IGameData from "../../data/interfaces/IGameData";
-import KeyOfMap from "../../types/KeyOfMap.js";
-import DiceExpression from "../rolls/diceExpression.js";
-import { TaskParams } from "./BotTask.js";
-import { WidgetType, RefType } from "../widgets/WidgetType.js";
+import type IGameData from "../../data/interfaces/IGameData";
+import type KeyOfMap from "../../types/KeyOfMap.js";
+import type DiceExpression from "../rolls/diceExpression.js";
+import type { TaskParams } from "./BotTask.js";
+import type { WidgetType, RefType } from "../widgets/WidgetType.js";
 
 export interface IEditAttrTaskParams extends TaskParams {
   id?: string; // field's name

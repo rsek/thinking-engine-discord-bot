@@ -1,16 +1,16 @@
 import "reflect-metadata";
 
-import { CommandInteraction, AutocompleteInteraction, ApplicationCommandOptionType, InteractionType } from "discord.js";
+import type { CommandInteraction, AutocompleteInteraction } from "discord.js";
+import { ApplicationCommandOptionType, InteractionType } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import queryCollection from "../autocomplete/queryCollection.js";
 import RollDamage from "../../modules/rolls/RollDamage.js";
-import DamageInfo from "../../modules/reference/DamageInfo.js";
-import { container } from "tsyringe";
-import DamageTables from "../../data/DamageTables.js";
+import type DamageInfo from "../../modules/reference/DamageInfo.js";
+import { Bot } from "../../bot.js";
+import { RefType } from "../../modules/widgets/WidgetType.js";
 
 @Discord()
 export abstract class RollDamageCommand {
-  readonly _gameData = container.resolve(DamageTables);
   @Slash("damage", { description: "Roll damage." })
   @SlashGroup("roll")
   async rollTable(
@@ -66,7 +66,7 @@ export abstract class RollDamageCommand {
 
     interaction: CommandInteraction|AutocompleteInteraction
   ): Promise<void> {
-    const collection = this._gameData;
+    const collection = Bot.gameData[RefType.DamageTable];
     switch (interaction.type) {
       case InteractionType.ApplicationCommandAutocomplete: {
         interaction = interaction as AutocompleteInteraction;

@@ -2,6 +2,7 @@ import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import RollDiceTask from "../tasks/RollDiceTask.js";
 import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
+import { Bot } from "../../bot.js";
 
 @Discord()
 export abstract class RollDiceCommand {
@@ -39,6 +40,6 @@ export abstract class RollDiceCommand {
     const dice = toDiceExpression({
       quantity, sides, modifier
     });
-    return RollDiceTask.exec(interaction, { dice, description });
+    return new RollDiceTask(interaction, { dice, description }, Bot.gameData).run();
   }
 }

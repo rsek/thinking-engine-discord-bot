@@ -2,12 +2,10 @@ import { Collection } from "discord.js";
 import _ from "lodash";
 import YAML from "yamljs";
 import Enemy from "../modules/reference/Enemy.js";
-import IEnemyYaml from "../modules/reference/IEnemyYaml.js";
+import type IEnemyYaml from "../modules/reference/IEnemyYaml.js";
 import getYamlFiles from "./getYamlFiles.js";
 import yamlRoot from "./yamlRoot.js";
-import { singleton } from "tsyringe";
 
-@singleton()
 export default class Bestiary extends Collection<string, Enemy> {
   constructor() {
     super();
@@ -16,3 +14,4 @@ export default class Bestiary extends Collection<string, Enemy> {
     _.forEach(enemyYaml, (data, id) => this.set(id, new Enemy(id, data)));
   }
 }
+

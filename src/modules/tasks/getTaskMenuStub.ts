@@ -1,5 +1,5 @@
 import { SelectMenuBuilder } from "discord.js";
-import { taskMenuIdPrefix } from "../../interactions/components/TaskMenu.js";
+import { taskMenuIdPrefix } from "../../interactions/components/taskMenuIdPrefix.js";
 
 
 export default function getTaskMenuStub(idSuffix: string) {

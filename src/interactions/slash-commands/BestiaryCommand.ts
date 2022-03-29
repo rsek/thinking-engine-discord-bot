@@ -1,16 +1,15 @@
 import "reflect-metadata";
 
-import { AutocompleteInteraction, CommandInteraction, InteractionType, ApplicationCommandOptionType } from "discord.js";
+import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
+import { InteractionType, ApplicationCommandOptionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
-import { container } from "tsyringe";
-import Bestiary from "../../data/Bestiary.js";
+import { Bot } from "../../bot.js";
 
 @Discord()
 export abstract class BestiaryCommand {
-  readonly _gameData = container.resolve(Bestiary);
   @Slash("bestiary", { description: "Display a bestiary entry." })
   async bestiary(
     @SlashOption( "enemy-name",
@@ -36,15 +35,15 @@ export abstract class BestiaryCommand {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === "enemy-name") {
           return interaction.respond(
-            queryCollection(focusedOption.value as string, this._gameData)
+            queryCollection(focusedOption.value as string, Bot.gameData[RefType.Bestiary])
           );
         }
         break;
       }
       case InteractionType.ApplicationCommand: {
-        return ReferenceTask.exec(interaction as CommandInteraction, {
+        return new ReferenceTask(interaction as CommandInteraction, {
           ephemeral, id, type: RefType.Bestiary
-        });
+        }, Bot.gameData).run();
       }
       default:
         throw new Error("[BestiaryCommand] Received unexpected interaction.");

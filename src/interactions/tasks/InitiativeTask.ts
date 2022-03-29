@@ -1,15 +1,18 @@
 
-import { EmbedBuilder, MessageComponentInteraction } from "discord.js";
-import { IInitiativeTokenTaskParams, InitiativeAction } from "../../modules/tasks/ITaskParams.js";
+import type { MessageComponentInteraction } from "discord.js";
+import { EmbedBuilder } from "discord.js";
+import type { IInitiativeTokenTaskParams } from "../../modules/tasks/ITaskParams.js";
+import { InitiativeAction } from "../../modules/tasks/ITaskParams.js";
 import { firstEmbedOfType } from "../../utils/firstEmbedOfType.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
 import { WidgetType } from "../../modules/widgets/WidgetType.js";
 import ColorTheme from "../../constants/ColorTheme.js";
-import { APIEmbed } from "discord-api-types/v10";
+import type { APIEmbed } from "discord-api-types/v10";
 import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
+import Task from "./Task.js";
 
-export default abstract class InitiativeTask {
+export default class InitiativeTask extends Task<MessageComponentInteraction, IInitiativeTokenTaskParams> {
   static drawAlertEmbed(token: string, turn: number, round: number) {
     const embed = new EmbedBuilder()
       .setAuthor({ name: "Initiative Token" })
@@ -41,24 +44,6 @@ export default abstract class InitiativeTask {
     }
     return embed;
   }
-  static async exec(interaction: MessageComponentInteraction, task: IInitiativeTokenTaskParams) {
-    const embeds = interaction.message.embeds as APIEmbed[];
-    const embed = firstEmbedOfType(WidgetType.InitiativeStack, embeds);
-    if (!embed) {
-      return interaction.reply(userErrorMessage());
-    }
-    switch (task.action) {
-      case InitiativeAction.Draw:
-        return InitiativeTask.draw(interaction, embed);
-        break;
-      case InitiativeAction.Shuffle:
-        return InitiativeTask.shuffle(interaction, embed);
-        break;
-      default:
-        await interaction.reply(userErrorMessage());
-        break;
-    }
-  }
   static async shuffle(interaction: MessageComponentInteraction, embed: APIEmbed) {
     const stack = InitiativeStack.fromEmbed(embed).shuffleTokens();
     const widget = stack.toMessage();
@@ -81,6 +66,24 @@ export default abstract class InitiativeTask {
       components: widget.components.map(components => components.toJSON())
     };
     await interaction.update(message);
-    return interaction.followUp({ embeds });
+    await interaction.followUp({ embeds });
+  }
+  run() {
+    const embeds = this.interaction.message.embeds as APIEmbed[];
+    const embed = firstEmbedOfType(WidgetType.InitiativeStack, embeds);
+    if (!embed) {
+      return this.interaction.reply(userErrorMessage());
+    }
+    switch (this.params.action) {
+      case InitiativeAction.Draw:
+        return InitiativeTask.draw(this.interaction, embed);
+        break;
+      case InitiativeAction.Shuffle:
+        return InitiativeTask.shuffle(this.interaction, embed);
+        break;
+      default:
+        return this.interaction.reply(userErrorMessage());
+        break;
+    }
   }
 }

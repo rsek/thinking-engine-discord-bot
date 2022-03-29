@@ -1,4 +1,4 @@
-import { BotTask, IBotTasksParams } from "./BotTask.js";
+import type { BotTask, IBotTasksParams } from "./BotTask.js";
 
 export function packParams<T extends BotTask>(
   task: T,

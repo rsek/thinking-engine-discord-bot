@@ -3,11 +3,9 @@ import _ from "lodash";
 import YAML from "yamljs";
 import getYamlFiles from "./getYamlFiles.js";
 import yamlRoot from "./yamlRoot.js";
-import { singleton } from "tsyringe";
 import Spell from "../modules/reference/Spell.js";
-import ISpell from "./interfaces/ISpell.js";
+import type ISpell from "./interfaces/ISpell.js";
 
-@singleton()
 export default class Spells extends Collection<string, Spell> {
   constructor() {
     super();
@@ -16,3 +14,4 @@ export default class Spells extends Collection<string, Spell> {
     _.forEach(spellYaml, (data, id) => this.set(id, new Spell(id, data)));
   }
 }
+

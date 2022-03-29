@@ -1,13 +1,17 @@
 
-import { ButtonBuilder, ButtonStyle, MessageComponentInteraction, GuildCacheMessage, CacheType, Message, ComponentType } from "discord.js";
+import type { MessageComponentInteraction, GuildCacheMessage, CacheType, Message } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
 import { packParams } from "../../modules/tasks/packParams.js";
 import { asEphemeral } from "../../modules/attributes/toEphemeral.js";
-import { IManageMessageTaskParams, ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
+import type { IManageMessageTaskParams } from "../../modules/tasks/ITaskParams.js";
+import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
 import { ActionRowBuilder } from "@discordjs/builders";
-import { APIActionRowComponent, APIMessageActionRowComponent } from "discord-api-types/v10";
+import type { APIActionRowComponent, APIMessageActionRowComponent } from "discord-api-types/v10";
+import Task from "./Task.js";
+import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 
-export default abstract class ManageMessageTask {
+export default class ManageMessageTask extends Task<MessageComponentInteraction<CacheType>,IManageMessageTaskParams> {
   static createButton(action: ManageMessageAction) {
     const customId = packParams(BotTask.ManageMessage, { action });
     const btn = new ButtonBuilder().setCustomId(customId);
@@ -48,9 +52,15 @@ export default abstract class ManageMessageTask {
     }
     return newMessage;
   }
-  static async exec(interaction: MessageComponentInteraction, params: IManageMessageTaskParams) {
-    const msg = interaction.message as Message;
-    switch (params.action) {
+  public get params(): IManageMessageTaskParams {
+    throw new Error("Method not implemented.");
+  }
+  public set params(value: IManageMessageTaskParams) {
+    throw new Error("Method not implemented.");
+  }
+  run() {
+    const msg = this.interaction.message as Message;
+    switch (this.params.action) {
       case ManageMessageAction.Delete:
         if (msg.deletable) {
           return msg.delete();
@@ -60,7 +70,7 @@ export default abstract class ManageMessageTask {
         break;
       case ManageMessageAction.Reveal:
         // TODO: fix stripEphemeral
-        return interaction.reply({
+        return this.interaction.reply({
           embeds: msg.embeds,
           components: [
             new ActionRowBuilder<ButtonBuilder>()
@@ -72,6 +82,7 @@ export default abstract class ManageMessageTask {
         });
         break;
       default:
+        return this.interaction.reply(userErrorMessage());
         break;
     }
 

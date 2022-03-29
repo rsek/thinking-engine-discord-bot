@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import DamageInfo from "../modules/reference/DamageInfo.js";
+import type DamageInfo from "../modules/reference/DamageInfo.js";
 
 /**
  * Extracts DamageInfo objects from items and spells and keys them in their own collection.

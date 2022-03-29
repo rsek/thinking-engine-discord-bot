@@ -1,14 +1,37 @@
 import "reflect-metadata";
 
-import { ApplicationCommand, Collection, IntentsBitField } from "discord.js";
+import type { ApplicationCommand, Collection, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuInteraction } from "discord.js";
+import { ComponentType, IntentsBitField, InteractionType } from "discord.js";
 import { dirname, importx } from "@discordx/importer";
 import { ArgsOf, Client, Discord, On, Once } from "discordx";
 import dotenv from "dotenv";
+import unpackSubmittedModal from "./modules/tasks/unpackSubmittedModal.js";
+import { unpackParams } from "./modules/tasks/packParams.js";
+import { routeTask } from "./modules/tasks/routeTask.js";
+import GameData from "./data/GameData.js";
+import Backgrounds from "./data/Backgrounds.js";
+import Bestiary from "./data/Bestiary.js";
+import Items from "./data/Items.js";
+import Skills from "./data/Skills.js";
+import DamageTables from "./data/DamageTables.js";
+import Spells from "./data/Spells.js";
+import Tables from "./data/Tables.js";
 
 dotenv.config();
 
+const backgrounds =  new Backgrounds();
+const bestiary =  new Bestiary();
+const items =  new Items();
+const skills =  new Skills();
+const spells =  new Spells();
+const damageTables =  new DamageTables(items, spells);
+const tables =  new Tables(bestiary);
+
 @Discord()
 export abstract class Bot {
+  static get gameData(): GameData {
+    return this._gameData;
+  }
   static get client(): Client {
     return this._client;
   }
@@ -36,6 +59,37 @@ export abstract class Bot {
 
     await this._client.login(process.env.DISCORD_TOKEN);
   }
+  static async routeMessageComponent(interaction: MessageComponentInteraction) {
+    switch (interaction.componentType) {
+      case ComponentType.Button: {
+        const params = unpackParams(interaction.customId);
+        return routeTask(params, interaction, Bot.gameData);
+        break;
+      }
+      case ComponentType.SelectMenu: {
+        const value = (interaction as SelectMenuInteraction).values[0];
+        const params = unpackParams(value);
+        return routeTask(params, interaction, Bot.gameData);
+        break;
+      }
+      default:
+        return interaction.reply({
+          content: `ERROR: Unknown handler for component of type \`${ComponentType[interaction.componentType]}\`\ncustomId: \`${interaction.customId}\``,
+          ephemeral: true
+        });
+        break;
+    }
+  }
+  private static readonly _gameData: GameData = new GameData(
+    backgrounds,
+    bestiary,
+    damageTables,
+    items,
+    skills,
+    spells,
+    tables,
+  );
+
   private static _client: Client;
 
   @Once("ready")
@@ -59,8 +113,19 @@ export abstract class Bot {
     console.log(`Bot is a member of ${Bot.client.guilds.cache.size} guilds.`);
   }
   @On("interactionCreate")
-  async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">) {
-    await Bot.client.executeInteraction(interaction, true);
+  async onInteractionCreate([interaction]: ArgsOf<"interactionCreate">): Promise<void|unknown> {
+    switch (interaction.type) {
+      case InteractionType.MessageComponent:
+        // routes to custom handler for components, whose customIds are used to store json
+        return Bot.routeMessageComponent(interaction as MessageComponentInteraction);
+      case InteractionType.ModalSubmit: {
+        const newParams = unpackSubmittedModal(interaction as ModalSubmitInteraction);
+        return routeTask(newParams, interaction, Bot.gameData);
+      }
+      default:
+        return Bot.client.executeInteraction(interaction, true);
+        break;
+    }
   }
 }
 

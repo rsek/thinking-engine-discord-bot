@@ -1,4 +1,5 @@
-import { PathLike, readdirSync } from "fs";
+import type { PathLike } from "fs";
+import { readdirSync } from "fs";
 
 export default function getYamlFiles(path: PathLike): PathLike[] {
   return readdirSync(path).filter(file => file.match(/^.*\.y(a)?ml/))

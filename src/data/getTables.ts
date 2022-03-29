@@ -1,6 +1,6 @@
 import { Collection } from "discord.js";
-import Enemy from "../modules/reference/Enemy.js";
-import Table from "../modules/tables/Table.js";
+import type Enemy from "../modules/reference/Enemy.js";
+import type Table from "../modules/tables/Table.js";
 
 /**
  * Extracts Mien Table objects from enemies and keys them in their own collection.

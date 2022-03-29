@@ -1,16 +1,15 @@
 import "reflect-metadata";
 
-import { AutocompleteInteraction, CommandInteraction, InteractionType, ApplicationCommandOptionType } from "discord.js";
+import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
+import { InteractionType, ApplicationCommandOptionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
-import { container } from "tsyringe";
-import Spells from "../../data/Spells.js";
+import { Bot } from "../../bot.js";
 
 @Discord()
 export abstract class SpellCommand {
-  readonly _gameData = container.resolve(Spells);
   @Slash("spell", { description: "Display the text of a spell." })
   async spell(
     @SlashOption( "spell-name",
@@ -36,15 +35,15 @@ export abstract class SpellCommand {
         const focusedOption = interaction.options.getFocused(true);
         if (focusedOption.name === "spell-name") {
           return interaction.respond(
-            queryCollection(focusedOption.value as string, this._gameData)
+            queryCollection(focusedOption.value as string, Bot.gameData[RefType.Spell])
           );
         }
         break;
       }
       case InteractionType.ApplicationCommand: {
-        return ReferenceTask.exec(interaction as CommandInteraction, {
+        return new ReferenceTask(interaction as CommandInteraction, {
           ephemeral, id, type: RefType.Spell
-        });
+        }, Bot.gameData).run();
       }
       default:
         throw new Error("[SpellCommand] Received unexpected interaction.");

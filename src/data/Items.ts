@@ -3,11 +3,9 @@ import _ from "lodash";
 import YAML from "yamljs";
 import getYamlFiles from "./getYamlFiles.js";
 import yamlRoot from "./yamlRoot.js";
-import { singleton } from "tsyringe";
 import Item from "../modules/inventory/Item.js";
-import IItem from "./interfaces/IItem.js";
+import type IItem from "./interfaces/IItem.js";
 
-@singleton()
 export default class Items extends Collection<string, Item> {
   constructor() {
     super();

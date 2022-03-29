@@ -1,16 +1,16 @@
-import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonStyle, Collection, EmbedBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
-import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
-import IGameObject from "../inventory/IGameObject.js";
+import type { APIEmbedField, EmbedBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Collection } from "discord.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import type IGameObject from "../inventory/IGameObject.js";
 import { WidgetType, RefType } from "../widgets/WidgetType.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import ItemIn from "../../types/ItemIn.js";
+import type ItemIn from "../../types/ItemIn.js";
 import embedLength from "../text/embedLength.js";
 import { MAX_EMBED_FIELDS, MAX_LENGTH_EMBED_TOTAL } from "../text/embedLimits.js";
 import embedFieldLength from "../text/embedFieldLength.js";
-import { injectable } from "tsyringe";
+import { packParams } from "../tasks/packParams.js";
+import { BotTask } from "../tasks/BotTask.js";
 
-@injectable()
 export default class Table extends Collection<number, string> implements IGameObject {
   readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
   readonly Type: RefType.Table = RefType.Table;
@@ -98,7 +98,11 @@ export default class Table extends Collection<number, string> implements IGameOb
     return embed;
   }
   getRollButton(label = "Roll on table") {
-    return RollTableTask.toButton(this.$id, label);
+    return new ButtonBuilder()
+      .setLabel(label)
+      .setEmoji({ name: "🎲" })
+      .setStyle(ButtonStyle.Primary)
+      .setCustomId(packParams(BotTask.RollTable, { id: this.$id }) );
   }
   toPreviewMessage(ephemeral: boolean = true) {
     return {

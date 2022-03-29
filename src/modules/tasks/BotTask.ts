@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams } from "./ITaskParams.js";
 
 export enum BotTask {
   EditAttribute = "editAttr",
