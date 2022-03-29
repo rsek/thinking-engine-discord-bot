@@ -1,11 +1,12 @@
-import { EmbedField, InteractionReplyOptions } from "discord.js";
+import type { EmbedField, InteractionReplyOptions } from "discord.js";
 import _ from "lodash-es";
-import { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
-import DiceExpression, { dicePattern } from "./diceExpression.js";
-import IRoll from "./IRoll.js";
+import type { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import type DiceExpression from "./diceExpression.js";
+import { dicePattern } from "./diceExpression.js";
+import type IRoll from "./IRoll.js";
 import parseDice from "./parseDice.js";
-import IRollOptions from "./IRollOptions.js";
+import type IRollOptions from "./IRollOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 

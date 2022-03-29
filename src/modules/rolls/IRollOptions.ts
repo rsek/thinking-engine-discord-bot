@@ -1,4 +1,4 @@
-import DiceExpression from "./diceExpression.js";
+import type DiceExpression from "./diceExpression.js";
 
 
 export default interface IRollOptions {

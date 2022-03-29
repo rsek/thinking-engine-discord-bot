@@ -1,4 +1,4 @@
-import { ActionRow, MessageActionRowComponent, ModalActionRowComponent } from "discord.js";
+import type { ActionRow, MessageActionRowComponent, ModalActionRowComponent } from "discord.js";
 // import findIndicesByCustomId from "./findIndicesByCustomId.js";
 
 export default function replaceByCustomId(components: ActionRow<MessageActionRowComponent | ModalActionRowComponent>[], customId: string, newComponent: MessageActionRowComponent) {
