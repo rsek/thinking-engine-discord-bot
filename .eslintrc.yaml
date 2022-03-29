@@ -43,7 +43,7 @@ rules:
   prefer-rest-params:
     - 0
   sort-class-members/sort-class-members:
-    - 2
+    - 1
     - order:
         - "[static-properties]"
         - "[static-methods]"
