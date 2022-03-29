@@ -52,12 +52,6 @@ export default class ManageMessageTask extends Task<MessageComponentInteraction<
     }
     return newMessage;
   }
-  public get params(): IManageMessageTaskParams {
-    throw new Error("Method not implemented.");
-  }
-  public set params(value: IManageMessageTaskParams) {
-    throw new Error("Method not implemented.");
-  }
   run() {
     const msg = this.interaction.message as Message;
     switch (this.params.action) {
