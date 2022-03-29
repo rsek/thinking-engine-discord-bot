@@ -1,6 +1,6 @@
 {
   "name": "thinking-engine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Discord bot to assist in playing the Troika! TTRPG.",
   "main": "./dist/bot.js",
   "type": "module",
