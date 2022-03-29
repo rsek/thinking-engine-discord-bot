@@ -4,7 +4,7 @@ import { currentKeyName } from "../attributes/NumericAttrConstants.js";
 import { isPlayerToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
 import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
-import { endOfRoundToken, pcTokenValue, henchmanToken, enemyToken, removeTokenMenuId } from "./InitiativeConstants.js";
+import { endOfRoundToken, enemyToken, henchmanToken, pcTokenValue, removeTokenMenuId } from "./InitiativeConstants.js";
 
 // TODO: figure out how i'm handling/IDing the menu
 

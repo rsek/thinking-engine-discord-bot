@@ -1,4 +1,4 @@
-import type { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IEditTextTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams, IRollTableTaskParams, IRollVersusTaskParams } from "./ITaskParams.js";
 
 export enum BotTask {
   EditAttribute = "editAttr",

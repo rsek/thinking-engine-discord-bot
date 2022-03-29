@@ -4,7 +4,7 @@ import NumericAttribute from "../attributes/NumericAttribute.js";
 import { BotTask } from "../tasks/BotTask.js";
 import { packPartialParams } from "../tasks/packParams.js";
 import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
-import { pcTokenValue, henchmanToken, enemyToken, addTokenMenuId } from "./InitiativeConstants.js";
+import { addTokenMenuId, enemyToken, henchmanToken, pcTokenValue } from "./InitiativeConstants.js";
 
 
 export default function buildAddTokenMenu() {

@@ -1,5 +1,5 @@
 import type { ActionRowBuilder } from "@discordjs/builders";
-import type { MessageActionRowComponentBuilder, InteractionReplyOptions, InteractionUpdateOptions, EmbedBuilder } from "discord.js";
+import type { EmbedBuilder, InteractionReplyOptions, InteractionUpdateOptions, MessageActionRowComponentBuilder } from "discord.js";
 
 export type InteractionMessageOptions = InteractionUpdateOptions | InteractionReplyOptions;
 

@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
-import { InteractionType, ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, InteractionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";

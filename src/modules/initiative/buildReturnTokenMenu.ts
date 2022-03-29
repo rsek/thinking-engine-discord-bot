@@ -6,7 +6,7 @@ import numberEmoji from "../../constants/numberEmoji.js";
 import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
 import { SelectMenuOptionBuilder } from "discord.js";
 import { InitiativeAction } from "../tasks/ITaskParams.js";
-import { endOfRoundToken, henchmanToken, enemyToken, returnTokenMenuId } from "./InitiativeConstants.js";
+import { endOfRoundToken, enemyToken, henchmanToken, returnTokenMenuId } from "./InitiativeConstants.js";
 import packInitiativeParams from "./packInitiativeTaskParams.js";
 
 /**

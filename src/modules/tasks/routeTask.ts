@@ -5,7 +5,7 @@ import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import type { IEditAttrTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollTableTaskParams, IInitiativeTokenTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
 import type { unpackParams } from "./packParams.js";
 import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 import { BotTask } from "./BotTask.js";

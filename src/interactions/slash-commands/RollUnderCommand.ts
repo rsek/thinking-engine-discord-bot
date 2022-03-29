@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashOption , SlashGroup } from "discordx";
+import { Discord, Slash, SlashGroup , SlashOption } from "discordx";
 import RollUnder from "../../modules/rolls/RollUnder.js";
 
 @Discord()

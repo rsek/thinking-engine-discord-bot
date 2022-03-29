@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import type { MessageComponentInteraction, CommandInteraction, InteractionReplyOptions } from "discord.js";
+import type { CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
 import type { IRollTableTaskParams } from "../../modules/tasks/ITaskParams.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";

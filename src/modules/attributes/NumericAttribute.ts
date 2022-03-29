@@ -7,7 +7,7 @@ import { BotTask } from "../tasks/BotTask.js";
 import type { IHasTask } from "../tasks/IHasTask.js";
 import type { IEditAttrTaskParams } from "../tasks/ITaskParams.js";
 import { packParams } from "../tasks/packParams.js";
-import { currentKeyName, maxKeyName, NumericAttrPattern, NumericAttrSeparator } from "./NumericAttrConstants.js";
+import { NumericAttrPattern, NumericAttrSeparator, currentKeyName, maxKeyName } from "./NumericAttrConstants.js";
 import Attribute from "./Attribute.js";
 import type INumericAttribute from "./INumericAttribute.js";
 import type { IRendersButton, IRendersSelectMenuOption } from "../widgets/IRenders.js";

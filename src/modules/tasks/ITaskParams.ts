@@ -2,7 +2,7 @@ import type IGameData from "../../data/interfaces/IGameData";
 import type KeyOfMap from "../../types/KeyOfMap.js";
 import type DiceExpression from "../rolls/diceExpression.js";
 import type { TaskParamsBase } from "./BotTask.js";
-import type { WidgetType, RefType } from "../widgets/WidgetType.js";
+import type { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 export interface IEditAttrTaskParams extends TaskParamsBase {
   id?: string; // field's name

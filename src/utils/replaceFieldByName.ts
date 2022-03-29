@@ -1,4 +1,4 @@
-import type { EmbedField, Embed } from "discord.js";
+import type { Embed, EmbedField } from "discord.js";
 import type WithRequired from "../types/WithRequired.js";
 
 export default function replaceFieldByName(embed: WithRequired<Embed, "fields">, fieldName: string, newField: EmbedField) {

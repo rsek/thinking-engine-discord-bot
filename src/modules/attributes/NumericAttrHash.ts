@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import type { NumericAttrFieldData, NumericAttrField } from "./NumericAttrFieldData";
+import type { NumericAttrField, NumericAttrFieldData } from "./NumericAttrFieldData";
 import NumericAttribute from "./NumericAttribute.js";
 import type { NumericAttrHash } from "./NumericAttrConstants.js";
 import { NumericAttrPattern } from "./NumericAttrConstants.js";

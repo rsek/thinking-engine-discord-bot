@@ -1,4 +1,4 @@
-import type { EmbedField, InteractionReplyOptions, ButtonBuilder } from "discord.js";
+import type { ButtonBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder } from "discord.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import type DamageInfo from "../reference/DamageInfo.js";

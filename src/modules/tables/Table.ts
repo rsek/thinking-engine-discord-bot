@@ -2,7 +2,7 @@ import type { APIEmbedField, EmbedBuilder, EmbedField, InteractionReplyOptions }
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Collection } from "discord.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import type IGameObject from "../inventory/IGameObject.js";
-import { WidgetType, RefType } from "../widgets/WidgetType.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type ItemIn from "../../types/ItemIn.js";
 import embedLength from "../text/embedLength.js";

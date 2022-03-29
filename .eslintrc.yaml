@@ -155,3 +155,5 @@ rules:
   - warn
   - before: false
     after: true
+  sort-imports:
+  - warn

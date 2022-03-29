@@ -5,7 +5,7 @@ import NumericAttribute from "../attributes/NumericAttribute.js";
 import type IHasAttributes from "../attributes/IHasAttributes.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import type IGameObject from "../inventory/IGameObject.js";
-import { WidgetType, RefType } from "../widgets/WidgetType.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import Roll from "../rolls/Roll.js";
 import Table from "../tables/Table.js";
