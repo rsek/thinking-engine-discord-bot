@@ -39,7 +39,6 @@
     "source-map-support": "^0.5.21",
     "title-case": "^3.0.3",
     "ts-node": "^10.7.0",
-    "tsyringe": "^4.6.0",
     "typed-regex": "^0.0.8",
     "typescript": "^4.7.0-dev.20220323",
     "weighted": "^1.0.0",
