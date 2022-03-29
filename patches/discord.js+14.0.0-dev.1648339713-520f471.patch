@@ -43,10 +43,10 @@ index 2f08898..fd3e357 100644
  
  InteractionResponses.applyToClass(ModalSubmitInteraction, 'showModal');
 diff --git a/node_modules/discord.js/src/util/Components.js b/node_modules/discord.js/src/util/Components.js
-index 95c0044..14e78d0 100644
+index 80d4861..02fea59 100644
 --- a/node_modules/discord.js/src/util/Components.js
 +++ b/node_modules/discord.js/src/util/Components.js
-@@ -75,6 +75,8 @@ class Components extends null {
+@@ -80,6 +80,8 @@ class Components extends null {
          return new ButtonComponent(data);
        case ComponentType.SelectMenu:
          return new SelectMenuComponent(data);
@@ -55,7 +55,7 @@ index 95c0044..14e78d0 100644
        default:
          throw new Error(`Found unknown component type: ${data.type}`);
      }
-@@ -87,3 +89,4 @@ const ActionRow = require('../structures/ActionRow');
+@@ -92,3 +94,4 @@ const ActionRow = require('../structures/ActionRow');
  const ButtonComponent = require('../structures/ButtonComponent');
  const Component = require('../structures/Component');
  const SelectMenuComponent = require('../structures/SelectMenuComponent');
