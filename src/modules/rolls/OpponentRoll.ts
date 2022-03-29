@@ -1,6 +1,6 @@
-import { EmbedField } from "discord.js";
+import type { EmbedField } from "discord.js";
 import Roll from "./Roll.js";
-import IRoll from "./IRoll.js";
+import type IRoll from "./IRoll.js";
 
 export default class OpponentRoll extends Roll implements IOpponentRoll {
   name: string;

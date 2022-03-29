@@ -1,7 +1,8 @@
 import _ from "lodash-es";
-import { NumericAttrFieldData, NumericAttrField } from "./NumericAttrFieldData";
+import type { NumericAttrFieldData, NumericAttrField } from "./NumericAttrFieldData";
 import NumericAttribute from "./NumericAttribute.js";
-import { NumericAttrHash, NumericAttrPattern } from "./NumericAttrConstants.js";
+import type { NumericAttrHash } from "./NumericAttrConstants.js";
+import { NumericAttrPattern } from "./NumericAttrConstants.js";
 
 export function fieldsToNumericAttrHash(...fields: NumericAttrFieldData[]): NumericAttrHash {
   const hash: NumericAttrHash = {};

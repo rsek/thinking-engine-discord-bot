@@ -1,5 +1,6 @@
 import _ from "lodash-es";
-import { NumericAttrHash, currentKeyName } from "../attributes/NumericAttrConstants.js";
+import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import { currentKeyName } from "../attributes/NumericAttrConstants.js";
 import { isPlayerToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
 import getTaskMenuStub from "../tasks/getTaskMenuStub.js";

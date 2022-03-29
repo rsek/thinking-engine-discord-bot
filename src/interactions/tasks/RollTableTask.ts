@@ -4,7 +4,7 @@ import type { MessageComponentInteraction, CommandInteraction, InteractionReplyO
 import type { IRollTableTaskParams } from "../../modules/tasks/ITaskParams.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 
 export default class RollTableTask extends Task<MessageComponentInteraction | CommandInteraction,IRollTableTaskParams> {
   run() {

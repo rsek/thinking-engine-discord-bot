@@ -1,10 +1,10 @@
 import type IGameData from "../../data/interfaces/IGameData";
 import type KeyOfMap from "../../types/KeyOfMap.js";
 import type DiceExpression from "../rolls/diceExpression.js";
-import type { TaskParams } from "./BotTask.js";
+import type { TaskParamsBase } from "./BotTask.js";
 import type { WidgetType, RefType } from "../widgets/WidgetType.js";
 
-export interface IEditAttrTaskParams extends TaskParams {
+export interface IEditAttrTaskParams extends TaskParamsBase {
   id?: string; // field's name
   current: number | undefined;
   max?: number | undefined;
@@ -19,26 +19,26 @@ export enum EditTextType {
   Footer
 }
 
-export interface IEditTextTaskParams extends TaskParams {
+export interface IEditTextTaskParams extends TaskParamsBase {
   type: EditTextType;
 }
-export interface IRefTaskParams extends TaskParams {
+export interface IRefTaskParams extends TaskParamsBase {
   type: RefType;
   id: KeyOfMap<IGameData[this["type"]]>;
   ephemeral?: boolean | undefined;
 }
 
-export interface IRollDamageTaskParams extends TaskParams {
+export interface IRollDamageTaskParams extends TaskParamsBase {
   id: KeyOfMap<IGameData[RefType.DamageTable]>;
   bonus?: number;
   armour?: number;
 }
 
-export interface IRollTableTaskParams extends TaskParams {
+export interface IRollTableTaskParams extends TaskParamsBase {
   id: KeyOfMap<IGameData[RefType.Table]>;
 }
 
-export interface IRollUnderTaskParams extends TaskParams {
+export interface IRollUnderTaskParams extends TaskParamsBase {
 
   /**
    * The target number.
@@ -49,7 +49,7 @@ export interface IRollUnderTaskParams extends TaskParams {
   target: number;
 }
 
-export interface IRollVersusTaskParams extends TaskParams {
+export interface IRollVersusTaskParams extends TaskParamsBase {
   char1: string;
   char2: string;
   bonus1: number;
@@ -61,7 +61,7 @@ export enum ManageMessageAction {
   Reveal
 }
 
-export interface IManageMessageTaskParams extends TaskParams {
+export interface IManageMessageTaskParams extends TaskParamsBase {
   action: ManageMessageAction;
 }
 
@@ -70,18 +70,18 @@ export enum InitiativeAction {
   Shuffle
 }
 
-export interface IInitiativeTokenTaskParams extends TaskParams {
+export interface IInitiativeTokenTaskParams extends TaskParamsBase {
   action: InitiativeAction
 }
 
-export interface IRebuildParams extends TaskParams {
+export interface IRebuildParams extends TaskParamsBase {
   embed?: WidgetType
 }
 
-export interface IRollDiceTaskParams extends TaskParams {
+export interface IRollDiceTaskParams extends TaskParamsBase {
   dice: DiceExpression
 }
 
-export interface IRollPlaceValuesTaskParams extends TaskParams {
+export interface IRollPlaceValuesTaskParams extends TaskParamsBase {
   dieType: number
 }

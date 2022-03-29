@@ -13,7 +13,7 @@ import { packParams } from "../../modules/tasks/packParams.js";
 import unpackSubmittedModal from "../../modules/tasks/unpackSubmittedModal.js";
 import parseWidget from "../../modules/widgets/parseWidget.js";
 import { routeTask } from "../../modules/tasks/routeTask.js";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 
 export default class EditAttributeTask extends Task<MessageComponentInteraction | ModalMessageModalSubmitInteraction, IEditAttrTaskParams> {
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {

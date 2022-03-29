@@ -1,5 +1,5 @@
 import { BotTask } from "../tasks/BotTask.js";
-import { InitiativeAction } from "../tasks/ITaskParams.js";
+import type { InitiativeAction } from "../tasks/ITaskParams.js";
 import { packParams } from "../tasks/packParams.js";
 
 

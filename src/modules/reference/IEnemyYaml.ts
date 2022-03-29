@@ -1,4 +1,4 @@
-import IEnemyBase from "./IEnemyBase";
+import type IEnemyBase from "./IEnemyBase";
 
 export default interface IEnemyYaml extends IEnemyBase{
   Skill: number;

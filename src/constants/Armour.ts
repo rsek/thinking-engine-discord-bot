@@ -1,5 +1,3 @@
-import _ from "lodash-es";
-
 enum Armour {
   "Unarmoured" = 0,
   "Lightly armoured" = 1,

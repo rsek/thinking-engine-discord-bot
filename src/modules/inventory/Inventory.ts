@@ -1,4 +1,4 @@
-import Item from "./Item.js";
+import type Item from "./Item.js";
 
 const maxInventorySpace = 12;
 

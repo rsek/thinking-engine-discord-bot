@@ -1,4 +1,5 @@
-import { BitField, CacheType, GuildCacheMessage, MessageFlags } from "discord.js";
+import type { CacheType, GuildCacheMessage } from "discord.js";
+import { BitField, MessageFlags } from "discord.js";
 
 export function asEphemeral<T extends GuildCacheMessage<CacheType>>(message: T) {
   const flags = new BitField(message.flags);

@@ -1,4 +1,5 @@
-import DiceExpression, { dicePattern } from "./diceExpression.js";
+import type DiceExpression from "./diceExpression.js";
+import { dicePattern } from "./diceExpression.js";
 import Roll from "./Roll.js";
 
 export default class RollPlaceValues extends Roll {

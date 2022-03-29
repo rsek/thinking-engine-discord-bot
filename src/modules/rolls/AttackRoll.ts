@@ -1,4 +1,5 @@
-import OpponentRoll, { IOpponentRoll } from "./OpponentRoll.js";
+import type { IOpponentRoll } from "./OpponentRoll.js";
+import OpponentRoll from "./OpponentRoll.js";
 
 
 // On your Turn you may decide to take Aim with your ranged Weapon. To do so hold onto your Initiative Token. When your next Initiative Token is drawn you may roll twice and pick the best roll. If the End of the Round Token comes up and you haven’t used your Aim Token you may decide to hold onto it for the next Round.

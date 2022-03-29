@@ -1,5 +1,5 @@
-import { EmbedField, EmbedFieldData } from "discord.js";
-import { NumericAttrString } from "./NumericAttrConstants.js";
+import type { EmbedField, EmbedFieldData } from "discord.js";
+import type { NumericAttrString } from "./NumericAttrConstants.js";
 
 
 export interface NumericAttrFieldData extends EmbedFieldData {

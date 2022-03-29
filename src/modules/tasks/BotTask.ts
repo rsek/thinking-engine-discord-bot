@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import type { IEditAttrTaskParams, IEditTextTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollTableTaskParams, IRollVersusTaskParams, IInitiativeTokenTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams } from "./ITaskParams.js";
 
 export enum BotTask {
@@ -14,9 +13,9 @@ export enum BotTask {
   RollPlaceValues = "rollPV"
 }
 
-export type TaskParams = Record<string,(number|boolean|string|undefined)>;
+export type TaskParamsBase = Record<string,(number|boolean|string|undefined)>;
 
-export interface IBotTasksParams extends Record<BotTask, TaskParams> {
+export interface IBotTasksParams extends Record<BotTask, TaskParamsBase> {
   [BotTask.EditAttribute]: IEditAttrTaskParams;
   [BotTask.EditText]: IEditTextTaskParams;
   [BotTask.ManageMessage]: IManageMessageTaskParams;

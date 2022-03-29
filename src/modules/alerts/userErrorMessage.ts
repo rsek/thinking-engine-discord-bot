@@ -1,4 +1,4 @@
-import { InteractionReplyOptions } from "discord.js";
+import type { InteractionReplyOptions } from "discord.js";
 
 export default function userErrorMessage(error: string = "An error has occurred.") {
   const message: InteractionReplyOptions = {

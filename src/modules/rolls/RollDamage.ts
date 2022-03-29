@@ -1,8 +1,8 @@
-import { EmbedField, InteractionReplyOptions, ActionRowBuilder, ButtonBuilder } from "discord.js";
-import _ from "lodash-es";
+import type { EmbedField, InteractionReplyOptions, ButtonBuilder } from "discord.js";
+import { ActionRowBuilder } from "discord.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
-import DamageInfo from "../reference/DamageInfo.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
+import type DamageInfo from "../reference/DamageInfo.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import Roll from "./Roll.js";

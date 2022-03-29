@@ -1,14 +1,14 @@
-import { InteractionReplyOptions } from "discord.js";
+import type { InteractionReplyOptions } from "discord.js";
 import AttackType from "../../constants/AttackType.js";
-import Tuple from "../../types/Tuple.js";
-import { IRendersEmbed } from "../widgets/IRenders.js";
+import type Tuple from "../../types/Tuple.js";
+import type { IRendersEmbed } from "../widgets/IRenders.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
-import Item from "../inventory/Item.js";
+import type Item from "../inventory/Item.js";
 import GameObject from "../inventory/GameObject.js";
-import IDamageInfo from "../../data/interfaces/IDamageInfo.js";
-import Spell from "./Spell.js";
-import ItemIn from "../../types/ItemIn.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
+import type IDamageInfo from "../../data/interfaces/IDamageInfo.js";
+import type Spell from "./Spell.js";
+import type ItemIn from "../../types/ItemIn.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
 import toSentenceCase from "../text/toSentenceCase.js";
 
 export default class DamageInfo extends GameObject implements IDamageInfo, IRendersEmbed {

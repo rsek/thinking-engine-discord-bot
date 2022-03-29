@@ -1,5 +1,5 @@
 import { TypedRegEx } from "typed-regex";
-import NumericAttribute from "./NumericAttribute.js";
+import type NumericAttribute from "./NumericAttribute.js";
 
 
 export const NumericAttrSeparator = " / ";

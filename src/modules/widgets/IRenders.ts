@@ -1,6 +1,6 @@
-import { SelectMenuBuilder } from "@discordjs/builders";
-import { EmbedField, ButtonBuilder, EmbedBuilder, SelectMenuOptionBuilder } from "discord.js";
-import WidgetOptions from "./WidgetOptions.js";
+import type { SelectMenuBuilder } from "@discordjs/builders";
+import type { EmbedField, ButtonBuilder, EmbedBuilder, SelectMenuOptionBuilder } from "discord.js";
+import type WidgetOptions from "./WidgetOptions.js";
 
 export interface IRendersEmbedField {
   toEmbedField(...args: any[]): EmbedField;

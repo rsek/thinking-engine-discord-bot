@@ -8,7 +8,7 @@ import type { IManageMessageTaskParams } from "../../modules/tasks/ITaskParams.j
 import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
 import { ActionRowBuilder } from "@discordjs/builders";
 import type { APIActionRowComponent, APIMessageActionRowComponent } from "discord-api-types/v10";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 
 export default class ManageMessageTask extends Task<MessageComponentInteraction<CacheType>,IManageMessageTaskParams> {

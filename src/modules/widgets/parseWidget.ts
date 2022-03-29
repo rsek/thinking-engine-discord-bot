@@ -1,5 +1,5 @@
-import { APIMessage } from "discord-api-types/v10";
-import { IRendersMessage } from "./IRenders.js";
+import type { APIMessage } from "discord-api-types/v10";
+import type { IRendersMessage } from "./IRenders.js";
 import InitiativeStack from "../initiative/InitiativeStack.js";
 import { WidgetType } from "./WidgetType.js";
 import { parseEmbedType } from "../../utils/firstEmbedOfType.js";

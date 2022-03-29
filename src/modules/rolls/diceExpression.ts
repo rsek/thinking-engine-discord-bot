@@ -1,4 +1,3 @@
-import _ from "lodash-es";
 import { TypedRegEx } from "typed-regex";
 
 type DiceExpression = `${number|""}d${number}` | `${number}d${number}${plusOrMinus}${number}`;

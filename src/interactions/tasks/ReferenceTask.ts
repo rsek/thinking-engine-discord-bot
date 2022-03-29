@@ -11,7 +11,7 @@ import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import ManageMessageTask from "./ManageMessageTask.js";
 import type WidgetOptions from "../../modules/widgets/WidgetOptions.js";
 import type IGameObject from "../../modules/inventory/IGameObject.js";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 
 interface IReferenceable {
   $id: string,

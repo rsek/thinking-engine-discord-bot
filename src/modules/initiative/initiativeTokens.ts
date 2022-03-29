@@ -1,4 +1,4 @@
-import { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
 import { endOfRoundToken, enemyToken, nonPlayerTokens } from "./InitiativeConstants.js";
 
 

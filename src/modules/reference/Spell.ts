@@ -1,11 +1,11 @@
-import ISpell from "../../data/interfaces/ISpell.js";
+import type ISpell from "../../data/interfaces/ISpell.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
 import GameObject from "../inventory/GameObject.js";
 import DamageInfo from "./DamageInfo.js";
-import { IRendersMessage } from "../widgets/IRenders.js";
-import { InteractionReplyOptions } from "discord.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
-import ItemIn from "../../types/ItemIn.js";
+import type { IRendersMessage } from "../widgets/IRenders.js";
+import type { InteractionReplyOptions } from "discord.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import type ItemIn from "../../types/ItemIn.js";
 
 export default class Spell extends GameObject implements ISpell, IRendersMessage {
   readonly WidgetTypes: WidgetType[] = [WidgetType.Spell];

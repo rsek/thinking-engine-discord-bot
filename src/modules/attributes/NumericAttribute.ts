@@ -1,15 +1,16 @@
-import { APIEmbed } from "discord-api-types/v9";
-import { ButtonBuilder, ButtonStyle, EmbedField, EmbedFieldData, SelectMenuOptionBuilder } from "discord.js";
-import PartialBy from "../../types/PartialBy.js";
-import WithRequired from "../../types/WithRequired.js";
+import type { APIEmbed } from "discord-api-types/v9";
+import type { EmbedField, EmbedFieldData } from "discord.js";
+import { ButtonBuilder, ButtonStyle, SelectMenuOptionBuilder } from "discord.js";
+import type PartialBy from "../../types/PartialBy.js";
+import type WithRequired from "../../types/WithRequired.js";
 import { BotTask } from "../tasks/BotTask.js";
-import { IHasTask } from "../tasks/IHasTask.js";
-import { IEditAttrTaskParams } from "../tasks/ITaskParams.js";
+import type { IHasTask } from "../tasks/IHasTask.js";
+import type { IEditAttrTaskParams } from "../tasks/ITaskParams.js";
 import { packParams } from "../tasks/packParams.js";
 import { currentKeyName, maxKeyName, NumericAttrPattern, NumericAttrSeparator } from "./NumericAttrConstants.js";
 import Attribute from "./Attribute.js";
-import INumericAttribute from "./INumericAttribute.js";
-import { IRendersButton, IRendersSelectMenuOption } from "../widgets/IRenders.js";
+import type INumericAttribute from "./INumericAttribute.js";
+import type { IRendersButton, IRendersSelectMenuOption } from "../widgets/IRenders.js";
 
 export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
   static incrementEmbedByName(embed: APIEmbed, {

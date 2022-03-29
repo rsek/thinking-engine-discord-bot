@@ -1,4 +1,4 @@
-import { ActionRow, MessageActionRowComponent, ModalActionRowComponent } from "discord.js";
+import type { ActionRow, MessageActionRowComponent, ModalActionRowComponent } from "discord.js";
 
 // looks for a component with a matching Id; if it's present, returns the index of the component's row container, and the com
 export default function findIndicesByCustomId(components: ActionRow<MessageActionRowComponent | ModalActionRowComponent>[], customId: string): { rowIndex: number; componentIndex: number; } {

@@ -1,7 +1,6 @@
-import Tuple from "../../types/Tuple.js";
-import IGameDataBase from "./IGameObjectBase.js";
-import IItem from "./IItem.js";
-import AttackType from "../../constants/AttackType.js";
+import type Tuple from "../../types/Tuple.js";
+import type IGameDataBase from "./IGameObjectBase.js";
+import type AttackType from "../../constants/AttackType.js";
 
 export default interface IDamageInfo extends IGameDataBase {
   "Name"?: string | undefined;

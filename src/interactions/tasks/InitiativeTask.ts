@@ -10,7 +10,7 @@ import { WidgetType } from "../../modules/widgets/WidgetType.js";
 import ColorTheme from "../../constants/ColorTheme.js";
 import type { APIEmbed } from "discord-api-types/v10";
 import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 
 export default class InitiativeTask extends Task<MessageComponentInteraction, IInitiativeTokenTaskParams> {
   static drawAlertEmbed(token: string, turn: number, round: number) {

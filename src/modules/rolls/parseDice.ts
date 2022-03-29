@@ -1,4 +1,5 @@
-import DiceExpression, { dicePattern } from "./diceExpression.js";
+import type DiceExpression from "./diceExpression.js";
+import { dicePattern } from "./diceExpression.js";
 
 /**
  * Attempts to parse dice notation into options suitable for use with Roll constructors.

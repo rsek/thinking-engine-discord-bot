@@ -1,8 +1,8 @@
-import { InteractionReplyOptions } from "discord.js";
+import type { InteractionReplyOptions } from "discord.js";
 import GameObject from "../inventory/GameObject.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
-import ItemIn from "../../types/ItemIn.js";
-import IBackground from "../../data/interfaces/IBackground.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import type ItemIn from "../../types/ItemIn.js";
+import type IBackground from "../../data/interfaces/IBackground.js";
 
 
 export default class Background extends GameObject implements IBackground {

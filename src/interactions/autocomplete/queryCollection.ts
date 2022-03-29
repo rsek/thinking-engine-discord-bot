@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionChoice, Collection } from "discord.js";
-import IGameObject from "../../modules/inventory/IGameObject.js";
+import type { ApplicationCommandOptionChoice, Collection } from "discord.js";
+import type IGameObject from "../../modules/inventory/IGameObject.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 
 const maxOptions = 25;

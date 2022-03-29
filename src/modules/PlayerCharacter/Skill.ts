@@ -1,8 +1,8 @@
-import { InteractionReplyOptions } from "discord.js";
-import ItemIn from "../../types/ItemIn.js";
-import WidgetOptions from "../widgets/WidgetOptions.js";
+import type { InteractionReplyOptions } from "discord.js";
+import type ItemIn from "../../types/ItemIn.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
 import GameObject from "../inventory/GameObject.js";
-import ISkill from "./ISkill.js";
+import type ISkill from "./ISkill.js";
 
 export default class Skill extends GameObject implements ISkill {
   $id: string;

@@ -1,7 +1,7 @@
 import type { CommandInteraction, MessageComponentInteraction } from "discord.js";
 import type { IRollDiceTaskParams } from "../../modules/tasks/ITaskParams.js";
 import Roll from "../../modules/rolls/Roll.js";
-import Task from "./Task.js";
+import Task from "../../modules/tasks/Task.js";
 import type GameData from "../../data/GameData.js";
 
 export default class RollDiceTask extends Task<MessageComponentInteraction|CommandInteraction,IRollDiceTaskParams> {
