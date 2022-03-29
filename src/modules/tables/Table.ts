@@ -71,9 +71,9 @@ export default class Table extends Collection<number, string> implements IGameOb
         const floor: string = fields[0].name;
         const ceiling: string = fields[fields.length-1].name;
         if (floor === ceiling) {
-          newTitle += `(${ceiling})`;
+          newTitle += ` (${ceiling})`;
         } else {
-          newTitle += `(${floor}-${ceiling})`;
+          newTitle += ` (${floor}-${ceiling})`;
         }
         return embed.setTitle(newTitle);
       });
