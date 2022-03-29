@@ -1,5 +1,5 @@
 
-import type { MessageComponentInteraction, GuildCacheMessage, CacheType, Message } from "discord.js";
+import type { MessageComponentInteraction, GuildCacheMessage, CacheType, Message, InteractionReplyOptions } from "discord.js";
 import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
 import { packParams } from "../../modules/tasks/packParams.js";
@@ -62,19 +62,23 @@ export default class ManageMessageTask extends Task<MessageComponentInteraction<
           throw new Error("Message is not deletable.");
         }
         break;
-      case ManageMessageAction.Reveal:
-        // TODO: fix stripEphemeral
-        return this.interaction.reply({
+      case ManageMessageAction.Reveal: {
+        const replyOptions: InteractionReplyOptions = {
           embeds: msg.embeds,
-          components: [
+        };
+        if (this.interaction.inGuild()) {
+          replyOptions.components = [
             new ActionRowBuilder<ButtonBuilder>()
               .addComponents(
                 ManageMessageTask.createButton(
                   ManageMessageAction.Delete
                 )
-              )]
-        });
+              )
+          ];
+        }
+        return this.interaction.reply(replyOptions);
         break;
+      }
       default:
         return this.interaction.reply(userErrorMessage());
         break;
