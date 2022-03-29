@@ -873,9 +873,9 @@ discord.js@^14.0.0-dev.1646395406.6f7a366:
     ws "^8.5.0"
 
 discordx@^10.0.0-dev.1646443270.8c9d2f69:
-  version "10.0.0-dev.1648471136.808aeab1"
-  resolved "https://registry.yarnpkg.com/discordx/-/discordx-10.0.0-dev.1648471136.808aeab1.tgz#f8a1fee3bfe408f0e8dcb3eb5c643123ee3ffcf9"
-  integrity sha512-N1d+oN58R3/WlltqDnZ8oijH3bBXalXRj54qV3c/4Fk9L8+FCR01XiA51/DYQNLL77rdSNEtmWiM8bE3JTWTEg==
+  version "10.0.0-dev.1648523956.5a57cfac"
+  resolved "https://registry.yarnpkg.com/discordx/-/discordx-10.0.0-dev.1648523956.5a57cfac.tgz#289948e6ab366b52d30b9db7eeb5262ffd656304"
+  integrity sha512-4uaBWqZoZXOhFqa8qgUpEWr5Sy59KGgA3I9E7ZkSTxLb1G2di9ZOcx15HO7doq07JjQ3zAOXqdWlO6ob9OgM7Q==
   dependencies:
     "@discordx/di" "^2.0.1"
     "@discordx/internal" "^1.0.2"

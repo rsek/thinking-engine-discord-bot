@@ -18,7 +18,9 @@
     "start": "yarn rebuild && pm2 start ./dist/bot.js --name \"Thinking Engine\"",
     "restart": "yarn rebuild && pm2 restart \"Thinking Engine\" --update-env",
     "stop": "pm2 stop \"Thinking Engine\"",
-    "kill": "yarn stop && pm2 delete \"Thinking Engine\""
+    "kill": "yarn stop && pm2 delete \"Thinking Engine\"",
+    "wipe-global": "node ./dist/wipeGlobalCommands.js",
+    "wipe-guild": "node ./dist/wipeGuildCommands.js"
   },
   "author": "rsek",
   "license": "ISC",
