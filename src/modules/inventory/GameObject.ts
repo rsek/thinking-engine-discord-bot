@@ -1,13 +1,13 @@
 import type { InteractionReplyOptions } from "discord.js";
 import { Embed } from "discord.js";
 import { titleCase } from "title-case";
+import type IGameObject from "./IGameObject.js";
 import type ItemIn from "../../types/ItemIn.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import { IRendersEmbed, IRendersMessage } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import type { RefType } from "../widgets/WidgetType.js";
 import { WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import type IGameObject from "./IGameObject.js";
 
 /**
  * Base class for static game data objects.

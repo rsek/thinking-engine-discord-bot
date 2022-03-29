@@ -1,6 +1,6 @@
 import type { Interaction, Message } from "discord.js";
-import type GameData from "../../data/GameData.js";
 import type { IBotTasksParams } from "./BotTask.js";
+import type GameData from "../../data/GameData.js";
 import type ValueOf from "../../types/ValueOf.js";
 
 export default abstract class Task<I extends Interaction, P extends ValueOf<IBotTasksParams>> {

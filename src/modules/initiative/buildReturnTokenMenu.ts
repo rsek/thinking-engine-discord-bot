@@ -1,13 +1,13 @@
+import { SelectMenuOptionBuilder } from "discord.js";
 import _ from "lodash-es";
+import { endOfRoundToken, enemyToken, henchmanToken, returnTokenMenuId } from "./InitiativeConstants.js";
+import { isPlayerToken } from "./initiativeTokens.js";
+import packInitiativeParams from "./packInitiativeTaskParams.js";
+import numberEmoji from "../../constants/numberEmoji.js";
 import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
 import { currentKeyName, maxKeyName } from "../attributes/NumericAttrConstants.js";
-import { isPlayerToken } from "./initiativeTokens.js";
-import numberEmoji from "../../constants/numberEmoji.js";
-import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
-import { SelectMenuOptionBuilder } from "discord.js";
+import createTaskMenuStub from "../tasks/createTaskMenuStub.js";
 import { InitiativeAction } from "../tasks/ITaskParams.js";
-import { endOfRoundToken, enemyToken, henchmanToken, returnTokenMenuId } from "./InitiativeConstants.js";
-import packInitiativeParams from "./packInitiativeTaskParams.js";
 
 /**
  * Builds a select menu used to return tokens to the initiative token stack.
@@ -15,7 +15,7 @@ import packInitiativeParams from "./packInitiativeTaskParams.js";
  * @returns The menu.
  */
 export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
-  const menu = getTaskMenuStub(returnTokenMenuId)
+  const menu = createTaskMenuStub(returnTokenMenuId)
     .setPlaceholder("Return token to initiative stack...")
   ;
   _.forEach(tokens, (token) => {

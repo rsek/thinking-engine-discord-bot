@@ -1,11 +1,11 @@
 import "reflect-metadata";
 
-import { Discord, Slash, SlashOption } from "discordx";
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType, InteractionType } from "discord.js";
+import { Discord, Slash, SlashOption } from "discordx";
+import { Bot } from "../../bot.js";
 import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
-import { Bot } from "../../bot.js";
 
 @Discord()
 export abstract class RollTableCommand {

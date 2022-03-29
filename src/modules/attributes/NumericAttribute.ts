@@ -1,15 +1,15 @@
 import type { APIEmbed } from "discord-api-types/v10";
 import type { EmbedField, EmbedFieldData } from "discord.js";
 import { ButtonBuilder, ButtonStyle, SelectMenuOptionBuilder } from "discord.js";
+import Attribute from "./Attribute.js";
+import type INumericAttribute from "./INumericAttribute.js";
+import { currentKeyName, maxKeyName, NumericAttrPattern, NumericAttrSeparator } from "./NumericAttrConstants.js";
 import type PartialBy from "../../types/PartialBy.js";
 import type WithRequired from "../../types/WithRequired.js";
 import { BotTask } from "../tasks/BotTask.js";
 import type { IHasTask } from "../tasks/IHasTask.js";
 import type { IEditAttrTaskParams } from "../tasks/ITaskParams.js";
-import { packParams } from "../tasks/packParams.js";
-import { NumericAttrPattern, NumericAttrSeparator, currentKeyName, maxKeyName } from "./NumericAttrConstants.js";
-import Attribute from "./Attribute.js";
-import type INumericAttribute from "./INumericAttribute.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 import type { IRendersButton, IRendersSelectMenuOption } from "../widgets/IRenders.js";
 
 export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
@@ -76,7 +76,7 @@ export default class NumericAttribute extends Attribute implements INumericAttri
   }
   packParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     params.id = this.name;
-    return packParams(BotTask.EditAttribute, params as IEditAttrTaskParams);
+    return packTaskParams(BotTask.EditAttribute, params as IEditAttrTaskParams);
   }
   toButton(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     const customId = this.packParams(params);

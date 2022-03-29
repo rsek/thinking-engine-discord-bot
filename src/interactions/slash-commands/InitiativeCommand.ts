@@ -1,8 +1,8 @@
-import { Discord, Slash, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
+import { Discord, Slash, SlashOption } from "discordx";
 import _ from "lodash-es";
 import { enemyToken, henchmanToken, pcTokenValue } from "../../modules/initiative/InitiativeConstants.js";
+import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
 
 @Discord()
 export abstract class InitiativeCommand {

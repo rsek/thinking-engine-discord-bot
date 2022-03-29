@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/require-await */
 import type { CommandInteraction, Interaction, MessageComponentInteraction, ModalMessageModalSubmitInteraction } from "discord.js";
 import _ from "lodash-es";
-import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
-import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
-import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
-import RollTableTask from "../../interactions/tasks/RollTableTask.js";
-import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
-import type { unpackParams } from "./packParams.js";
-import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 import { BotTask } from "./BotTask.js";
+import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
+import type { unpackTaskParams } from "./packTaskParams.js";
 import type GameData from "../../data/GameData.js";
+import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
+import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
+import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
+import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
+import RollTableTask from "../../interactions/tasks/RollTableTask.js";
 
 /**
  * Routes interactions to the corresponding handler.
  *
  * @export
- * @param {ReturnType<typeof unpackParams>} tasksParams
+ * @param {ReturnType<typeof unpackTaskParams>} tasksParams
  * @param {Interaction} interaction
  */
-export async function routeTask(tasksParams: ReturnType<typeof unpackParams>, interaction: Interaction, gameData: GameData): Promise<void> {
+export async function routeTask(tasksParams: ReturnType<typeof unpackTaskParams>, interaction: Interaction, gameData: GameData): Promise<void> {
   // console.log("[routeTask]", tasksParams);
   _.forEach(tasksParams, async (task, taskId) => {
     switch (taskId) {

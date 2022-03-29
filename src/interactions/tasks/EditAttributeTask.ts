@@ -7,7 +7,7 @@ import type IHasAttributes from "../../modules/attributes/IHasAttributes.js";
 import NumericAttribute from "../../modules/attributes/NumericAttribute.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
 import type { IEditAttrTaskParams } from "../../modules/tasks/ITaskParams.js";
-import { packParams } from "../../modules/tasks/packParams.js";
+import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
 import { routeTask } from "../../modules/tasks/routeTask.js";
 import Task from "../../modules/tasks/Task.js";
 import unpackSubmittedModal from "../../modules/tasks/unpackSubmittedModal.js";
@@ -30,7 +30,7 @@ export default class EditAttributeTask extends Task<MessageComponentInteraction 
     const actionRow = new ActionRowBuilder<TextInputBuilder>()
       .addComponents(textInput);
     const modal = new ModalBuilder()
-      .setCustomId(packParams(BotTask.EditAttribute, params))
+      .setCustomId(packTaskParams(BotTask.EditAttribute, params))
       .setTitle("Add New Player Character")
       .addComponents(actionRow.toJSON())
       ;

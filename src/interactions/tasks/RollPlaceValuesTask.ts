@@ -1,9 +1,9 @@
 
 import type { CommandInteraction, MessageComponentInteraction } from "discord.js";
-import type { IRollPlaceValuesTaskParams } from "../../modules/tasks/ITaskParams.js";
-import RollPlaceValues from "../../modules/rolls/RollPlaceValues.js";
-import Task from "../../modules/tasks/Task.js";
 import type GameData from "../../data/GameData.js";
+import RollPlaceValues from "../../modules/rolls/RollPlaceValues.js";
+import type { IRollPlaceValuesTaskParams } from "../../modules/tasks/ITaskParams.js";
+import Task from "../../modules/tasks/Task.js";
 
 export default class RollPlaceValuesTask extends Task<MessageComponentInteraction|CommandInteraction, IRollPlaceValuesTaskParams> {
   description?: string | undefined;

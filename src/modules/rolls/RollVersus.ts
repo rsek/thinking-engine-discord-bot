@@ -1,9 +1,9 @@
 import type { EmbedField } from "discord.js";
 import _ from "lodash-es";
+import OpponentRoll from "./OpponentRoll.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type { IRendersEmbed } from "../widgets/IRenders.js";
 import { WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import OpponentRoll from "./OpponentRoll.js";
 
 export interface IRollVersus {
   opponents: Record<string, OpponentRoll>;

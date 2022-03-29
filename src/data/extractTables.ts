@@ -9,7 +9,7 @@ import type Table from "../modules/tables/Table.js";
  * @param {...Collection<string, Enemy>[]} dataCollections
  * @return {*}
  */
-export default function getTables(...dataCollections: Collection<string, Enemy>[]) {
+export default function extractTables(...dataCollections: Collection<string, Enemy>[]) {
   const result: Collection<string, Table> = new Collection();
   dataCollections.forEach((collection) => {
     collection.forEach((enemy) => {

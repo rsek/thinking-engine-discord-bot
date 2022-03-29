@@ -1,11 +1,11 @@
 import type { ButtonBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder } from "discord.js";
+import Roll from "./Roll.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import type DamageInfo from "../reference/DamageInfo.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import Roll from "./Roll.js";
 
 export default class RollDamage extends Roll {
   static minRoll = 1;

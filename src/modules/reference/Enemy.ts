@@ -1,20 +1,20 @@
+import type { ButtonBuilder } from "@discordjs/builders";
 import type { EmbedBuilder, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder } from "discord.js";
-import type { IRendersEmbed } from "../widgets/IRenders.js";
-import NumericAttribute from "../attributes/NumericAttribute.js";
+import type IEnemyBase from "./IEnemyBase.js";
+import type IEnemyYaml from "./IEnemyYaml.js";
 import type IHasAttributes from "../attributes/IHasAttributes.js";
-import type WidgetOptions from "../widgets/WidgetOptions.js";
+import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import { numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
+import NumericAttribute from "../attributes/NumericAttribute.js";
+import GameObject from "../inventory/GameObject.js";
 import type IGameObject from "../inventory/IGameObject.js";
-import { RefType, WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import Roll from "../rolls/Roll.js";
 import Table from "../tables/Table.js";
-import { numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
-import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
-import type IEnemyYaml from "./IEnemyYaml.js";
-import type IEnemyBase from "./IEnemyBase.js";
-import type { ButtonBuilder } from "@discordjs/builders";
-import GameObject from "../inventory/GameObject.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
+import type { IRendersEmbed } from "../widgets/IRenders.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 export type EnemyAttrHash = NumericAttrHash & {
   Skill: NumericAttribute,

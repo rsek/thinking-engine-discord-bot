@@ -1,11 +1,11 @@
 import type { ButtonBuilder, InteractionReplyOptions } from "discord.js";
+import GameObject from "./GameObject.js";
 import type IItem from "../../data/interfaces/IItem.js";
+import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
+import DamageInfo from "../reference/DamageInfo.js";
 import type { IRendersButton, IRendersMessage } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
-import GameObject from "./GameObject.js";
-import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
-import DamageInfo from "../reference/DamageInfo.js";
 
 // might be fun to experiment with *light* nlp hre, for pluralizing items
 

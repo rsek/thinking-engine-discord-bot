@@ -1,13 +1,13 @@
 
-import { RefType } from "../modules/widgets/WidgetType.js";
-import type Background from "../modules/reference/Background.js";
 import type { Collection } from "discord.js";
-import type Enemy from "../modules/reference/Enemy.js";
-import type DamageInfo from "../modules/reference/DamageInfo.js";
 import type Item from "../modules/inventory/Item.js";
 import type Skill from "../modules/PlayerCharacter/Skill.js";
+import type Background from "../modules/reference/Background.js";
+import type DamageInfo from "../modules/reference/DamageInfo.js";
+import type Enemy from "../modules/reference/Enemy.js";
 import type Spell from "../modules/reference/Spell.js";
 import type Table from "../modules/tables/Table.js";
+import { RefType } from "../modules/widgets/WidgetType.js";
 
 export default class GameData {
   [RefType.Background]!: Collection<string, Background>;

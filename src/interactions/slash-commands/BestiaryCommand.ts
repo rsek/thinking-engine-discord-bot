@@ -3,10 +3,10 @@ import "reflect-metadata";
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType, InteractionType } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
+import { Bot } from "../../bot.js";
 import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
-import { Bot } from "../../bot.js";
 
 @Discord()
 export abstract class BestiaryCommand {

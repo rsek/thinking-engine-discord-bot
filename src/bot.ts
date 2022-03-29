@@ -1,21 +1,21 @@
 import "reflect-metadata";
 
-import type { ApplicationCommand, Collection, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuInteraction } from "discord.js";
-import { ComponentType, IntentsBitField, InteractionType } from "discord.js";
 import { dirname, importx } from "@discordx/importer";
+import { ComponentType, IntentsBitField, InteractionType } from "discord.js";
+import type { ApplicationCommand, Collection, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuInteraction } from "discord.js";
 import { ArgsOf, Client, Discord, On, Once } from "discordx";
 import dotenv from "dotenv";
-import unpackSubmittedModal from "./modules/tasks/unpackSubmittedModal.js";
-import { unpackParams } from "./modules/tasks/packParams.js";
-import { routeTask } from "./modules/tasks/routeTask.js";
-import GameData from "./data/GameData.js";
 import Backgrounds from "./data/Backgrounds.js";
 import Bestiary from "./data/Bestiary.js";
+import DamageTables from "./data/DamageTables.js";
+import GameData from "./data/GameData.js";
 import Items from "./data/Items.js";
 import Skills from "./data/Skills.js";
-import DamageTables from "./data/DamageTables.js";
 import Spells from "./data/Spells.js";
 import Tables from "./data/Tables.js";
+import { unpackTaskParams } from "./modules/tasks/packTaskParams.js";
+import { routeTask } from "./modules/tasks/routeTask.js";
+import unpackSubmittedModal from "./modules/tasks/unpackSubmittedModal.js";
 
 dotenv.config();
 
@@ -62,13 +62,13 @@ export abstract class Bot {
   static async routeMessageComponent(interaction: MessageComponentInteraction) {
     switch (interaction.componentType) {
       case ComponentType.Button: {
-        const params = unpackParams(interaction.customId);
+        const params = unpackTaskParams(interaction.customId);
         return routeTask(params, interaction, Bot.gameData);
         break;
       }
       case ComponentType.SelectMenu: {
         const value = (interaction as SelectMenuInteraction).values[0];
-        const params = unpackParams(value);
+        const params = unpackTaskParams(value);
         return routeTask(params, interaction, Bot.gameData);
         break;
       }

@@ -1,8 +1,8 @@
-import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import RollDiceTask from "../tasks/RollDiceTask.js";
-import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
+import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { Bot } from "../../bot.js";
+import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
+import RollDiceTask from "../tasks/RollDiceTask.js";
 
 @Discord()
 export abstract class RollDiceCommand {

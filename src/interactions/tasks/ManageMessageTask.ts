@@ -1,19 +1,19 @@
 
-import type { CacheType, GuildCacheMessage, InteractionReplyOptions, Message, MessageComponentInteraction } from "discord.js";
-import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
-import { BotTask } from "../../modules/tasks/BotTask.js";
-import { packParams } from "../../modules/tasks/packParams.js";
-import { asEphemeral } from "../../modules/attributes/toEphemeral.js";
-import type { IManageMessageTaskParams } from "../../modules/tasks/ITaskParams.js";
-import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
 import { ActionRowBuilder } from "@discordjs/builders";
 import type { APIActionRowComponent, APIMessageActionRowComponent } from "discord-api-types/v10";
-import Task from "../../modules/tasks/Task.js";
+import type { CacheType, GuildCacheMessage, InteractionReplyOptions, Message, MessageComponentInteraction } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
+import { toEphemeral } from "../../modules/attributes/toEphemeral.js";
+import { BotTask } from "../../modules/tasks/BotTask.js";
+import type { IManageMessageTaskParams } from "../../modules/tasks/ITaskParams.js";
+import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
+import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
+import Task from "../../modules/tasks/Task.js";
 
 export default class ManageMessageTask extends Task<MessageComponentInteraction<CacheType>,IManageMessageTaskParams> {
   static createButton(action: ManageMessageAction) {
-    const customId = packParams(BotTask.ManageMessage, { action });
+    const customId = packTaskParams(BotTask.ManageMessage, { action });
     const btn = new ButtonBuilder().setCustomId(customId);
 
     switch (action) {
@@ -34,7 +34,7 @@ export default class ManageMessageTask extends Task<MessageComponentInteraction<
     return btn;
   }
   static asRevealable<T extends GuildCacheMessage<CacheType>>(message: T) {
-    const newMessage = asEphemeral(message);
+    const newMessage = toEphemeral(message);
     if (!newMessage.components) {
       newMessage.components = [];
     }

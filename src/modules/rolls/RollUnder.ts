@@ -1,6 +1,6 @@
-import { WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import Roll from "./Roll.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
+import { WidgetType } from "../widgets/WidgetType.js";
 
 enum RollUnderOutcome {
   Failure,

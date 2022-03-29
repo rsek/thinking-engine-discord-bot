@@ -8,7 +8,7 @@ import type DamageInfo from "../modules/reference/DamageInfo.js";
  * @param {...Collection<string, Item>[]} dataCollections
  * @return {*}
  */
-export default function getDamageTables(...dataCollections: Collection<string, { Attacks?: DamageInfo[] | undefined; }>[]) {
+export default function extractDamageTables(...dataCollections: Collection<string, { Attacks?: DamageInfo[] | undefined; }>[]) {
   const result: Collection<string, DamageInfo> = new Collection();
   dataCollections.forEach((collection) => {
     collection.forEach((item) => {

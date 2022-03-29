@@ -1,6 +1,6 @@
 import { SelectMenuOptionBuilder } from "discord.js";
 
-export default function emptyInventorySlotMenuOption(slotNumber: number) {
+export default function createEmptyInventorySlotMenuOption(slotNumber: number) {
   return new SelectMenuOptionBuilder()
     .setLabel(`${slotNumber}. [Empty]`)
     .setDescription("Select this slot to add an item to it.")

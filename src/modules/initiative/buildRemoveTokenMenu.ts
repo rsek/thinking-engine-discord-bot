@@ -1,10 +1,10 @@
 import _ from "lodash-es";
-import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
-import { currentKeyName } from "../attributes/NumericAttrConstants.js";
+import { endOfRoundToken, enemyToken, henchmanToken, pcTokenValue, removeTokenMenuId } from "./InitiativeConstants.js";
 import { isPlayerToken } from "./initiativeTokens.js";
 import numberEmoji from "../../constants/numberEmoji.js";
-import getTaskMenuStub from "../tasks/getTaskMenuStub.js";
-import { endOfRoundToken, enemyToken, henchmanToken, pcTokenValue, removeTokenMenuId } from "./InitiativeConstants.js";
+import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
+import { currentKeyName } from "../attributes/NumericAttrConstants.js";
+import createTaskMenuStub from "../tasks/createTaskMenuStub.js";
 
 // TODO: figure out how i'm handling/IDing the menu
 
@@ -15,7 +15,7 @@ import { endOfRoundToken, enemyToken, henchmanToken, pcTokenValue, removeTokenMe
  * @returns A select menu builder.
  */
 export default function buildRemoveTokenMenu(tokens: NumericAttrHash) {
-  const menu = getTaskMenuStub(removeTokenMenuId)
+  const menu = createTaskMenuStub(removeTokenMenuId)
     .setPlaceholder("Discard tokens...")
   ;
   _.forEach(tokens, (token) => {

@@ -1,29 +1,29 @@
+import type { EmbedBuilder, MessageActionRowComponentBuilder } from "@discordjs/builders";
+import { ActionRowBuilder, SelectMenuBuilder } from "@discordjs/builders";
+import type { APIEmbed } from "discord-api-types/v10";
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 import _ from "lodash-es";
 import weighted from "weighted";
 import buildAddTokenMenu from "./buildAddTokenMenu.js";
 import buildRemoveTokenMenu from "./buildRemoveTokenMenu.js";
-import { endOfRoundToken, enemyToken, henchmanToken, roundPattern, turnPattern } from "./InitiativeConstants.js";
-import { tokenFactionsLeft } from "./initiativeTokens.js";
-import type { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../widgets/IRenders.js";
-import NumericAttribute from "../attributes/NumericAttribute.js";
 import buildReturnTokenMenu from "./buildReturnTokenMenu.js";
+import { endOfRoundToken, enemyToken, henchmanToken, roundPattern, turnPattern } from "./InitiativeConstants.js";
+import { roundPrefix, turnPrefix } from "./InitiativeConstants.js";
+import { tokenFactionsLeft } from "./initiativeTokens.js";
+import packInitiativeParams from "./packInitiativeTaskParams.js";
 import type WithRequired from "../../types/WithRequired.js";
-import type WidgetOptions from "../widgets/WidgetOptions.js";
-import { WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import type { APIEmbed } from "discord-api-types/v10";
-import type { EmbedBuilder, MessageActionRowComponentBuilder } from "@discordjs/builders";
-import { ActionRowBuilder, SelectMenuBuilder } from "@discordjs/builders";
-import { InitiativeAction } from "../tasks/ITaskParams.js";
-import type IHasAttributes from "../attributes/IHasAttributes.js";
 import sortRecord from "../../utils/sortRecord.js";
-import { fieldsToNumericAttrHash, numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
-import type { NumericAttrFieldData } from "../attributes/NumericAttrFieldData";
+import type IHasAttributes from "../attributes/IHasAttributes.js";
 import type { NumericAttrHash } from "../attributes/NumericAttrConstants.js";
 import { currentKeyName, maxKeyName } from "../attributes/NumericAttrConstants.js";
-import { roundPrefix, turnPrefix } from "./InitiativeConstants.js";
-import packInitiativeParams from "./packInitiativeTaskParams.js";
+import type { NumericAttrFieldData } from "../attributes/NumericAttrFieldData";
+import { fieldsToNumericAttrHash, numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
+import NumericAttribute from "../attributes/NumericAttribute.js";
+import { InitiativeAction } from "../tasks/ITaskParams.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
+import type { IRendersButton, IRendersEmbed, IRendersMessage, IRendersSelectMenu } from "../widgets/IRenders.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import { WidgetType } from "../widgets/WidgetType.js";
 
 enum TokenMenuType {
   Remove,

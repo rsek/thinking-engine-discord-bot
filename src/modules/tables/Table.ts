@@ -1,15 +1,15 @@
 import type { APIEmbedField, EmbedBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Collection } from "discord.js";
-import type WidgetOptions from "../widgets/WidgetOptions.js";
-import type IGameObject from "../inventory/IGameObject.js";
-import { RefType, WidgetType } from "../widgets/WidgetType.js";
-import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type ItemIn from "../../types/ItemIn.js";
+import type IGameObject from "../inventory/IGameObject.js";
+import { BotTask } from "../tasks/BotTask.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 import embedLength from "../text/embedLength.js";
 import { MAX_EMBED_FIELDS, MAX_LENGTH_EMBED_TOTAL } from "../text/embedLimits.js";
-import embedFieldLength from "../text/embedFieldLength.js";
-import { packParams } from "../tasks/packParams.js";
-import { BotTask } from "../tasks/BotTask.js";
+import getEmbedFieldLength from "../text/getEmbedFieldLength.js";
+import buildWidgetStub from "../widgets/buildWidgetStub.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 export default class Table extends Collection<number, string> implements IGameObject {
   readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
@@ -57,7 +57,7 @@ export default class Table extends Collection<number, string> implements IGameOb
       if (!embeds[embedCount]) {
         embeds.push(buildWidgetStub(WidgetType.Table, this.Name));
       }
-      if ((embedLength(embeds[embedCount]) + embedFieldLength(field)) > MAX_LENGTH_EMBED_TOTAL ||
+      if ((embedLength(embeds[embedCount]) + getEmbedFieldLength(field)) > MAX_LENGTH_EMBED_TOTAL ||
       ((embeds[embedCount].data.fields?.length ?? 0) >= MAX_EMBED_FIELDS)) {
         embeds.push(buildWidgetStub(WidgetType.Table, `${this.Name}`));
         embedCount++;
@@ -102,7 +102,7 @@ export default class Table extends Collection<number, string> implements IGameOb
       .setLabel(label)
       .setEmoji({ name: "🎲" })
       .setStyle(ButtonStyle.Primary)
-      .setCustomId(packParams(BotTask.RollTable, { id: this.$id }) );
+      .setCustomId(packTaskParams(BotTask.RollTable, { id: this.$id }) );
   }
   toPreviewMessage(ephemeral: boolean = true) {
     return {

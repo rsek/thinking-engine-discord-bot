@@ -3,11 +3,11 @@ import "reflect-metadata";
 import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType, InteractionType } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
-import queryCollection from "../autocomplete/queryCollection.js";
-import RollDamage from "../../modules/rolls/RollDamage.js";
-import type DamageInfo from "../../modules/reference/DamageInfo.js";
 import { Bot } from "../../bot.js";
+import type DamageInfo from "../../modules/reference/DamageInfo.js";
+import RollDamage from "../../modules/rolls/RollDamage.js";
 import { RefType } from "../../modules/widgets/WidgetType.js";
+import queryCollection from "../autocomplete/queryCollection.js";
 
 @Discord()
 export abstract class RollDamageCommand {

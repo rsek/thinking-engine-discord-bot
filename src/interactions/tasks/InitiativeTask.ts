@@ -1,16 +1,16 @@
 
+import type { APIEmbed } from "discord-api-types/v10";
 import type { MessageComponentInteraction } from "discord.js";
 import { EmbedBuilder } from "discord.js";
+import ColorTheme from "../../constants/ColorTheme.js";
+import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
+import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
+import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
 import type { IInitiativeTokenTaskParams } from "../../modules/tasks/ITaskParams.js";
 import { InitiativeAction } from "../../modules/tasks/ITaskParams.js";
-import { firstEmbedOfType } from "../../utils/firstEmbedOfType.js";
-import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
-import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
-import { WidgetType } from "../../modules/widgets/WidgetType.js";
-import ColorTheme from "../../constants/ColorTheme.js";
-import type { APIEmbed } from "discord-api-types/v10";
-import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
 import Task from "../../modules/tasks/Task.js";
+import { WidgetType } from "../../modules/widgets/WidgetType.js";
+import { firstEmbedOfType } from "../../utils/firstEmbedOfType.js";
 
 export default class InitiativeTask extends Task<MessageComponentInteraction, IInitiativeTokenTaskParams> {
   static drawAlertEmbed(token: string, turn: number, round: number) {

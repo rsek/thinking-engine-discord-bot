@@ -1,8 +1,8 @@
 import type { APIMessage } from "discord-api-types/v10";
 import type { IRendersMessage } from "./IRenders.js";
-import InitiativeStack from "../initiative/InitiativeStack.js";
 import { WidgetType } from "./WidgetType.js";
 import { parseEmbedType } from "../../utils/firstEmbedOfType.js";
+import InitiativeStack from "../initiative/InitiativeStack.js";
 /**
  * Attempts to parse a widget message back into its corresponding object.
  * @param message The message to parse into an object.

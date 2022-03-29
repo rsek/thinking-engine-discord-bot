@@ -2,16 +2,16 @@ import "reflect-metadata";
 
 import type { CommandInteraction, InteractionReplyOptions, MessageActionRowComponentBuilder, MessageComponentInteraction } from "discord.js";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
+import ManageMessageTask from "./ManageMessageTask.js";
+import type IGameObject from "../../modules/inventory/IGameObject.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
-import { packParams } from "../../modules/tasks/packParams.js";
 import type { IRefTaskParams } from "../../modules/tasks/ITaskParams.js";
 import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
-import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
-import toSentenceCase from "../../modules/text/toSentenceCase.js";
-import ManageMessageTask from "./ManageMessageTask.js";
-import type WidgetOptions from "../../modules/widgets/WidgetOptions.js";
-import type IGameObject from "../../modules/inventory/IGameObject.js";
+import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
 import Task from "../../modules/tasks/Task.js";
+import toSentenceCase from "../../modules/text/toSentenceCase.js";
+import type WidgetOptions from "../../modules/widgets/WidgetOptions.js";
+import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
 
 interface IReferenceable {
   $id: string,
@@ -26,7 +26,7 @@ export default class ReferenceTask extends Task<MessageComponentInteraction | Co
       id: target.$id, type: target.Type, ephemeral
     };
     return new ButtonBuilder()
-      .setCustomId(packParams(BotTask.Reference, params))
+      .setCustomId(packTaskParams(BotTask.Reference, params))
       .setLabel(toSentenceCase(target.Name ?? target.name ?? target.$id))
       .setEmoji({ name: "ℹ️" })
       .setStyle(ButtonStyle.Secondary)

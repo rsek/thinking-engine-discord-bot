@@ -1,6 +1,6 @@
-import type Tuple from "../../types/Tuple.js";
 import type IGameDataBase from "./IGameObjectBase.js";
 import type AttackType from "../../constants/AttackType.js";
+import type Tuple from "../../types/Tuple.js";
 
 export default interface IDamageInfo extends IGameDataBase {
   "Name"?: string | undefined;

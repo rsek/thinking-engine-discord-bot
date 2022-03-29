@@ -1,9 +1,9 @@
 import { ButtonBuilder, ButtonStyle } from "discord.js";
 import _ from "lodash-es";
-import { BotTask } from "../tasks/BotTask.js";
-import { packParams } from "../tasks/packParams.js";
 import { dicePattern } from "./diceExpression.js";
 import toDiceExpression from "./toDiceExpression.js";
+import { BotTask } from "../tasks/BotTask.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 /**
  * Extracts any roll notation from descriptive text, and generates buttons for those rolls.
  *
@@ -16,7 +16,7 @@ export default function extractRollButtons(text: string): ButtonBuilder[] {
   const buttons = captures.map(capture => {
     const numberCapture = _.mapValues(capture, (value) => Number(value));
     const dice = toDiceExpression(numberCapture);
-    const customId = packParams(BotTask.RollDice, { dice });
+    const customId = packTaskParams(BotTask.RollDice, { dice });
     const button = new ButtonBuilder()
       .setCustomId(customId)
       .setStyle(ButtonStyle.Primary)
