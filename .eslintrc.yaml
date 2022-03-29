@@ -74,6 +74,9 @@ rules:
   "@typescript-eslint/no-inferrable-types":
     - 0
     - error
+  "@typescript-eslint/consistent-type-imports":
+    - 1
+    - prefer: type-imports
   block-scoped-var: warn
   curly:
   - warn
