@@ -74,18 +74,18 @@ export default class NumericAttribute extends Attribute implements INumericAttri
       inline
     };
   }
-  packParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
+  packTaskParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     params.id = this.name;
     return packTaskParams(BotTask.EditAttribute, params as IEditAttrTaskParams);
   }
   toButton(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
-    const customId = this.packParams(params);
+    const customId = this.packTaskParams(params);
     return new ButtonBuilder()
       .setCustomId(customId)
       .setStyle(ButtonStyle.Secondary);
   }
   toSelectMenuOption(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }): SelectMenuOptionBuilder {
-    const value = this.packParams(params);
+    const value = this.packTaskParams(params);
     return new SelectMenuOptionBuilder()
       .setValue(value)
       .setDefault(false)
