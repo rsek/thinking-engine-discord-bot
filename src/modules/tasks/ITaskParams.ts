@@ -28,7 +28,11 @@ export interface IRefTaskParams extends TaskParamsBase {
   ephemeral?: boolean | undefined;
 }
 
-export interface IRollDamageTaskParams extends TaskParamsBase {
+export interface RollTaskParamsBase extends TaskParamsBase {
+  isReroll?: boolean | undefined;
+}
+
+export interface IRollDamageTaskParams extends RollTaskParamsBase {
   id: KeyOfMap<IGameData[RefType.DamageTable]>;
   bonus?: number;
   armour?: number;
@@ -38,18 +42,11 @@ export interface IRollTableTaskParams extends TaskParamsBase {
   id: KeyOfMap<IGameData[RefType.Table]>;
 }
 
-export interface IRollUnderTaskParams extends TaskParamsBase {
-
-  /**
-   * The target number.
-   *
-   * @type {number}
-   * @memberof IRollUnderTaskParams
-   */
+export interface IRollUnderTaskParams extends RollTaskParamsBase {
   target: number;
 }
 
-export interface IRollVersusTaskParams extends TaskParamsBase {
+export interface IRollVersusTaskParams extends RollTaskParamsBase {
   char1: string;
   char2: string;
   bonus1: number;
@@ -78,11 +75,10 @@ export interface IRebuildParams extends TaskParamsBase {
   embed?: WidgetType
 }
 
-export interface IRollDiceTaskParams extends TaskParamsBase {
+export interface IRollDiceTaskParams extends RollTaskParamsBase {
   dice: DiceExpression;
-  sameDesc?: boolean | undefined;
 }
 
-export interface IRollPlaceValuesTaskParams extends TaskParamsBase {
+export interface IRollPlaceValuesTaskParams extends RollTaskParamsBase {
   dieType: number
 }

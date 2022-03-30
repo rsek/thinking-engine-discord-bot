@@ -1,8 +1,10 @@
+import type { ButtonBuilder } from "discord.js";
 import type DiceExpression from "./diceExpression.js";
 import { dicePattern } from "./diceExpression.js";
-import Roll from "./Roll.js";
+import RollBase from "./RollBase.js";
+import type { IRollPlaceValuesTaskParams } from "../tasks/ITaskParams.js";
 
-export default class RollPlaceValues extends Roll {
+export default class RollPlaceValues extends RollBase<IRollPlaceValuesTaskParams> {
   static isPlaceValues = true;
   static fromString(expression: DiceExpression, description?: string): RollPlaceValues {
     if (!expression.startsWith("d")) {
@@ -26,6 +28,17 @@ export default class RollPlaceValues extends Roll {
       dice, modifier: 0, description
     });
   }
+  toButton(isReroll: boolean): ButtonBuilder {
+    throw new Error("Method not implemented.");
+  }
+  
+  
+  toParams(isReroll: boolean): IRollPlaceValuesTaskParams {
+    throw new Error("Method not implemented.");
+  }
+  
+  
+  
   get total(): number {
     return Number(this.results.join(""));
   }

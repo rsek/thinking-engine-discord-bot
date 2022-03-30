@@ -1,13 +1,13 @@
 import type { ButtonBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder } from "discord.js";
-import Roll from "./Roll.js";
+import RollDice from "./RollDice.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import type DamageInfo from "../reference/DamageInfo.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 
-export default class RollDamage extends Roll {
+export default class RollDamage extends RollDice {
   static minRoll = 1;
   static maxRoll = 7;
   // alternately: mighty blow toggle via button?

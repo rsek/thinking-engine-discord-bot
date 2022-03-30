@@ -1,5 +1,12 @@
-import Roll from "./Roll.js";
+import { ButtonBuilder, ButtonStyle } from "discord.js";
+import type { InteractionReplyOptions } from "discord.js";
+import RollBase from "./RollBase.js";
+import ColorTheme from "../../constants/ColorTheme.js";
+import { BotTask } from "../tasks/BotTask.js";
+import type { IRollUnderTaskParams } from "../tasks/ITaskParams.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
+import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 
 enum RollUnderOutcome {
@@ -9,14 +16,28 @@ enum RollUnderOutcome {
 
 // "Rolling Under is the throwing of 2d6 with the intention of scoring equal to or under a number. This will mainly be used in unopposed situations like climbing a wall or casting a Spell. Rolling two 6s always results in failure."
 
-export default class RollUnder extends Roll {
+export default class RollUnder extends RollBase<IRollUnderTaskParams> {
   private _target: number;
-  constructor(targetNumber: number, description?: string | undefined) {
+  constructor(target: number, description?: string | undefined) {
     super({
       dice: [ 6, 6 ], modifier: 0, description
     });
-    this._target = targetNumber;
+    this._target = target;
   }
+  toButton(isReroll: boolean = false): ButtonBuilder {
+    return new ButtonBuilder()
+      .setLabel(`Roll under ${this._target}`)
+      .setEmoji({ name: "🎲" })
+      .setStyle(ButtonStyle.Primary)
+      .setCustomId(
+        packTaskParams(
+          BotTask.RollUnder,
+          this.toParams(isReroll)
+        )
+      );
+  }
+
+
   get target(): number { return this._target;}
   isAutoFail(): boolean {
     return this.results.every(die => die === 6);
@@ -29,26 +50,22 @@ export default class RollUnder extends Roll {
     }
     return RollUnderOutcome.Failure;
   }
-  // protected toTargetField(): EmbedField {
-  //   return {
-  //     name: "Target number",
-  //     value: this.target.toString(),
-  //     inline: true
-  //   };
-  // }
+  // toButton(isReroll?: boolean): ButtonBuilder {
 
-  // protected toOutcomeField(): EmbedField {
-  //   return {
-  //     name: "Outcome",
-  //     value: RollUnderOutcome[this.outcome],
-  //     inline: false
-  //   };
   // }
+  toParams(isReroll: boolean = false): IRollUnderTaskParams {
+    return {
+      isReroll,
+      target: this._target
+    };
+  }
   toEmbed() {
+    const color = this.outcome === RollUnderOutcome.Failure ? ColorTheme.Danger : ColorTheme.Primary;
     const embed =
       buildWidgetStub(WidgetType.RollUnder, RollUnderOutcome[this.outcome],
         // this.target.toString()
       )
+        .setColor(color)
         .addFields(
           {
             name: "Target",
@@ -67,5 +84,9 @@ export default class RollUnder extends Roll {
       embed.setFooter({ text: "Rolling two 6s always results in failure." });
     }
     return embed;
+  }
+  toMessage(): WidgetOptions<InteractionReplyOptions> {
+    const message = super.toMessage();
+    return message;
   }
 }

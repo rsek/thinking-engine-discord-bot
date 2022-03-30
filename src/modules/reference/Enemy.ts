@@ -9,7 +9,7 @@ import { numericAttrHashToFields } from "../attributes/NumericAttrHash.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
 import GameObject from "../inventory/GameObject.js";
 import type IGameObject from "../inventory/IGameObject.js";
-import Roll from "../rolls/Roll.js";
+import RollDice from "../rolls/RollDice.js";
 import Table from "../tables/Table.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type { IRendersEmbed } from "../widgets/IRenders.js";
@@ -45,7 +45,7 @@ export default class Enemy extends GameObject implements IEnemyBase, IGameObject
     // TODO: change this to reference the actual table... or just include a method to, like, look it up based on whatever the string is set to.
     this["Damage as"] = data["Damage as"];
     const mienTableName = `Mien: ${this.$id}`;
-    this.Mien = new Table(`Mien: ${this.$id}`, data.Mien as Record<number, string>, () => new Roll({ dice: "1d6" }).valueOf(),mienTableName);
+    this.Mien = new Table(`Mien: ${this.$id}`, data.Mien as Record<number, string>, () => new RollDice({ dice: "1d6" }).valueOf(),mienTableName);
     this.Description = data.Description;
     this.Special = data.Special;
   }

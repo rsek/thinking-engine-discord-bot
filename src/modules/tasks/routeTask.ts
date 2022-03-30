@@ -2,7 +2,7 @@
 import type { CommandInteraction, Interaction, MessageComponentInteraction, ModalMessageModalSubmitInteraction } from "discord.js";
 import _ from "lodash-es";
 import { BotTask } from "./BotTask.js";
-import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDiceTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDiceTaskParams, IRollTableTaskParams, IRollUnderTaskParams } from "./ITaskParams.js";
 import type { unpackTaskParams } from "./packTaskParams.js";
 import type GameData from "../../data/GameData.js";
 import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
@@ -11,6 +11,7 @@ import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
 import RollDiceTask from "../../interactions/tasks/RollDiceTask.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
+import RollUnderTask from "../../interactions/tasks/RollUnderTask.js";
 
 /**
  * Routes interactions to the corresponding handler.
@@ -37,6 +38,8 @@ export async function routeTask(tasksParams: ReturnType<typeof unpackTaskParams>
       //   break;
       case BotTask.RollDice:
         return new RollDiceTask(interaction as MessageComponentInteraction| CommandInteraction, task as IRollDiceTaskParams, gameData).run();
+      case BotTask.RollUnder:
+        return new RollUnderTask(interaction as MessageComponentInteraction | CommandInteraction, task as IRollUnderTaskParams, gameData).run();
       case BotTask.ManageMessage:
         return new ManageMessageTask(interaction as MessageComponentInteraction, task as IManageMessageTaskParams, gameData).run();
         break;

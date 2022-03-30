@@ -1,4 +1,4 @@
-import type { IEditAttrTaskParams, IEditTextTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams, IRollTableTaskParams, IRollVersusTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IEditTextTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDamageTaskParams, IRollDiceTaskParams, IRollPlaceValuesTaskParams, IRollTableTaskParams, IRollUnderTaskParams, IRollVersusTaskParams } from "./ITaskParams.js";
 
 export enum BotTask {
   EditAttribute = "editAttr",
@@ -7,6 +7,7 @@ export enum BotTask {
   Reference = "ref",
   RollDamage = "rollDmg",
   RollTable = "rollTbl",
+  RollUnder = "rollUnder",
   RollVersus = "rollVs",
   RollDice = "roll",
   Initiative = "init",
@@ -22,6 +23,7 @@ export interface IBotTasksParams extends Record<BotTask, TaskParamsBase> {
   [BotTask.Reference]: IRefTaskParams;
   [BotTask.RollDamage]: IRollDamageTaskParams;
   [BotTask.RollTable]: IRollTableTaskParams;
+  [BotTask.RollUnder]: IRollUnderTaskParams;
   [BotTask.RollVersus]: IRollVersusTaskParams;
   [BotTask.Initiative]: IInitiativeTokenTaskParams
   [BotTask.RollDice]: IRollDiceTaskParams;

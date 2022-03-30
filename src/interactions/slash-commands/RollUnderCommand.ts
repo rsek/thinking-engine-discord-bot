@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashGroup , SlashOption } from "discordx";
-import RollUnder from "../../modules/rolls/RollUnder.js";
+import { Bot } from "../../bot.js";
+import RollUnderTask from "../tasks/RollUnderTask.js";
 
 @Discord()
 export default class RollUnderCommand {
@@ -20,7 +21,6 @@ export default class RollUnderCommand {
       description = "",
     interaction: CommandInteraction
   ): Promise<void> {
-    const roll = new RollUnder(targetNumber,description.length ? description : undefined);
-    await interaction.reply({ embeds: [roll.toEmbed()] });
+    return new RollUnderTask(interaction, { target: targetNumber }, Bot.gameData, description).run();
   }
 }

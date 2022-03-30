@@ -1,6 +1,6 @@
 import type Skill from "./Skill.js";
 import NumericAttribute from "../attributes/NumericAttribute.js";
-import Roll from "../rolls/Roll.js";
+import RollDice from "../rolls/RollDice.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type { IRendersEmbed } from "../widgets/IRenders.js";
 import { WidgetType } from "../widgets/WidgetType.js";
@@ -35,9 +35,9 @@ export default class PlayerCharacter implements IRendersEmbed {
   Luck: NumericAttribute;
   constructor(
     name: string,
-    skill: number = new Roll({ dice: "1d3+3" }).valueOf(),
-    stamina: number = new Roll({ dice: "2d6+12" }).valueOf(),
-    luck: number = new Roll({ dice: "1d6+6" }).valueOf(),
+    skill: number = new RollDice({ dice: "1d3+3" }).valueOf(),
+    stamina: number = new RollDice({ dice: "2d6+12" }).valueOf(),
+    luck: number = new RollDice({ dice: "1d6+6" }).valueOf(),
   ) {
     this.Name = name;
     this.Skill = new NumericAttribute("Skill", skill);
