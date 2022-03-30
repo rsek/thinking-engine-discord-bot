@@ -1,16 +1,21 @@
 import type { EmbedField, InteractionReplyOptions } from "discord.js";
+import { ActionRowBuilder } from "discord.js";
+import { ButtonStyle } from "discord.js";
+import { ButtonBuilder } from "discord.js";
 import _ from "lodash-es";
 import type DiceExpression from "./diceExpression.js";
 import { dicePattern } from "./diceExpression.js";
 import type IRoll from "./IRoll.js";
 import type IRollOptions from "./IRollOptions.js";
 import parseDice from "./parseDice.js";
+import { BotTask } from "../tasks/BotTask.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import type { IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
+import type { IRendersButton, IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 
-export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, IRendersMessage {
+export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, IRendersMessage, IRendersButton {
   static WidgetType: WidgetType = WidgetType.DiceRoll;
   static fromString(expression: DiceExpression, description?: string | undefined): Roll {
     if (!dicePattern.match(expression)) {
@@ -41,6 +46,20 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
     }
     this._modifier += (modifier ?? 0);
     this.roll();
+  }
+  toButton(sameDesc: boolean = false): ButtonBuilder {
+    const button = new ButtonBuilder()
+      .setCustomId(
+        packTaskParams(
+          BotTask.RollDice,
+          { dice: this.toDiceExpression(), sameDesc }
+        )
+      )
+      .setLabel(`Roll ${this.toDiceExpression()}`)
+      .setEmoji({ name: "🎲" })
+      .setStyle(ButtonStyle.Primary)
+    ;
+    return button;
   }
   public get results(): number[] {
     return this._results;
@@ -94,9 +113,17 @@ export default class Roll implements IRoll, IRendersEmbed, IRendersEmbedField, I
     };
   }
   toMessage(): WidgetOptions<InteractionReplyOptions> {
-    return {
-      embeds: [this.toEmbed()]
+    const message = {
+      embeds: [this.toEmbed()],
+      components: [
+        new ActionRowBuilder<ButtonBuilder>().addComponents(
+          this.toButton(true)
+            .setStyle(ButtonStyle.Secondary)
+            .setLabel("Reroll")
+        )
+      ]
     };
+    return message;
   }
   add(...dice: number[]) {
     dice.forEach(die => {
