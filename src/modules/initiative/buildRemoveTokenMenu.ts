@@ -45,7 +45,7 @@ export default function buildRemoveTokenMenu(tokens: NumericAttrHash) {
             return token
               .toSelectMenuOption({ current: 0, max: -currentValue })
               .setLabel(`Remove ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"} from the initiative`)
-              .setEmoji({ name: emoji as string })
+              .setEmoji({ name: emoji })
             ;
           });
           menu.addOptions(...enemyOptions);

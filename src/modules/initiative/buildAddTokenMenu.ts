@@ -6,7 +6,10 @@ import { BotTask } from "../tasks/BotTask.js";
 import createTaskMenuStub from "../tasks/createTaskMenuStub.js";
 import { packPartialTaskParams } from "../tasks/packTaskParams.js";
 
-
+/**
+ * "Create a menu that allows the user to add tokens to initiative."
+ * @returns A menu that can be used to add tokens to the initiative.
+ */
 export default function buildAddTokenMenu() {
   const menu = createTaskMenuStub(addTokenMenuId)
     .setPlaceholder("Add tokens to initiative...");
@@ -16,14 +19,14 @@ export default function buildAddTokenMenu() {
     new SelectMenuOptionBuilder()
       .setLabel("Add player character...")
       .setDescription("Add a new PC with 2 tokens")
-      .setEmoji("👤")
+      .setEmoji({ name: "👤" })
       .setValue(packPartialTaskParams(BotTask.EditAttribute, { current: pcTokenValue, max: pcTokenValue }) )
   );
   menu.addOptions(
     new NumericAttribute(henchmanToken, 1)
       .toSelectMenuOption({ current: 1, max: 1 })
       .setLabel("Add 1 henchman token")
-      .setEmoji("👥")
+      .setEmoji({ name: "👥" })
   );
   numberEmoji.slice(1,6).forEach((emoji, index) => {
     const currentValue = index+1;
@@ -34,7 +37,7 @@ export default function buildAddTokenMenu() {
           max: currentValue
         })
         .setLabel(`Add ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"}`)
-        .setEmoji({ name: emoji as string })
+        .setEmoji({ name: emoji })
     );
   });
   return menu;

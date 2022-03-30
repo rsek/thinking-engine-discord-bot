@@ -46,7 +46,7 @@ export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
               const option = token
                 .toSelectMenuOption({ current: currentValue, max: 0 })
                 .setLabel(`Return ${currentValue} enemy ${currentValue > 1 ? "tokens" : "token"} to stack`)
-                .setEmoji({ name: emoji as string })
+                .setEmoji({ name: emoji })
             ;
               menu.addOptions(option);
             }
