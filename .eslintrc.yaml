@@ -188,3 +188,5 @@ rules:
     - paths:
       - name: lodash
         message: Use 'lodash-es' instead.
+  no-console:
+    - warn
