@@ -2,13 +2,14 @@
 import type { CommandInteraction, Interaction, MessageComponentInteraction, ModalMessageModalSubmitInteraction } from "discord.js";
 import _ from "lodash-es";
 import { BotTask } from "./BotTask.js";
-import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
+import type { IEditAttrTaskParams, IInitiativeTokenTaskParams, IManageMessageTaskParams, IRefTaskParams, IRollDiceTaskParams, IRollTableTaskParams } from "./ITaskParams.js";
 import type { unpackTaskParams } from "./packTaskParams.js";
 import type GameData from "../../data/GameData.js";
 import EditAttributeTask from "../../interactions/tasks/EditAttributeTask.js";
 import InitiativeTask from "../../interactions/tasks/InitiativeTask.js";
 import ManageMessageTask from "../../interactions/tasks/ManageMessageTask.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
+import RollDiceTask from "../../interactions/tasks/RollDiceTask.js";
 import RollTableTask from "../../interactions/tasks/RollTableTask.js";
 
 /**
@@ -34,6 +35,8 @@ export async function routeTask(tasksParams: ReturnType<typeof unpackTaskParams>
       }
       // case BotTask.EditText:
       //   break;
+      case BotTask.RollDice:
+        return new RollDiceTask(interaction as MessageComponentInteraction| CommandInteraction, task as IRollDiceTaskParams, gameData).run();
       case BotTask.ManageMessage:
         return new ManageMessageTask(interaction as MessageComponentInteraction, task as IManageMessageTaskParams, gameData).run();
         break;
@@ -49,9 +52,9 @@ export async function routeTask(tasksParams: ReturnType<typeof unpackTaskParams>
       //   break;
       default:
         if (interaction.isRepliable()) {
-          return interaction.reply({ content: "NYI", ephemeral: true });
+          return interaction.reply({ content: `Error: BotTask.${taskId} is not implemented.`, ephemeral: true });
         } else {
-          throw new Error("Unable to route task.");
+          throw new Error(`BotTask.${taskId} is not implemented.`);
         }
     }
   });

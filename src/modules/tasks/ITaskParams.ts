@@ -79,7 +79,8 @@ export interface IRebuildParams extends TaskParamsBase {
 }
 
 export interface IRollDiceTaskParams extends TaskParamsBase {
-  dice: DiceExpression
+  dice: DiceExpression;
+  sameDesc?: boolean | undefined;
 }
 
 export interface IRollPlaceValuesTaskParams extends TaskParamsBase {
