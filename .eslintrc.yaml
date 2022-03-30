@@ -183,3 +183,8 @@ rules:
     alphabetize:
       order: asc
       caseInsensitive: true
+  no-restricted-imports:
+    - error
+    - paths:
+      - name: lodash
+        message: Use 'lodash-es' instead.

@@ -26,7 +26,6 @@ export default function buildReturnTokenMenu(tokens: NumericAttrHash) {
             token
               .toSelectMenuOption({ current: 1, max: 0 })
               .setLabel(`Return 1 of ${token.name}'s tokens to stack`)
-              .setEmoji({ name: "👤" })
           );
           break;
         }

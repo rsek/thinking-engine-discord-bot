@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import _ from "lodash";
+import _ from "lodash-es";
 import YAML from "yamljs";
 import type IItem from "./interfaces/IItem.js";
 import readYamlFilePaths from "./readYamlFilePaths.js";

@@ -16,14 +16,14 @@ export default function buildAddTokenMenu() {
     new SelectMenuOptionBuilder()
       .setLabel("Add player character...")
       .setDescription("Add a new PC with 2 tokens")
-      .setEmoji({ name: "👤" })
+      .setEmoji("👤")
       .setValue(packPartialTaskParams(BotTask.EditAttribute, { current: pcTokenValue, max: pcTokenValue }) )
   );
   menu.addOptions(
     new NumericAttribute(henchmanToken, 1)
       .toSelectMenuOption({ current: 1, max: 1 })
       .setLabel("Add 1 henchman token")
-      .setEmoji({ name: "👥" })
+      .setEmoji("👥")
   );
   numberEmoji.slice(1,6).forEach((emoji, index) => {
     const currentValue = index+1;
