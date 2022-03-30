@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // run this to wipe all global application (slash) commands
 // note that global commands take some time to propagate, so wiping them (or replacing them with new ones) may not be instantaneous
 

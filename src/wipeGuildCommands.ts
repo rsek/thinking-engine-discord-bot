@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // run this to wipe all guild application (slash) commands
 
 import { REST } from "@discordjs/rest";
