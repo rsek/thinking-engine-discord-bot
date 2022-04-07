@@ -4,8 +4,9 @@ import type { AutocompleteInteraction, CommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType, InteractionType } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import { Bot } from "../../bot.js";
-import type DamageInfo from "../../modules/reference/DamageInfo.js";
+import type DamageTable from "../../modules/reference/DamageTable.js";
 import RollDamage from "../../modules/rolls/RollDamage.js";
+import type { IRollDamageTaskParams } from "../../modules/tasks/ITaskParams.js";
 import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 
@@ -35,12 +36,12 @@ export abstract class RollDamageCommand {
     // FIXME: discord.ts claims this can be done with just the enum, but it apparently requires a standard object.
     // if they fixed it, 'armour' can instead be passed directly
     @SlashChoice({
-      "0 (Unarmoured)": 0,
-      "1 (Lightly Armoured)": 1,
-      "2 (Modestly Armoured)": 2,
-      "3 (Heavily Armoured)": 3,
-      4: 4,
-      5: 5,
+      ["0 (Unarmoured)"]: 0,
+      ["1 (Lightly Armoured)"]: 1,
+      ["2 (Modestly Armoured)"]: 2,
+      ["3 (Heavily Armoured)"]: 3,
+      ["4"]: 4,
+      ["5"]: 5,
     })
       armour: number,
 
@@ -62,7 +63,7 @@ export abstract class RollDamageCommand {
       description: "Whether to calculate damage as a Mighty Blow.",
       required: false,
     })
-    isMightyBlow: boolean = false,
+    mightyBlow: boolean = false,
 
     interaction: CommandInteraction|AutocompleteInteraction
   ): Promise<void> {
@@ -86,8 +87,15 @@ export abstract class RollDamageCommand {
             ephemeral: true
           });
         }
-        const damage = collection.get(damageId) as DamageInfo;
-        const roll = new RollDamage(damage, modifier, armour, shield, description, isMightyBlow);
+        const params: IRollDamageTaskParams = {
+          id: damageId,
+          armour,
+          shield,
+          mods: [modifier],
+          mightyBlow
+        };
+        // FIXME: finish RollDamageTask and use it here
+        const roll = new RollDamage(params, Bot.gameData, description);
         return interaction.reply(roll.toMessage());
         break;
       }

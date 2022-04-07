@@ -2,11 +2,11 @@ import "reflect-metadata";
 
 import type { CommandInteraction, InteractionReplyOptions, MessageComponentInteraction } from "discord.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
-import type { IRollTableTaskParams } from "../../modules/tasks/ITaskParams.js";
-import Task from "../../modules/tasks/Task.js";
+import type { BotTask } from "../../modules/tasks/BotTask.js";
+import BotTaskBase from "../../modules/tasks/BotTaskBase.js";
 import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
 
-export default class RollTableTask extends Task<MessageComponentInteraction | CommandInteraction,IRollTableTaskParams> {
+export default class RollTableTask extends BotTaskBase<MessageComponentInteraction | CommandInteraction,BotTask.RollTable> {
   run() {
     let message: InteractionReplyOptions;
     const tableData = this.gameData[RefType.Table];

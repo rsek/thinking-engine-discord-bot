@@ -2,6 +2,7 @@ root: true
 ignorePatterns:
   - node_modules
   - .vscode
+  - .github
   - "*.json"
 parser: "@typescript-eslint/parser"
 parserOptions:
@@ -16,16 +17,11 @@ env:
   es6: true
 extends:
   - eslint:recommended
-  # - plugin:import/recommended
-  # - plugin:import/typescript
-  # - plugin:node/recommended
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
-  # - plugin:lodash/recommended
-  # - prettier
 rules:
-  # eslint-plugin-import/prefer-default-export:
-  #   - 1
+  import/prefer-default-export:
+    - 1
   prefer-const: 1
   object-curly-newline:
     - 1
@@ -88,8 +84,7 @@ rules:
   - warn
   - 1
   no-eval:
-  - warn
-  - allowIndirect: false
+  - error
   no-extra-bind: warn
   no-fallthrough:
   - warn
@@ -159,6 +154,9 @@ rules:
   - warn
   - ignoreCase: true
     ignoreDeclarationSort: true
+  import/extensions:
+    - warn
+    - js: always
   import/order:
   - warn
   - groups:
@@ -190,3 +188,11 @@ rules:
         message: Use 'lodash-es' instead.
   no-console:
     - warn
+  prefer-destructuring:
+    - warn
+    - VariableDeclarator:
+        array: false
+        object: true
+      AssignmentExpression:
+        array: false
+        object: true

@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import type DamageInfo from "../modules/reference/DamageInfo.js";
+import type DamageTable from "../modules/reference/DamageTable.js";
 
 /**
  * Extracts DamageInfo objects from items and spells and keys them in their own collection.
@@ -8,8 +8,8 @@ import type DamageInfo from "../modules/reference/DamageInfo.js";
  * @param {...Collection<string, Item>[]} dataCollections
  * @return {*}
  */
-export default function extractDamageTables(...dataCollections: Collection<string, { Attacks?: DamageInfo[] | undefined; }>[]) {
-  const result: Collection<string, DamageInfo> = new Collection();
+export default function extractDamageTables(...dataCollections: Collection<string, { Attacks?: DamageTable[] | undefined; }>[]) {
+  const result: Collection<string, DamageTable> = new Collection();
   dataCollections.forEach((collection) => {
     collection.forEach((item) => {
       if (item.Attacks) {

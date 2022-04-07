@@ -13,8 +13,8 @@ import { WidgetType } from "../widgets/WidgetType.js";
  * Base class for static game data objects.
  */
 export default abstract class GameObject implements IGameObject {
-  readonly WidgetTypes: WidgetType[] = [];
-  readonly Type!: RefType;
+  readonly widgetTypes: WidgetType[] = [];
+  readonly refType!: RefType;
   $id: string;
   Name: string;
   Description?: string | undefined;
@@ -23,14 +23,14 @@ export default abstract class GameObject implements IGameObject {
     this.Name = name;
     this.Description = description;
   }
-  abstract toMessage<T extends ItemIn<typeof this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions>;
+  abstract toMessage<T extends ItemIn<typeof this["widgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions>;
   /**
    * Generates a stub embed to use in building embeds of descendent classes.
    * @param embedSubtype An optional subtype string to be appended to the widget type.
    * @returns An embed stub.
    */
   toEmbed(embedSubtype?: string | undefined) {
-    const embed = buildWidgetStub(WidgetType[WidgetType[this.Type] as keyof typeof WidgetType], this.Name ?? this.$id, embedSubtype)
+    const embed = buildWidgetStub(WidgetType[WidgetType[this.refType] as keyof typeof WidgetType], this.Name ?? this.$id, embedSubtype)
       .setDescription(this.Description ?? null)
     ;
     return embed;

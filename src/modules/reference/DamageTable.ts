@@ -11,9 +11,9 @@ import type { IRendersEmbed } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
-export default class DamageInfo extends GameObject implements IDamageInfo, IRendersEmbed {
-  Type: RefType = RefType.DamageTable;
-  WidgetTypes: WidgetType[] = [WidgetType.DamageTable];
+export default class DamageTable extends GameObject implements IDamageInfo, IRendersEmbed {
+  readonly refType = RefType.DamageTable;
+  readonly widgetTypes = [WidgetType.DamageTable];
   "Source": Item | Spell;
   Damage: Tuple<number, 7>;
   "Attack type": AttackType;
@@ -65,7 +65,7 @@ export default class DamageInfo extends GameObject implements IDamageInfo, IRend
     ].join("\n");
     return result;
   }
-  override toMessage<T extends ItemIn<typeof this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
+  override toMessage<T extends ItemIn<typeof this["widgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
     return {
       embeds: [this.toEmbed()],
       ephemeral,

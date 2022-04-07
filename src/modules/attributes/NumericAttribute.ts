@@ -7,9 +7,9 @@ import { currentKeyName, maxKeyName, NumericAttrPattern, NumericAttrSeparator } 
 import type PartialBy from "../../types/PartialBy.js";
 import type WithRequired from "../../types/WithRequired.js";
 import { BotTask } from "../tasks/BotTask.js";
-import type { IHasTask } from "../tasks/IHasTask.js";
 import type { IEditAttrTaskParams } from "../tasks/ITaskParams.js";
 import { packTaskParams } from "../tasks/packTaskParams.js";
+import type IHasTask from "../widgets/IHasTask.js";
 import type { IRendersButton, IRendersSelectMenuOption } from "../widgets/IRenders.js";
 
 export default class NumericAttribute extends Attribute implements INumericAttribute, IRendersButton, IRendersSelectMenuOption, IHasTask<BotTask.EditAttribute> {
@@ -56,11 +56,13 @@ export default class NumericAttribute extends Attribute implements INumericAttri
   }
   [maxKeyName]: number;
   [currentKeyName]: number;
+  readonly botTask = BotTask.EditAttribute;
   constructor(name: string, current: number, max: number = current) {
     super(name);
     this[currentKeyName] = current;
     this[maxKeyName] = max;
   }
+
   // incrementByName() {
 
   // }
@@ -74,9 +76,12 @@ export default class NumericAttribute extends Attribute implements INumericAttri
       inline
     };
   }
-  packTaskParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
+  toTaskParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     params.id = this.name;
-    return packTaskParams(BotTask.EditAttribute, params as IEditAttrTaskParams);
+    return params as IEditAttrTaskParams;
+  }
+  packTaskParams(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
+    return packTaskParams(this.botTask, this.toTaskParams(params));
   }
   toButton(params: PartialBy<IEditAttrTaskParams, "id"> = { current: 1, max: 0 }) {
     const customId = this.packTaskParams(params);

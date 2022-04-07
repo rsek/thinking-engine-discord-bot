@@ -6,15 +6,15 @@ import { InteractionType, ModalBuilder, TextInputStyle } from "discord.js";
 import type IHasAttributes from "../../modules/attributes/IHasAttributes.js";
 import NumericAttribute from "../../modules/attributes/NumericAttribute.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
+import BotTaskBase from "../../modules/tasks/BotTaskBase.js";
 import type { IEditAttrTaskParams } from "../../modules/tasks/ITaskParams.js";
 import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
 import { routeTask } from "../../modules/tasks/routeTask.js";
-import Task from "../../modules/tasks/Task.js";
 import unpackSubmittedModal from "../../modules/tasks/unpackSubmittedModal.js";
 import type { IRendersMessage } from "../../modules/widgets/IRenders.js";
 import parseWidget from "../../modules/widgets/parseWidget.js";
 
-export default class EditAttributeTask extends Task<MessageComponentInteraction | ModalMessageModalSubmitInteraction, IEditAttrTaskParams> {
+export default class EditAttributeTask extends BotTaskBase<MessageComponentInteraction | ModalMessageModalSubmitInteraction, BotTask.EditAttribute> {
   static async promptForId(interaction: MessageComponentInteraction, params: IEditAttrTaskParams) {
     // console.log("[promptForId] no ID specified, prompting user with a modal");
     const textInput =

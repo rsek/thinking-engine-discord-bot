@@ -6,12 +6,11 @@ import { ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import { toEphemeral } from "../../modules/attributes/toEphemeral.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
-import type { IManageMessageTaskParams } from "../../modules/tasks/ITaskParams.js";
+import BotTaskBase from "../../modules/tasks/BotTaskBase.js";
 import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
 import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
-import Task from "../../modules/tasks/Task.js";
 
-export default class ManageMessageTask extends Task<MessageComponentInteraction<CacheType>,IManageMessageTaskParams> {
+export default class ManageMessageTask extends BotTaskBase<MessageComponentInteraction<CacheType>,BotTask.ManageMessage> {
   static createButton(action: ManageMessageAction) {
     const customId = packTaskParams(BotTask.ManageMessage, { action });
     const btn = new ButtonBuilder().setCustomId(customId);

@@ -1,28 +1,46 @@
 import type { ButtonBuilder, EmbedField, InteractionReplyOptions } from "discord.js";
 import { ActionRowBuilder } from "discord.js";
-import RollDice from "./RollDice.js";
+import RollBase from "./RollBase.js";
+import type GameData from "../../data/GameData.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
-import type DamageInfo from "../reference/DamageInfo.js";
+import type DamageTable from "../reference/DamageTable.js";
+import { BotTask } from "../tasks/BotTask.js";
+import type { IRollDamageTaskParams } from "../tasks/ITaskParams.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
-import { WidgetType } from "../widgets/WidgetType.js";
+import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
-export default class RollDamage extends RollDice {
+export default class RollDamage extends RollBase<BotTask.RollDamage> {
   static minRoll = 1;
   static maxRoll = 7;
-  // alternately: mighty blow toggle via button?
-  attack: DamageInfo;
-  armour: number;
-  isMightyBlow: boolean;
-  shield: number;
-  constructor(attack: DamageInfo, modifier: number, armour: number, shield: number, description?: string | undefined, isMightyBlow = false) {
-    super({
-      dice: [6], modifier, description
-    });
-    this.attack = attack;
-    this.armour = armour;
-    this.isMightyBlow = isMightyBlow;
-    this.shield = shield;
+  readonly widgetType = WidgetType.DamageRoll;
+  readonly botTask = BotTask.RollDamage;
+  results!: number[];
+  private readonly gameData: GameData;
+  dice = [6];
+  constructor(params: IRollDamageTaskParams,  gameData: GameData, description?: string | undefined) {
+    super({ params, description });
+    this.gameData = gameData;
+    if (!this.gameData[RefType.DamageTable].has(this.params.id)) {
+      throw new RangeError(`Damage Table with ID \`${this.params.id}\` not found.`);
+    }
+    this.roll();
+  }
+  get modifiers() {
+    return [ ...(this.params.mods ?? [] ), -this.effectiveArmour, -this.shield ];
+  }
+  get shield() {
+    return this.params.shield ?? 0;
+  }
+  get isMightyBlow() {
+    return this.params.mightyBlow ?? false;
+  }
+  get armour() {
+    return this.params.armour ?? 0;
+  }
+  get attack() {
+    // the constructor throws if this doesn't exist, so it should generally be safe.
+    return this.gameData[RefType.DamageTable].get(this.params.id) as DamageTable;
   }
   get effectiveArmour() {
     if (this.attack["Ignore armour"] === -1) {
@@ -77,16 +95,16 @@ export default class RollDamage extends RollDice {
   private get isBottomedOut() {
     return this.total > super.total - this.effectiveDmgReduction;
   }
-  toString(): string {
-    let result = `[${this.results.join(", ")}]`;
-    if (this.modifier > 0) {
-      result += ` + ${this.modifier.toString()}`;
-    }
-    if (this.effectiveDmgReduction > 0) {
-      result += ` - ${this.effectiveDmgReduction}`;
-    }
-    return result += ` = **${this.valueOf()}**`;
-  }
+  // toString(): string {
+  //   let result = `[${this.results.join(", ")}]`;
+  //   if (this.modifier > 0) {
+  //     result += ` + ${this.modifier.toString()}`;
+  //   }
+  //   if (this.effectiveDmgReduction > 0) {
+  //     result += ` - ${this.effectiveDmgReduction}`;
+  //   }
+  //   return result += ` = **${this.valueOf()}**`;
+  // }
   toDamageField(): EmbedField {
     let damageString = this.damage.toString();
     if (this.isMightyBlow) {
@@ -98,19 +116,9 @@ export default class RollDamage extends RollDice {
       inline: false
     };
   }
-  override toModifierString() {
-    let string = super.toModifierString();
-    if (this.effectiveDmgReduction > 0) {
-      string += ` - ${this.effectiveDmgReduction}`;
-    }
-    return string;
-  }
   toEmbed() {
     const footerText: string[] = [];
     const embed = buildWidgetStub(WidgetType.DamageRoll, this.attack.Name, this.attack["Attack type"]);
-    if (this.modifier > 0) {
-      embed.addFields(this.toModifierField());
-    }
     if (this.armour > 0) {
       embed.addFields(this.toArmourField());
     }

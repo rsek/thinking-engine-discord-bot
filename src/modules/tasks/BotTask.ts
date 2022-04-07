@@ -3,31 +3,38 @@ import type { IEditAttrTaskParams, IEditTextTaskParams, IInitiativeTokenTaskPara
 export enum BotTask {
   EditAttribute = "editAttr",
   EditText = "editTxt",
+  Initiative = "init",
   ManageMessage = "manageMsg",
   Reference = "ref",
   RollDamage = "rollDmg",
-  RollTable = "rollTbl",
+  RollDice = "roll",
+  RollPlaceValues = "rollPV",
   RollUnder = "rollUnder",
   RollVersus = "rollVs",
-  RollDice = "roll",
-  Initiative = "init",
-  RollPlaceValues = "rollPV"
+  RollTable = "rollTbl",
+  Reroll = "reroll"
 }
 
-export type TaskParamsBase = Record<string,(number|boolean|string|undefined)>;
+
+
+export type TaskParamsBase = Record<string,(number|boolean|string|undefined|number[]|string[])>;
 
 export interface IBotTasksParams extends Record<BotTask, TaskParamsBase> {
   [BotTask.EditAttribute]: IEditAttrTaskParams;
   [BotTask.EditText]: IEditTextTaskParams;
+  [BotTask.Initiative]: IInitiativeTokenTaskParams
   [BotTask.ManageMessage]: IManageMessageTaskParams;
   [BotTask.Reference]: IRefTaskParams;
   [BotTask.RollDamage]: IRollDamageTaskParams;
-  [BotTask.RollTable]: IRollTableTaskParams;
-  [BotTask.RollUnder]: IRollUnderTaskParams;
-  [BotTask.RollVersus]: IRollVersusTaskParams;
-  [BotTask.Initiative]: IInitiativeTokenTaskParams
   [BotTask.RollDice]: IRollDiceTaskParams;
   [BotTask.RollPlaceValues]: IRollPlaceValuesTaskParams;
+  [BotTask.RollUnder]: IRollUnderTaskParams;
+  [BotTask.RollVersus]: IRollVersusTaskParams;
+  [BotTask.RollTable]: IRollTableTaskParams;
 }
 
-
+export type BotTaskRoll = BotTask.RollDamage|
+  BotTask.RollDice|
+  BotTask.RollPlaceValues|
+  BotTask.RollUnder|
+  BotTask.RollVersus;

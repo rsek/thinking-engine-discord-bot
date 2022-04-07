@@ -1,44 +1,27 @@
-import { ButtonBuilder, ButtonStyle } from "discord.js";
-import type DiceExpression from "./diceExpression.js";
-import { dicePattern } from "./diceExpression.js";
-import type IRollOptions from "./IRollOptions.js";
+import _ from "lodash-es";
 import parseDice from "./parseDice.js";
 import RollBase from "./RollBase.js";
 import { BotTask } from "../tasks/BotTask.js";
 import type { IRollDiceTaskParams } from "../tasks/ITaskParams.js";
-import { packTaskParams } from "../tasks/packTaskParams.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 
-export default class RollDice extends RollBase<IRollDiceTaskParams> {
-  static WidgetType: WidgetType = WidgetType.DiceRoll;
-  static fromString(expression: DiceExpression, description?: string | undefined): RollDice {
-    if (!dicePattern.match(expression)) {
-      throw new RangeError("Invalid dice expression");
-    }
-    const options = parseDice(expression) as IRollOptions;
-    if (description) {
-      options.description = description;
-    }
-    return new RollDice(options);
+export default class RollDice extends RollBase<BotTask.RollDice> {
+  readonly botTask = BotTask.RollDice;
+  readonly widgetType = WidgetType.RollDice;
+  results!: number[];
+  constructor(params: IRollDiceTaskParams, description?: string|undefined) {
+    super({ params, description });
+    this.roll();
   }
-  toParams(isReroll: boolean = false): IRollDiceTaskParams {
-    return {
-      isReroll,
-      dice: this.toDiceExpression()
-    };
+  get modifiers() {
+    return this.params.mods ?? [];
   }
-  toButton(isReroll: boolean = false): ButtonBuilder {
-    return new ButtonBuilder()
-      .setLabel(`Roll ${this.toDiceExpression()}`)
-      .setEmoji({ name: "🎲" })
-      .setStyle(ButtonStyle.Primary)
-      .setCustomId(
-        packTaskParams(
-          BotTask.RollDice,
-          this.toParams(isReroll)
-        )
-      );
+  get dice() {
+    return parseDice(this.params.dice).dice;
+  }
+  toTaskParams(isReroll: boolean = false): IRollDiceTaskParams {
+    const params = _.clone(this.params);
+    params.isReroll = isReroll;
+    return params;
   }
 }
-
-

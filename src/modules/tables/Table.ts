@@ -11,9 +11,11 @@ import buildWidgetStub from "../widgets/buildWidgetStub.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
+
+// FIXME: separate table roll logic in to another class. it can generate its own separate embed.
 export default class Table extends Collection<number, string> implements IGameObject {
-  readonly WidgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
-  readonly Type: RefType.Table = RefType.Table;
+  readonly widgetTypes: [ WidgetType.Table, WidgetType.TableRoll ] = [ WidgetType.Table, WidgetType.TableRoll ];
+  readonly refType = RefType.Table;
   $id: string;
   Name: string;
   Description?: string | undefined;
@@ -31,7 +33,7 @@ export default class Table extends Collection<number, string> implements IGameOb
   toEmbedGroup(...args: any[]): EmbedBuilder[] {
     throw new Error("Method not implemented.");
   }
-  toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
+  toMessage<T extends ItemIn<this["widgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
     switch (type) {
       case WidgetType.Table:
         return this.toPreviewMessage(ephemeral);

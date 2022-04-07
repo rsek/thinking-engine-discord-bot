@@ -1,5 +1,5 @@
 import type { InteractionReplyOptions } from "discord.js";
-import DamageInfo from "./DamageInfo.js";
+import DamageTable from "./DamageTable.js";
 import type ISpell from "../../data/interfaces/ISpell.js";
 import type ItemIn from "../../types/ItemIn.js";
 import GameObject from "../inventory/GameObject.js";
@@ -8,12 +8,12 @@ import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 export default class Spell extends GameObject implements ISpell, IRendersMessage {
-  readonly WidgetTypes: WidgetType[] = [WidgetType.Spell];
-  readonly Type: RefType.Spell = RefType.Spell;
+  readonly widgetTypes = [WidgetType.Spell];
+  readonly refType = RefType.Spell;
   "Casting cost"?: string | number | undefined;
   Name: string;
   Description: string;
-  Attacks?: DamageInfo[] | undefined;
+  Attacks?: DamageTable[] | undefined;
   constructor(id: string, data: ISpell, name: string = id) {
     super(id, id, data.Description);
     this.Name = name;
@@ -26,12 +26,12 @@ export default class Spell extends GameObject implements ISpell, IRendersMessage
         if (!dmgInfo.Name && attacks.length > 1 && index > 0) {
           dmgName += ` (${dmgInfo["Attack type"]})`;
         }
-        return new DamageInfo(dmgId, dmgInfo, this, dmgName);
+        return new DamageTable(dmgId, dmgInfo, this, dmgName);
       });
-      this.WidgetTypes.push(WidgetType.DamageTable);
+      this.widgetTypes.push(WidgetType.DamageTable);
     }
   }
-  toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
+  toMessage<T extends ItemIn<this["widgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
     const message = {
       embeds: [this.toEmbed()],
       ephemeral

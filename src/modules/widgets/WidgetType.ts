@@ -17,11 +17,12 @@ export enum WidgetType {
   Spell,
   Table,
   InitiativeStack,
-  DiceRoll,
+  RollDice,
   DamageRoll,
   RollVersus,
   RollUnder,
   TableRoll,
   PlayerCharacter,
 }
+
 

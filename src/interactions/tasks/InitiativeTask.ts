@@ -6,13 +6,13 @@ import ColorTheme from "../../constants/ColorTheme.js";
 import userErrorMessage from "../../modules/alerts/userErrorMessage.js";
 import { endOfRoundToken, enemyToken } from "../../modules/initiative/InitiativeConstants.js";
 import InitiativeStack from "../../modules/initiative/InitiativeStack.js";
-import type { IInitiativeTokenTaskParams } from "../../modules/tasks/ITaskParams.js";
+import type { BotTask } from "../../modules/tasks/BotTask.js";
+import BotTaskBase from "../../modules/tasks/BotTaskBase.js";
 import { InitiativeAction } from "../../modules/tasks/ITaskParams.js";
-import Task from "../../modules/tasks/Task.js";
 import { WidgetType } from "../../modules/widgets/WidgetType.js";
 import { firstEmbedOfType } from "../../utils/firstEmbedOfType.js";
 
-export default class InitiativeTask extends Task<MessageComponentInteraction, IInitiativeTokenTaskParams> {
+export default class InitiativeTask extends BotTaskBase<MessageComponentInteraction, BotTask.Initiative> {
   static drawAlertEmbed(token: string, turn: number, round: number) {
     const embed = new EmbedBuilder()
       .setAuthor({ name: "Initiative Token" })
@@ -57,8 +57,8 @@ export default class InitiativeTask extends Task<MessageComponentInteraction, II
   }
   static async draw(interaction: MessageComponentInteraction, embed: APIEmbed) {
     const draw = InitiativeStack.fromEmbed(embed).drawToken();
-    const token = draw.token;
-    const stack = draw.stack;
+    const { token } = draw;
+    const { stack } = draw;
     const embeds = [InitiativeTask.drawAlertEmbed(token, stack.turn, stack.round)];
     const widget = stack.toMessage();
     const message = {

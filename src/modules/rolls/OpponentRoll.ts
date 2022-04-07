@@ -5,7 +5,7 @@ import RollDice from "./RollDice.js";
 export default class OpponentRoll extends RollDice implements IOpponentRoll {
   name: string;
   constructor(name: string, bonus: number) {
-    super({ dice: [ 6, 6 ], modifier: bonus });
+    super({ dice: "2d6", mods: [bonus] });
     this.name = name;
   }
   toField() {

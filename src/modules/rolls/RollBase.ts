@@ -1,59 +1,45 @@
-import { ActionRowBuilder, ButtonStyle } from "discord.js";
 import type { EmbedField } from "discord.js";
 import type { InteractionReplyOptions } from "discord.js";
-import type { ButtonBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonStyle } from "discord.js";
+import { ButtonBuilder } from "discord.js";
 import _ from "lodash-es";
 import type DiceExpression from "./diceExpression.js";
 import type IRoll from "./IRoll.js";
-import type IRollOptions from "./IRollOptions.js";
-import parseDice from "./parseDice.js";
-import type { RollTaskParamsBase } from "../tasks/ITaskParams.js";
+import type IRollBase from "./IRollBase.js";
+import type RollWidgetType from "./RollWidgetType";
+import type { BotTaskRoll, IBotTasksParams } from "../tasks/BotTask.js";
+import { packTaskParams } from "../tasks/packTaskParams.js";
 import buildWidgetStub from "../widgets/buildWidgetStub.js";
-import type { IRendersButton, IRendersEmbed, IRendersEmbedField, IRendersMessage } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { WidgetType } from "../widgets/WidgetType.js";
 
-export default abstract class RollBase<T extends RollTaskParamsBase> implements IRoll, IRendersEmbed, IRendersEmbedField, IRendersMessage, IRendersButton {
-  static WidgetType: WidgetType;
+export default abstract class RollBase<T extends BotTaskRoll> implements IRoll, IRollBase<T> {
   description?: string | undefined;
   title?: string | undefined;
-  private _dice: number[];
-  private _results!: number[];
-  private _modifier: number = 0;
-  constructor({ dice, modifier, description }: IRollOptions) {
+  params: IBotTasksParams[T];
+  constructor({ params, description }: { params: IBotTasksParams[T]; description?: string | undefined; }) {
+    this.params = params;
     this.description = description;
-    if (typeof dice === "string") {
-      const parsed = parseDice(dice);
-      this._dice = parsed.dice;
-      this._modifier +=  (modifier ?? 0);
-    } else if (Array.isArray(dice)) {
-      this._dice = dice;
-    } else {
-      this._dice = [dice];
-    }
-    this._modifier += (modifier ?? 0);
-    this.roll();
-  }
-  public get dice() {
-    return this._dice;
-  }
-  public set dice(value: number[]) {
-    this._dice = value;
   }
 
-  public get results(): number[] {
-    return this._results;
+  abstract readonly widgetType: RollWidgetType;
+  abstract readonly botTask: T;
+  abstract dice: number[];
+  abstract modifiers: number[];
+  abstract results: number[];
+  toTaskParams(isReroll: boolean): IBotTasksParams[T] {
+    const params = _.clone(this.params);
+    params.isReroll = isReroll;
+    return params;
   }
-  public set results(value: number[]) {
-    this._results = value;
+  //   this.roll();
+  packTaskParams(isReroll: boolean): string {
+    return packTaskParams(this.botTask, this.toTaskParams(isReroll));
   }
   get total(): number {
-    return _.sum(this.results) + this.modifier;
+    return _.sum([ ...this.results, ...this.modifiers ]);
   }
-  get modifier(): number {
-    return this._modifier;
-  }
-  roll() {
+  roll(): this {
     this.results = this.dice.map(die => _.random(1,die));
     return this;
   }
@@ -62,24 +48,28 @@ export default abstract class RollBase<T extends RollTaskParamsBase> implements 
     // console.log("diceCount", diceCount);
     const expressionFragments = _.map(diceCount, (count, dieSides) => `${count}d${dieSides}`);
     let expression = expressionFragments.join("+");
-    if (this.modifier !== 0) {
-      if (this.modifier > 0) {
-        expression += `+${this.modifier}`;
-      } else {
-        expression += this.modifier;
-      }
+    if (this.modifiers.length > 0) {
+      _.compact(this.modifiers).forEach(mod => expression+= mod > 0 ? `+${mod}` : mod.toString());
     }
     return expression as DiceExpression;
   }
+  protected toModifiersString(): string {
+    const mods = _.compact(this.modifiers);
+    let string = "";
+    if (mods.length > 0) {
+      mods.forEach(mod => string += mod > 0 ? `+${mod}` : mod.toString());
+    }
+    return string;
+  }
   toEmbed() {
     const embed = buildWidgetStub(
-      WidgetType.DiceRoll,
+      WidgetType.RollDice,
       this.toDiceExpression()
     ).addFields(
       this.toResultField(),
       this.toTotalField()
     )
-    ;
+      ;
     if (this.description) {
       embed.setDescription(this.description);
     }
@@ -93,21 +83,12 @@ export default abstract class RollBase<T extends RollTaskParamsBase> implements 
   }
   protected toRollString(): string {
     let str = `[${this.results.map(die => die.valueOf()).join(", ")}]`;
-    if (this.toModifierString().length > 0) {
-      str += " " + this.toModifierString();
+    if (this.toModifiersString().length > 0) {
+      str += " " + this.toModifiersString();
     }
     return str;
   }
-  protected toModifierString(): string {
-    if (this.modifier === 0 ) {
-      return "";
-    }
-    let string = `${this.modifier}`;
-    if (this.modifier >= 0) {
-      string = `+ ${string}`;
-    }
-    return string;
-  }
+
   toEmbedField(type: "roll" | "total"): EmbedField {
     let result: EmbedField;
     switch (type) {
@@ -124,8 +105,8 @@ export default abstract class RollBase<T extends RollTaskParamsBase> implements 
   }
   protected toResultField(): EmbedField {
     let value = this.toRollString();
-    if (this.toModifierString().length) {
-      value += this.toModifierString();
+    if (this.toModifiersString().length) {
+      value += this.toModifiersString();
     }
     return {
       name: "Result",
@@ -160,13 +141,40 @@ export default abstract class RollBase<T extends RollTaskParamsBase> implements 
     });
     return this;
   }
-  abstract toButton(isReroll: boolean): ButtonBuilder;
-  abstract toParams(isReroll: boolean): T;
-  protected toModifierField(): EmbedField {
+  toButton(isReroll: boolean = false): ButtonBuilder {
+    {
+      return new ButtonBuilder()
+        .setLabel(`Roll ${this.toDiceExpression()}`)
+        .setEmoji({ name: "🎲" })
+        .setStyle(ButtonStyle.Primary)
+        .setCustomId(
+          packTaskParams(
+            this.botTask,
+            this.toTaskParams(isReroll))
+        )
+      ;
+    }
+  }
+  protected toModifiersField(): EmbedField {
     return {
-      name: "Modifier",
-      value: this.toModifierString().replace(" ",""),
+      name: "Modifiers",
+      value: this.toModifiersString(),
       inline: true,
     };
   }
 }
+
+
+
+// constructor({ dice, modifier, description }: IRollOptions, botTask: T) {
+//   this.botTask = botTask;
+//   this.description = description;
+//   if (typeof dice === "string") {
+//     const parsed = parseDice(dice);
+//     this._dice = parsed.dice;
+//     this._modifier +=  (modifier ?? 0);
+//   } else if (Array.isArray(dice)) {
+//     this._dice = dice;
+//   } else {
+//     this._dice = [dice];
+//   }

@@ -3,8 +3,8 @@ import type { RefType, WidgetType } from "../widgets/WidgetType.js";
 
 
 export default interface IGameObject extends  IRendersMessage {
-  WidgetTypes: WidgetType[];
-  Type: RefType;
+  widgetTypes: WidgetType[];
+  refType: RefType;
   $id: string;
   Name: string;
   Description?: string | undefined;

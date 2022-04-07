@@ -2,7 +2,7 @@ import type { ButtonBuilder, InteractionReplyOptions } from "discord.js";
 import GameObject from "./GameObject.js";
 import type IItem from "../../data/interfaces/IItem.js";
 import ReferenceTask from "../../interactions/tasks/ReferenceTask.js";
-import DamageInfo from "../reference/DamageInfo.js";
+import DamageTable from "../reference/DamageTable.js";
 import type { IRendersButton, IRendersMessage } from "../widgets/IRenders.js";
 import type WidgetOptions from "../widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../widgets/WidgetType.js";
@@ -10,10 +10,10 @@ import { RefType, WidgetType } from "../widgets/WidgetType.js";
 // might be fun to experiment with *light* nlp hre, for pluralizing items
 
 export default class Item extends GameObject implements IItem, IRendersButton, IRendersMessage {
-  readonly Type: RefType.Item = RefType.Item;
+  readonly refType = RefType.Item;
   Name: string;
   Charges?: number | undefined;
-  Attacks?: DamageInfo[] | undefined;
+  Attacks?: DamageTable[] | undefined;
   Hands?: number | undefined;
   constructor(id: string, data: IItem, name: string = id) {
     super(id, undefined, data.Description);
@@ -28,9 +28,9 @@ export default class Item extends GameObject implements IItem, IRendersButton, I
         if (!dmgInfo.Name && attacks.length > 1 && index > 0) {
           dmgName += ` (${dmgInfo["Attack type"]})`;
         }
-        return new DamageInfo(dmgId, dmgInfo, this, dmgName);
+        return new DamageTable(dmgId, dmgInfo, this, dmgName);
       });
-      this.WidgetTypes.push(WidgetType.DamageTable);
+      this.widgetTypes.push(WidgetType.DamageTable);
     }
   }
 

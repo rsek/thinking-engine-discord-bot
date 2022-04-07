@@ -5,10 +5,10 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from "dis
 import ManageMessageTask from "./ManageMessageTask.js";
 import type IGameObject from "../../modules/inventory/IGameObject.js";
 import { BotTask } from "../../modules/tasks/BotTask.js";
+import BotTaskBase from "../../modules/tasks/BotTaskBase.js";
 import type { IRefTaskParams } from "../../modules/tasks/ITaskParams.js";
 import { ManageMessageAction } from "../../modules/tasks/ITaskParams.js";
 import { packTaskParams } from "../../modules/tasks/packTaskParams.js";
-import Task from "../../modules/tasks/Task.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 import type WidgetOptions from "../../modules/widgets/WidgetOptions.js";
 import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
@@ -17,13 +17,13 @@ interface IReferenceable {
   $id: string,
   name?: string,
   Name?: string,
-  Type: RefType,
+  refType: RefType,
 }
 
-export default class ReferenceTask extends Task<MessageComponentInteraction | CommandInteraction,IRefTaskParams> {
+export default class ReferenceTask extends BotTaskBase<MessageComponentInteraction | CommandInteraction,BotTask.Reference> {
   static createButton(target: IReferenceable, ephemeral: boolean) {
     const params: IRefTaskParams = {
-      id: target.$id, type: target.Type, ephemeral
+      id: target.$id, type: target.refType, ephemeral
     };
     return new ButtonBuilder()
       .setCustomId(packTaskParams(BotTask.Reference, params))

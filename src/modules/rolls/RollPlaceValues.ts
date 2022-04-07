@@ -1,48 +1,46 @@
-import type { ButtonBuilder } from "discord.js";
 import type DiceExpression from "./diceExpression.js";
-import { dicePattern } from "./diceExpression.js";
 import RollBase from "./RollBase.js";
+import { BotTask } from "../tasks/BotTask.js";
 import type { IRollPlaceValuesTaskParams } from "../tasks/ITaskParams.js";
+import { WidgetType } from "../widgets/WidgetType.js";
 
-export default class RollPlaceValues extends RollBase<IRollPlaceValuesTaskParams> {
+export default class RollPlaceValues extends RollBase<BotTask.RollPlaceValues> {
   static isPlaceValues = true;
-  static fromString(expression: DiceExpression, description?: string): RollPlaceValues {
-    if (!expression.startsWith("d")) {
-      throw RangeError();
-    }
-    // e.g. d36, d66, d666
-    // TODO: better type checking
-    const pattern = dicePattern.captures(expression);
-    if (!pattern) {
-      throw new RangeError("Unable to parse dice expression.");
-    }
-    return new RollPlaceValues(Number(pattern?.sides), description);
-  }
-  constructor(dieType: number, description?: string | undefined) {
-    const dice = dieType.toString().split("")
-      .map(item => Number(item));
-    if (dice.some(item => item < 2)) {
+  readonly botTask = BotTask.RollPlaceValues;
+  modifiers: number[] = [];
+  results!: number[];
+  readonly widgetType = WidgetType.RollDice;
+  constructor( params: IRollPlaceValuesTaskParams, description?: string | undefined) {
+    super({ params, description });
+    if (this.dice.some(die => die < 2)) {
       throw new RangeError("All digits must be at least 2, otherwise there's not much to roll.");
     }
-    super({
-      dice, modifier: 0, description
-    });
+    this.roll();
   }
-  toButton(isReroll: boolean): ButtonBuilder {
-    throw new Error("Method not implemented.");
+
+
+  public get dieType() {
+    return this.params.dieType;
   }
-  
-  
-  toParams(isReroll: boolean): IRollPlaceValuesTaskParams {
-    throw new Error("Method not implemented.");
+  public get dice() {
+    return this.params.dieType.toString().split("")
+      .map(die => Number(die));
   }
-  
-  
-  
-  get total(): number {
+  public get total(): number {
     return Number(this.results.join(""));
   }
+
+  toTaskParams(isReroll: boolean=false): IRollPlaceValuesTaskParams {
+    return {
+      dieType: this.dieType,
+      isReroll
+    };
+  }
+
   override toDiceExpression(): DiceExpression {
-    return `d${this.dice.join("")}` as DiceExpression;
+    return `D${this.dieType}` as DiceExpression;
   }
 }
+
+// const test = new RollPlaceValues({ params: { dieType: 66 } });
+// console.log(test);

@@ -31,8 +31,8 @@ export default class Enemy extends GameObject implements IEnemyBase, IGameObject
   Mien: Table;
   Description: string;
   Special?: string | undefined;
-  WidgetTypes: WidgetType[] = [WidgetType.Bestiary];
-  Type: RefType = RefType.Bestiary;
+  readonly widgetTypes = [WidgetType.Bestiary];
+  readonly refType = RefType.Bestiary;
   constructor(name: string, data: IEnemyYaml) {
     super(name, name, data.Description);
     this.$id = name;
@@ -50,7 +50,7 @@ export default class Enemy extends GameObject implements IEnemyBase, IGameObject
     this.Special = data.Special;
   }
   toEmbed(): EmbedBuilder {
-    const embed = buildWidgetStub(this.WidgetTypes[0], this.Name)
+    const embed = buildWidgetStub(this.widgetTypes[0], this.Name)
       .setDescription(this.Description)
     ;
     embed.addFields(
