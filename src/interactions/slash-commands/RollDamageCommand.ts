@@ -26,10 +26,6 @@ export abstract class RollDamageCommand {
       description: "Whether the target has a shield or not.",
       type: ApplicationCommandOptionType.Integer
     })
-    @SlashOption("shield", {
-      description: "Whether the target has a shield or not.",
-      type: ApplicationCommandOptionType.Integer
-    })
     @SlashChoice({ name: "No shield", value: 0 })
     @SlashChoice({ name: "Shield", value: 1 })
       shield: number,
