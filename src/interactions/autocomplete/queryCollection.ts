@@ -1,8 +1,9 @@
 import type { ApplicationCommandOptionChoice, Collection } from "discord.js";
+import _ from "lodash-es";
 import type IGameObject from "../../modules/inventory/IGameObject.js";
 import toSentenceCase from "../../modules/text/toSentenceCase.js";
 
-const maxOptions = 25;
+const MAX_OPTIONS = 25;
 
 /**
  * Generic function for querying the bot's game data.
@@ -12,14 +13,20 @@ const maxOptions = 25;
  */
 export default function queryCollection<T extends IGameObject>(query: string, collection: Collection<string, T>): ApplicationCommandOptionChoice[] {
   let results: ApplicationCommandOptionChoice[] = [];
-  let filtered: typeof collection;
-  if (!query.length) {
-    filtered = collection;
+  // let filtered: typeof collection;
+  let filtered: IGameObject[];
+  if (query.length === 0) {
+    // filtered = collection;
+    filtered = Array.from(collection.values());
   } else {
-    filtered = collection.filter(item => isAutocompleteMatch(query, item));
+    // collection.filter doesn't work correctly???
+    // TODO: file a discord.js bug report for that
+    // filtered = collection.filter(item => isAutocompleteMatch(query, item));
+    filtered = _.filter(Array.from(collection.values()), (item) => isAutocompleteMatch(query, item));
   }
-  results = filtered.map((value: {$id: string, Name?: string | undefined}) => toAutocompleteOption(value)).slice(0,maxOptions);
-  // console.log("autocomplete results:", results);
+  // results = filtered.map((value) => toAutocompleteOption(value)).slice(0,MAX_OPTIONS);
+  results = filtered.slice(0, MAX_OPTIONS).map((value) => toAutocompleteOption(value));
+  // console.log("query:", `"${query}"`, "\nautocomplete results:", results);
   return results;
 }
 
@@ -29,16 +36,15 @@ export default function queryCollection<T extends IGameObject>(query: string, co
  * @param obj The object to be tested.
  * @returns True if it's a match, false if not.
  */
-function isAutocompleteMatch(query: string, obj: {$id: string, Name?: string | undefined}): boolean {
+function isAutocompleteMatch(query: string, obj: IGameObject): boolean {
   const normalizedQuery = query.toLowerCase();
-  const idFragments = [...obj.$id.toLowerCase().split(/\W/)];
+  const idFragments = obj.$id.toLowerCase().split(/\W/);
   if (obj.Name) {
     idFragments.push(...obj.Name.toLowerCase().split(/\W/));
   }
-  if (idFragments.some(fragment => fragment.startsWith(normalizedQuery))) {
-    return true;
-  }
-  return false;
+  const result = idFragments.some(fragment => fragment.startsWith(normalizedQuery));
+  // console.log("comparison",result,normalizedQuery, idFragments);
+  return result;
 }
 
 /**
@@ -46,7 +52,7 @@ function isAutocompleteMatch(query: string, obj: {$id: string, Name?: string | u
  * @param obj
  * @returns The autocomplete option data.
  */
-function toAutocompleteOption(obj: {$id: string, Name?: string | undefined}): ApplicationCommandOptionChoice {
+function toAutocompleteOption(obj: IGameObject): ApplicationCommandOptionChoice {
   return {
     name: toSentenceCase(obj.Name ?? obj.$id),
     value: obj.$id,
