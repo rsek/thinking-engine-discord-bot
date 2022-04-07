@@ -3,7 +3,7 @@ import { Discord, Slash, SlashGroup , SlashOption } from "discordx";
 import RollVersus from "../../modules/rolls/RollVersus.js";
 
 @Discord()
-export abstract class RollVersusCommand {
+export default abstract class RollVersusCommand {
   @Slash("versus", { description: "Two opponents each roll 2d6 and add any applicable bonuses. The higher total wins." })
   @SlashGroup("roll")
   async versus(

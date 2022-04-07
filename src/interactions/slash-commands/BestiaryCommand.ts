@@ -9,7 +9,7 @@ import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
 
 @Discord()
-export abstract class BestiaryCommand {
+export default abstract class BestiaryCommand {
   @Slash("bestiary", { description: "Display a bestiary entry." })
   async bestiary(
     @SlashOption( "enemy-name",

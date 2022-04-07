@@ -14,7 +14,7 @@ export default class Skill extends GameObject implements ISkill {
     this.Name = data.Name;
     this.Description = data.Description;
   }
-  toMessage<T extends ItemIn<this["WidgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
+  toMessage<T extends ItemIn<this["widgetTypes"]>>(type: T, ephemeral?: boolean): WidgetOptions<InteractionReplyOptions> {
     throw new Error("Method not implemented.");
   }
 }

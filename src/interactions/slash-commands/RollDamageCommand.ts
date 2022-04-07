@@ -11,7 +11,7 @@ import { RefType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 
 @Discord()
-export abstract class RollDamageCommand {
+export default abstract class RollDamageCommand {
   @Slash("damage", { description: "Roll damage." })
   @SlashGroup("roll")
   async rollTable(
@@ -27,7 +27,8 @@ export abstract class RollDamageCommand {
       description: "Whether the target has a shield or not.",
       type: ApplicationCommandOptionType.Integer
     })
-    @SlashChoice({ "No shield": 0, Shield: 1, })
+    @SlashChoice({ name: "No shield", value: 0 })
+    @SlashChoice({ name: "Shield", value: 1 })
       shield: number,
 
     @SlashOption("armour", {
@@ -35,14 +36,12 @@ export abstract class RollDamageCommand {
     })
     // FIXME: discord.ts claims this can be done with just the enum, but it apparently requires a standard object.
     // if they fixed it, 'armour' can instead be passed directly
-    @SlashChoice({
-      ["0 (Unarmoured)"]: 0,
-      ["1 (Lightly Armoured)"]: 1,
-      ["2 (Modestly Armoured)"]: 2,
-      ["3 (Heavily Armoured)"]: 3,
-      ["4"]: 4,
-      ["5"]: 5,
-    })
+    @SlashChoice({ name: "0 (Unarmoured)", value: 0 })
+    @SlashChoice({ name: "1 (Lightly Armoured)", value: 1 })
+    @SlashChoice({ name: "2 (Modestly Armoured)", value: 2 })
+    @SlashChoice({ name: "3 (Heavily Armoured)", value: 3 })
+    @SlashChoice({ name: "4", value: 4 })
+    @SlashChoice({ name: "5", value: 5 })
       armour: number,
 
     @SlashOption("modifier", {

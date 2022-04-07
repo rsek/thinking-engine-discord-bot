@@ -9,7 +9,7 @@ import queryCollection from "../autocomplete/queryCollection.js";
 import ReferenceTask from "../tasks/ReferenceTask.js";
 
 @Discord()
-export abstract class SpellCommand {
+export default abstract class SpellCommand {
   @Slash("spell", { description: "Display the text of a spell." })
   async spell(
     @SlashOption( "spell-name",

@@ -5,7 +5,7 @@ import toDiceExpression from "../../modules/rolls/toDiceExpression.js";
 import RollDiceTask from "../tasks/RollDiceTask.js";
 
 @Discord()
-export abstract class RollDiceCommand {
+export default abstract class RollDiceCommand {
   @Slash("dice", {
     description: "Roll generic dice. For d36, d66, or d666, try \"/roll d36\", \"/roll d66\", or \"/roll d666\"."
   })

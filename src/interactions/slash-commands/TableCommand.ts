@@ -8,7 +8,7 @@ import { RefType, WidgetType } from "../../modules/widgets/WidgetType.js";
 import queryCollection from "../autocomplete/queryCollection.js";
 
 @Discord()
-export abstract class RollTableCommand {
+export default abstract class RollTableCommand {
   @Slash("table", { description: "Roll on a table." })
   async rollTable(
     @SlashOption( "table-name",
@@ -30,7 +30,7 @@ export abstract class RollTableCommand {
       case InteractionType.ApplicationCommandAutocomplete: {
         interaction = interaction as AutocompleteInteraction;
         const focusedOption = interaction.options.getFocused(true);
-        if (focusedOption.name === "table-name") {
+        if (focusedOption.name === "id") {
           return interaction.respond(
             queryCollection(focusedOption.value as string, Bot.gameData[RefType.Table])
           );

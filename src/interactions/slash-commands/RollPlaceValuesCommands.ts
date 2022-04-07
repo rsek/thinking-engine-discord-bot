@@ -4,7 +4,7 @@ import { Bot } from "../../bot.js";
 import RollPlaceValuesTask from "../tasks/RollPlaceValuesTask.js";
 
 @Discord()
-export abstract class RollPlaceValuesCommands {
+export default abstract class RollPlaceValuesCommands {
   @Slash("d36", {
     description: "Roll a d36 (1d3×10 + 1d6). For standard dice, use \"/roll dice\"; for tables, use \"/table\"."
   })
