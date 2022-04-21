@@ -20,7 +20,7 @@ export default class InitiativeTask extends BotTaskBase<MessageComponentInteract
       .setTitle(token)
       ;
     if (token === endOfRoundToken) {
-      embed.setDescription(`Round ${round} ends. All tokens have been returned to the stack.`);
+      embed.setDescription(`Round ${round-1} ends. All tokens have been returned to the stack.`);
       embed.setFooter({
         text: "Remove Tokens contributed by dead characters and enemies, resolve any per Round or end of Round activities such as magic effects, Drowning, fire, poison, or bleeding, then draw another Token and carry on."
       });

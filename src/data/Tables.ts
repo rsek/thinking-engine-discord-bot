@@ -24,7 +24,7 @@ export default class Tables extends Collection<string, Table> {
           new Table(tableId, tableData.Table, () =>
             new RollPlaceValues(
               {
-                dieType: Number(tableData.Roll.replace(/[Dd]/, ""))
+                dieType: Number(tableData.Dice.replace(/[Dd]/, ""))
               }
             ).valueOf()
           )
