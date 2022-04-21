@@ -20,8 +20,6 @@ extends:
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
 rules:
-  import/prefer-default-export:
-    - 1
   prefer-const: 1
   object-curly-newline:
     - 1
