@@ -9,7 +9,7 @@ import type TableDieType from "../../modules/tables/TableDieType.js";
 // TODO: use paging mechanism for table display?
 
 export default interface ITableYaml extends IGameDataBase {
-  Roll: keyof typeof TableDieType;
+  Dice: keyof typeof TableDieType;
   Table: Record<number, string>;
 }
 
